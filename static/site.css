@@ -1,0 +1,673 @@
+/* The homepage's paper, typography and geometric vocabulary continue across the site. */
+@media(min-width:621px) and (max-width:1000px){
+ .nav-links{display:none}.nav>.button{margin-left:auto}.mobile-menu{display:block;position:relative}
+ .mobile-menu summary{list-style:none;cursor:pointer;padding:8px 0 8px 6px}.mobile-menu summary::-webkit-details-marker{display:none}
+ .mobile-menu .icon{width:23px;height:23px}.menu-links{position:absolute;right:0;top:43px;width:220px;display:flex;flex-direction:column;background:#faf9f3;border:1px solid #c4ceb8;box-shadow:0 16px 35px #1a372922;padding:8px;z-index:20}.menu-links a{padding:14px;font-size:12px}
+}
+.city-scroll-section{min-width:0}
+.city-scroll-section.scroll-linked{height:calc(var(--hero-frame-height,740px) + 55svh)}
+.hero-scroll-frame{position:sticky;top:0;display:block;width:100%;height:auto;margin:0;padding-top:32px}
+@media(min-width:621px) and (max-width:1100px){
+ .hero-scroll-frame{padding-top:0}
+}
+@media(max-width:620px){
+ .city-scroll-section.scroll-linked{height:calc(var(--hero-frame-height,550px) + 34svh)}
+ .hero-scroll-frame{padding-top:0}
+ .studio-scroll{width:44px;height:44px}
+}
+@media(prefers-reduced-motion:reduce){.city-scroll-section.scroll-linked{height:auto}.hero-scroll-frame{position:relative!important;top:0!important}}
+@media(max-width:1000px){
+ .site-header{height:auto;min-height:87px}
+ .site-header .nav{display:grid;grid-template-columns:minmax(0,1fr) auto 44px;grid-template-rows:87px;column-gap:14px;row-gap:0;height:auto;min-height:87px}
+ .nav>.brand{grid-column:1;grid-row:1}
+ .nav>.button{grid-column:2;grid-row:1;margin-left:0}
+ .mobile-menu{grid-column:3;grid-row:1}
+ .mobile-menu[open]{display:contents}
+ .mobile-menu[open]::details-content{display:contents}
+ .mobile-menu summary{grid-column:3;grid-row:1;display:grid;place-items:center;min-width:44px;min-height:44px;padding:0}
+ .mobile-menu[open] .menu-links{grid-column:1/-1;grid-row:2;position:static;width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin:0 0 14px;padding:8px;box-shadow:none}
+ .menu-links a{display:flex;align-items:center;min-height:44px;font-size:13px}
+}
+[hidden]{display:none!important}
+/* Six authored city studies share one stage and an accessible outcome reader. */
+.outcomes .outcomes-grid{display:block}
+.outcomes-heading-row{display:flex;justify-content:space-between;align-items:flex-end;gap:45px;margin-bottom:36px}
+.outcomes-heading-row .outcomes-intro{max-width:365px;margin:0 0 5px}
+.outcomes-explorer{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,1fr);column-gap:38px;row-gap:22px;align-items:start}
+.outcome-study{grid-column:1;grid-row:1/3;margin:0;background:#e7e9da;border:1px solid #d0d6c0;position:relative;min-width:0}
+.outcome-study-heading{display:flex;justify-content:space-between;gap:16px;margin:22px 25px 0;color:#49614d;font-size:8px;letter-spacing:1.5px;text-transform:uppercase}
+.outcome-model{height:460px;position:relative;overflow:hidden}
+.outcome-model canvas{display:block;width:100%;height:100%;touch-action:pan-y}
+.outcome-study figcaption{margin:0 25px;padding:0 0 22px}
+.outcome-study h3{font-size:27px;line-height:1.15;letter-spacing:-1px;font-weight:500;max-width:410px}
+.outcome-study p{font-size:11px;line-height:1.75;color:#4c634f;margin-top:10px;max-width:420px;min-height:39px}
+.outcome-study-footer{display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid #bbc6ab;margin-top:18px;padding-top:15px;font-size:8px;color:#52674e}
+.outcome-tabs{grid-column:2;grid-row:1;border-top:1px solid #b8c3ad}
+.outcome-tab{display:grid;grid-template-columns:25px 1fr 18px;gap:12px;align-items:center;text-align:left;width:100%;border:0;border-bottom:1px solid #cbd2be;background:transparent;cursor:pointer;color:#304a40;padding:22px 14px 22px 0;font:inherit;transition:background .25s,color .25s}
+.outcome-tab>span:first-child{font-size:9px;color:#405640}
+.outcome-tab strong{display:block;font-weight:500;font-size:19px;letter-spacing:-.6px}
+.outcome-tab small{display:block;font-size:10px;line-height:1.7;color:#566b53;margin-top:5px}
+.outcome-tab>span:last-child{font-size:18px}
+.outcome-tab:hover{background:#e9ebdd}
+.outcome-tab[aria-selected=true]{background:#e4e7d5;color:#9a4933;box-shadow:inset 3px 0 #ad5e43;padding-left:14px}
+.outcomes .outcome-evidence{grid-column:2;grid-row:2;margin-top:0}
+@media(min-width:1101px){.outcome-model{height:480px}}
+@media(min-width:621px) and (max-width:900px){
+ .outcomes-heading-row{gap:28px}.outcomes-heading-row .outcomes-intro{max-width:310px;font-size:12px}
+ .outcomes-explorer{grid-template-columns:minmax(0,1.35fr) minmax(260px,1fr);gap:25px}
+ .outcome-model{height:365px}.outcome-study-heading{margin:19px 18px 0;font-size:7px;letter-spacing:.7px}
+ .outcome-study figcaption{margin-inline:18px}.outcome-study h3{font-size:24px}
+ .outcome-tab{padding-block:20px}.outcome-tab strong{font-size:18px}.outcome-tab small{font-size:9px}
+}
+@media(max-width:620px){
+ .outcomes-heading-row{display:block;margin-bottom:25px}.outcomes-heading-row .outcomes-intro{margin-top:20px;max-width:330px}
+ .outcomes-explorer{display:flex;flex-direction:column;gap:18px}
+ .outcome-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;order:-1;border:1px solid #cbd2be}
+ .outcome-tab{grid-template-columns:1fr;gap:5px;padding:12px 8px!important;border-right:1px solid #cbd2be;min-height:73px}
+ .outcome-tab strong{font-size:12px;letter-spacing:-.3px}.outcome-tab small,.outcome-tab>span:last-child{display:none}
+ .outcome-tab[aria-selected=true]{box-shadow:inset 0 -3px #ad5e43}.outcome-tab>span:first-child{font-size:8px}
+ .outcome-study{width:100%}.outcome-model{height:310px}
+ .outcome-study-heading{margin:18px 17px 0;font-size:7px;letter-spacing:.7px}
+ .outcome-study figcaption{margin:0 17px}.outcome-study h3{font-size:25px}
+ .outcome-study p{font-size:10px;min-height:36px}.outcome-study-footer{font-size:7px}
+ .outcomes .outcome-evidence{max-width:none}
+}
+.nav-links a[aria-current=page]{color:#a45138;box-shadow:0 1px currentColor}
+.chapter-breadcrumb{display:flex;gap:12px;align-items:center;padding-top:32px;font-size:10px;color:#60725d}
+.chapter-breadcrumb a:hover{color:#a45138}
+.chapter-hero{padding:65px 0 66px}
+.chapter-hero .eyebrow{margin-bottom:29px}
+.chapter-hero h1{font-size:clamp(58px,6.4vw,98px);font-weight:500;letter-spacing:-5.5px;line-height:1.03;max-width:1020px}
+.chapter-hero h1 em{font-style:normal;color:#a65339}
+.chapter-hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:50px;margin-top:33px}
+.chapter-hero-bottom p{font-size:14px;line-height:1.85;color:#5b6e5d;max-width:475px}
+.chapter-hero-bottom .text-link{white-space:nowrap}
+.chapter-index{padding:92px 0 98px;border-top:1px solid var(--line)}
+.chapter-index-heading{display:flex;justify-content:space-between;gap:40px;align-items:flex-end;margin-bottom:44px}
+.chapter-index h2,.editorial-heading{font-size:52px;letter-spacing:-2.5px;line-height:1.12;font-weight:500}
+.chapter-index-heading p{max-width:340px;font-size:12px;line-height:1.8;color:#60715c}
+.chapter-links{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.chapter-link{display:block;border-top:1px solid #b8c3ad;padding-top:17px}
+.chapter-link .chapter-meta{display:flex;align-items:center;justify-content:space-between;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#5a715a}
+.chapter-link .chapter-meta span:last-child{font-size:21px}
+.chapter-link h3{font-size:24px;line-height:1.2;letter-spacing:-.9px;font-weight:500;margin:5px 0 13px}
+.chapter-link p{font-size:12px;color:#5a6f5c;line-height:1.8;max-width:310px}
+.chapter-link:hover h3{color:#a45138}
+.site-footer-expanded{position:relative;display:flow-root;isolation:isolate;background:#ececdf;border-top:1px solid #d0d5c3;padding:47px 0 22px}
+.site-footer-expanded>.wrap{display:grid;gap:36px}
+.footer-map{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(2,minmax(0,1fr));gap:60px;align-items:start}
+.footer-brand{display:grid;gap:18px;align-content:start;min-width:0}
+.footer-map .brand{display:inline-flex}
+.footer-map p{font-size:11px;color:#5c6b57;margin:0;max-width:220px;line-height:1.8}
+.footer-column{display:grid;align-content:start;gap:8px;min-width:0}
+.footer-column h2{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 8px;font-weight:500;line-height:1.7}
+.footer-column a{display:flex;align-items:center;width:fit-content;max-width:100%;min-height:34px;font-size:12px;line-height:1.7;margin:0;color:#425a48}
+.footer-column a:hover{text-decoration:underline;text-underline-offset:5px}
+.footer-base{border-top:1px solid #cbd2bd;padding-top:21px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 20px;font-size:9px;color:#5c6b57}
+.footer-base a:hover{text-decoration:underline;text-underline-offset:4px}
+.editorial-section{padding:95px 0}
+.editorial-intro{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:end;margin-bottom:42px}
+.editorial-intro p{font-size:13px;line-height:1.85;color:#5b6f5b;max-width:420px}
+.editorial-intro .eyebrow{margin-bottom:24px}
+.editorial-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+.editorial-trio article{border-top:1px solid #b7c4ad;padding-top:22px}
+.editorial-trio .folio{font-size:34px;font-weight:400;color:#637957;letter-spacing:-1.5px}
+.editorial-trio h3{font-size:21px;letter-spacing:-.6px;line-height:1.3;font-weight:500;margin:20px 0 12px}
+.editorial-trio p{font-size:12px;line-height:1.9;color:#5b6f5b}
+.editorial-trio a{display:inline-block;font-size:10px;margin-top:22px;border-bottom:1px solid #9dad92;padding-bottom:5px}
+.soft-section{background:#e9ecdc}
+.faq-layout{display:grid;grid-template-columns:.9fr 1.3fr;gap:90px}
+.faq-layout h2{font-size:44px;line-height:1.15;letter-spacing:-2px;font-weight:500}
+.faq-layout .eyebrow{margin-bottom:25px}
+.faq-list{border-top:1px solid #b6c4aa}
+.faq-list details{border-bottom:1px solid #c3ceb7}
+.faq-list summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:25px;padding:23px 0;font-size:14px;line-height:1.5}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary:after{content:'+';color:#788e6e}
+.faq-list details[open] summary:after{content:'−'}
+.faq-list details p{font-size:12px;line-height:1.9;color:#536b53;padding:0 25px 25px 0;max-width:540px}
+.chapter-cta{background:#2c4b3d;color:#f0edda;padding:68px 0}
+.chapter-cta-inner{display:flex;justify-content:space-between;align-items:center;gap:45px}
+.chapter-cta h2{font-size:46px;font-weight:500;letter-spacing:-2px;line-height:1.12;max-width:730px}
+.chapter-cta .eyebrow{color:#c6d0af;margin-bottom:22px}
+.chapter-cta .button{background:#e5e7c8;color:#2c4b3d;white-space:nowrap}
+.chapter-cta .button:hover{background:#f6f2d9}
+.evidence-thread{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #b7c4ad;margin-top:40px}
+.evidence-thread article{padding:28px 30px 25px 0}
+.evidence-thread article+article{border-left:1px solid #c7d0bc;padding-left:30px}
+.evidence-thread h3{font-size:21px;font-weight:500;letter-spacing:-.7px;margin-bottom:15px}
+.evidence-thread p{font-size:12px;line-height:1.9;color:#536950}
+.field-note{padding:45px 0 85px;display:flex;justify-content:space-between;gap:60px}
+.field-note p{font-size:11px;line-height:1.8;color:#607255;max-width:560px}
+.field-note a{text-decoration:underline;text-underline-offset:4px;font-size:11px}
+@media(max-width:1100px){
+ .chapter-hero{padding-top:52px}.chapter-hero h1{letter-spacing:-4px}
+ .editorial-intro,.faq-layout{gap:50px}.chapter-index h2,.editorial-heading{font-size:43px}
+ .chapter-links{gap:23px}
+}
+@media(max-width:800px){
+ .nav-links{gap:15px;font-size:10px}.nav{gap:20px}
+ .chapter-hero h1{font-size:66px}.chapter-hero-bottom{align-items:flex-start;gap:30px}
+ .chapter-index-heading,.editorial-intro{display:block}.chapter-index-heading p,.editorial-intro p{margin-top:25px}
+ .chapter-links{gap:20px}.chapter-link h3{font-size:21px}
+ .chapter-index,.editorial-section{padding:70px 0}.editorial-trio{gap:24px}
+ .faq-layout{grid-template-columns:1fr;gap:35px}.faq-layout h2{max-width:460px}
+ .footer-map{gap:30px}.chapter-cta h2{font-size:37px}.chapter-cta-inner{gap:30px}
+}
+@media(max-width:620px){
+ .chapter-breadcrumb{font-size:9px;padding-top:25px}
+ .chapter-hero{padding:43px 0}.chapter-hero h1{font-size:49px;letter-spacing:-2.8px;line-height:1.06}
+ .chapter-hero .eyebrow{font-size:8px;margin-bottom:24px}
+ .chapter-hero-bottom{display:block;margin-top:24px}.chapter-hero-bottom p{font-size:12px}
+ .chapter-hero-bottom .text-link{display:inline-flex;margin-top:24px;font-size:10px}
+ .chapter-index-heading{margin-bottom:30px}.chapter-index h2,.editorial-heading{font-size:38px;letter-spacing:-1.8px}
+ .chapter-index-heading p{font-size:11px}.chapter-links{grid-template-columns:1fr;gap:34px}
+ .chapter-link h3{font-size:27px}.chapter-link p{font-size:12px;max-width:none}
+ .chapter-link .chapter-meta{font-size:8px}.chapter-index{padding:60px 0}
+ .editorial-section{padding:60px 0}.editorial-intro{margin-bottom:29px}.editorial-intro p{font-size:12px}
+ .editorial-trio{grid-template-columns:1fr;gap:28px}.editorial-trio article{position:relative;padding-left:55px}
+ .editorial-trio .folio{position:absolute;left:0;top:22px;font-size:30px}.editorial-trio h3{margin-top:0;font-size:23px}
+ .faq-layout h2{font-size:38px}.faq-list summary{font-size:13px}.faq-list details p{font-size:11px}
+ .chapter-cta{padding:50px 0}.chapter-cta-inner{display:block}.chapter-cta h2{font-size:39px;letter-spacing:-1.8px}
+ .chapter-cta .button{margin-top:30px;font-size:10px}
+ .footer-map{grid-template-columns:1fr 1fr;gap:30px 20px}.footer-brand{grid-column:1/-1;display:flex;align-items:center;gap:30px}
+ .footer-brand p{margin-top:0;max-width:165px;font-size:10px}.footer-column h2{font-size:8px}
+ .footer-column a{font-size:11px;min-height:40px}.footer-base{font-size:8px;line-height:1.6;align-items:center}
+ .evidence-thread{grid-template-columns:1fr}.evidence-thread article{padding:25px 0}
+ .evidence-thread article+article{border-left:0;border-top:1px solid #c7d0bc;padding-left:0}
+ .field-note{display:block;padding-bottom:55px}.field-note a{display:inline-block;margin-top:20px}
+}
+/* Text keeps its own space at every breakpoint, including narrow capture views. */
+:is(.manifesto h2,.section-heading,.workflow h2,.outcomes h2,.trust-top h2,.chapter-index h2,.closing h2){letter-spacing:-.035em;line-height:1.14}
+.closing{isolation:isolate}
+/* Captions occupy rows outside each illustration, including wrapped phone copy. */
+.network-art{display:grid;grid-template-rows:auto clamp(290px,33vw,470px) auto;row-gap:18px;aspect-ratio:auto}
+.network-heading{padding-bottom:0}
+.street-model{position:relative;inset:auto;min-width:0;min-height:0;overflow:hidden}
+.network-caption{position:static;margin:0 24px 24px}
+.outcome-study figcaption{padding-top:20px}
+.closing-inner{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px}
+.closing-copy{min-width:0;z-index:auto}
+.closing-city{overflow:hidden}
+@media(max-width:760px){.closing-inner{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:620px){.network-art{grid-template-rows:auto 310px auto}.network-caption{margin:0 20px 20px}}
+
+/* The public homepage follows the approved complete desktop and phone composition. */
+.platform-home{background:#f6f7fb;color:#000b2d}
+.platform-home .homepage-content{max-width:1440px;margin-inline:auto}
+.platform-home .site-header{height:auto;min-height:100px;border:0;background:#f6f7fb}
+.platform-home .site-header:after{display:none}
+.platform-home .nav{width:calc(100% - 96px);max-width:1344px;min-height:100px;display:flex;gap:28px;border-bottom:1px solid #bec9df}
+/* The header names the product the way the application does: the small Sofia
+   mark, then POLYCITY as one word in the page's own letters, CITY in the brand
+   colours. The only space in the lockup is the mark's own margin; a gap inside
+   the word would read "POLY CITY". */
+.platform-home .brand-lockup{gap:0;color:#000b2d;text-decoration:none;white-space:nowrap}
+.platform-home .brand-mark{display:block;width:34px;height:34px;margin-right:11px;flex:0 0 auto}
+.platform-home .brand-word{font:700 15px/1 Manrope,Arial,sans-serif;letter-spacing:.16em}
+.platform-home .brand-word span{background:linear-gradient(90deg,#2456a8,#7b3fa0,#c23d7c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.platform-home .nav-links{gap:28px;font-size:13px}
+.platform-home .nav .nav-sign-in{font-size:12px;font-weight:750;border:0;border-bottom:2px solid #000b2d;border-radius:0;padding:10px 0;gap:12px;white-space:nowrap;background:transparent}
+.platform-home h1,.platform-home h2,.platform-home h3{font-family:Manrope,Arial,sans-serif;font-style:normal;font-weight:750;margin:0;color:inherit}
+.platform-home h1{font-size:clamp(60px,6.65vw,90px);line-height:1.06;letter-spacing:-.04em}
+.platform-home h2{font-size:clamp(42px,4.55vw,60px);line-height:1.1;letter-spacing:-.032em}
+.platform-home h3{font-size:27px;line-height:1.18;letter-spacing:-.024em}
+.platform-home p{margin:0}
+.platform-home .eyebrow{display:block;font-size:11px;letter-spacing:1px;margin:0 0 25px}
+.platform-home .eyebrow:before{display:none}
+.platform-home .hero-copy p,.platform-home .copy{font-size:16px;line-height:1.75;color:#45536f}
+.platform-home .primary{display:inline-flex;align-items:center;justify-content:space-between;gap:30px;background:#000b2d;color:#fff;padding:16px 20px;font-size:12px;font-weight:750;margin-top:23px;min-height:48px}
+.platform-home .primary:hover{background:#57039b}
+.platform-home .text-link{display:inline-flex;align-items:center;gap:14px;border-bottom:1px solid currentColor;padding-bottom:5px;font-size:12px;font-weight:750;margin:0;line-height:1.6}
+.platform-home a:focus-visible,.platform-home summary:focus-visible{outline:2px solid #049dd6;outline-offset:5px}
+/* One city for the whole page. The stage is fixed to the screen and drawn
+   straight on the page's paper, with no sky and no frame; the screens of words
+   scroll over it. The navy wash sits under the stage, over the whole screen,
+   and comes up as the city turns into numbers at the end. */
+.one-city .homepage-content{max-width:none;margin:0}
+.one-city .city-scroll-section{position:fixed;inset:0;z-index:1;pointer-events:none}
+.one-city .hero-scroll-frame{position:absolute;inset:0;height:auto;margin:0;padding:0}
+.platform-home .model-stage{position:relative;width:100%;height:100%;min-width:0;overflow:hidden;background:none}
+.platform-home .model-stage canvas{display:block;position:static;width:100%;height:100%;pointer-events:none;touch-action:pan-y}
+.platform-home [data-story-stage=hero]{height:100%}
+.platform-home [data-story-stage=hero] canvas{position:relative;z-index:1}
+.platform-home .hero-wash{position:fixed;inset:0;z-index:0;opacity:0;pointer-events:none;background:radial-gradient(60% 55% at 50% 40%,#17347a 0%,#000b2d 100%)}
+.platform-home .model-stage[data-render-state=ready] .story-loading{display:none}
+.platform-home .model-stage .story-loading{position:absolute;left:48px;top:120px;font-size:12px;color:#52607d}
+.platform-home .model-stage[data-render-state=error] .story-loading,.platform-home .model-stage[data-render-state=recovering] .story-loading{background:#edf1fa;color:#000b2d;padding:18px}
+/* Pins mark places in the city as their rows are read. Each one is put on
+   screen by the scene, where its place in the city lands. */
+.one-city .pins{position:fixed;inset:0;z-index:3;overflow:hidden;pointer-events:none}
+.one-city .pin{position:absolute;left:0;top:0;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:750;color:#000b2d;white-space:nowrap;opacity:0;transform:translate(-7px,-50%);transition:opacity .4s}
+.one-city .pin[data-shown]{opacity:1}
+.one-city .pin i{width:14px;height:14px;border-radius:50%;background:#fd4b08;box-shadow:0 0 0 5px rgba(253,75,8,.25);flex-shrink:0}
+.one-city .pin span{background:#000b2d;color:#fff;padding:8px 12px;border-radius:2px}
+/* The header floats over the city. On the navy end its words go white. */
+.one-city .site-header{position:fixed;top:0;left:0;right:0;z-index:5;background:transparent;transition:color .4s}
+/* The header runs the full width, so the logo stands on the same left edge
+   as the words below it and Sign in on the same right edge as the footer. */
+.one-city .nav{border-bottom:0;max-width:none}
+/* The mark's drawing starts a little inside its own square. */
+.one-city .brand{margin-left:-1px}
+.one-city .site-header:has(.mobile-menu[open]){background:#f6f7fb;color:#000b2d}
+.one-city[data-stage-ink=light] .site-header{color:#fff}
+.one-city[data-stage-ink=light] .nav-links a,.one-city[data-stage-ink=light] .nav .nav-sign-in,.one-city[data-stage-ink=light] .mobile-menu summary{color:#fff}
+.one-city[data-stage-ink=light] .nav .nav-sign-in{border-bottom-color:#fff}
+/* Ask for access is an outlined navy button; over a dark stage it would be
+   navy on navy, so it takes the stage's own light ink. */
+.one-city[data-stage-ink=light] .nav>.button{color:#fff;border-color:#ffffff66;background:transparent}
+.one-city[data-stage-ink=light] .nav>.button:hover{background:#ffffff1f}
+/* The open menu covers the stage in daylight, so the button goes back to navy. */
+.one-city[data-stage-ink=light] .site-header:has(.mobile-menu[open]) .nav>.button{color:#000b2d;border-color:#a2adc8}
+/* On the navy end the word goes white and CITY takes the bright run of brand
+   colours, as the application's own navy footer does; the mark swaps for its
+   lifted-colour copy. Both give way again while the phone menu lies open on
+   paper. */
+.brand .brand-mark-light{display:none}
+.one-city[data-stage-ink=light] .brand-lockup{color:#fff}
+.one-city[data-stage-ink=light] .brand-word span{background-image:linear-gradient(90deg,#0ad6ed,#3f6bff,#9a4dff,#d63aa4,#fd4b08)}
+.one-city[data-stage-ink=light] .brand .brand-mark{display:none}
+.one-city[data-stage-ink=light] .brand .brand-mark-light{display:block}
+.one-city .site-header:has(.mobile-menu[open]) .brand-lockup{color:#000b2d}
+.one-city .site-header:has(.mobile-menu[open]) .brand-word span{background-image:linear-gradient(90deg,#2456a8,#7b3fa0,#c23d7c)}
+.one-city .site-header:has(.mobile-menu[open]) .brand .brand-mark{display:block}
+.one-city .site-header:has(.mobile-menu[open]) .brand .brand-mark-light{display:none}
+/* Five screens of words, each a screen tall, standing on the city with a
+   breath of paper behind the words and never a box. A tall screen holds its
+   words still while its part of the scroll runs. */
+.one-city .screen{position:relative;z-index:2;min-height:100svh;padding:0;margin:0;background:none;overflow:visible;pointer-events:none}
+.one-city .screen>*{pointer-events:auto}
+.one-city .screen:before{content:'';position:absolute;inset:0;opacity:1;pointer-events:none}
+.one-city .screen-words{position:relative;min-height:100svh;padding:100px 48px 48px;display:flex;flex-direction:column}
+/* How many screens of scrolling each tall section takes is the scene's pace
+   table, set on the section as --screens. */
+.one-city .screen.tall{min-height:calc(var(--screens,3)*100svh)}
+.one-city .screen.tall .screen-words{position:sticky;top:0;height:100svh;min-height:0}
+.one-city .screen.tall:before{position:sticky;top:0;display:block;height:100svh;margin-bottom:-100svh}
+/* The consequences take a screen of scrolling for each close-up; the scene
+   sets how many. The page's rests at each close-up are the scene's too, and
+   not scroll snapping: a browser's snapping pulls one notch of a mouse wheel
+   back to the rest it left, and lets a wheel flick run past every rest. */
+.one-city .screen.outcomes.tall{min-height:calc((1 + 6*var(--outcome-screens,1))*100svh)}
+.one-city .screen.hero:before{background:linear-gradient(0deg,rgba(246,247,251,.97) 0,rgba(246,247,251,.85) 30%,rgba(246,247,251,0) 62%)}
+.one-city .screen.proposal:before{background:linear-gradient(90deg,rgba(246,247,251,.96) 0,rgba(246,247,251,.9) 26%,rgba(246,247,251,0) 52%)}
+.one-city .screen.outcomes:before{background:linear-gradient(270deg,rgba(246,247,251,.92) 0,rgba(246,247,251,.7) 18%,rgba(246,247,251,0) 38%),linear-gradient(0deg,rgba(246,247,251,.8) 0,rgba(246,247,251,.3) 22%,rgba(246,247,251,0) 40%)}
+.one-city .screen.comparison:before{background:linear-gradient(180deg,rgba(246,247,251,.95) 0,rgba(246,247,251,0) 34%)}
+.one-city .screen.closing{color:#fff}
+/* The number city's outlines are as bright as the words, so the corner the
+   words stand in is held dark and the city keeps the rest of the screen. */
+.one-city .screen.closing:before{background:radial-gradient(125% 95% at 0 100%,rgba(0,11,45,.95) 0,rgba(0,11,45,.9) 48%,rgba(0,11,45,0) 84%),linear-gradient(0deg,rgba(0,11,45,.92) 0,rgba(0,11,45,0) 24%)}
+.one-city .screen.hero .screen-words{justify-content:flex-end}
+.one-city .hero-copy{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:40px;align-items:end}
+.one-city h1{font-size:clamp(60px,8.4vw,150px);line-height:.98;letter-spacing:-.04em}
+.one-city .screen h2{font-size:clamp(42px,5.2vw,92px);line-height:.98;letter-spacing:-.04em}
+.one-city .hero-copy .primary{margin-top:22px}
+.one-city .screen.proposal .screen-words{justify-content:center}
+.one-city .screen.proposal h2,.one-city .screen.proposal .copy,.one-city .screen.proposal .changes{max-width:640px}
+.one-city .screen.proposal .copy{margin-top:26px;max-width:520px}
+.one-city .changes{display:flex;flex-direction:column;margin-top:30px;max-width:520px}
+.one-city .changes>div{display:flex;justify-content:space-between;gap:18px;padding:16px 0;border-top:1px solid #b9c4da;font-size:15px;line-height:1.6;color:#52607d}
+.one-city .changes span{text-align:right}
+.platform-home .changes>div[data-camera-place]{transition:opacity .5s,border-top-color .5s,color .5s}
+.platform-home .changes>div[data-camera-place][data-arrived]:not([data-current]){opacity:.7}
+.platform-home .changes>div[data-camera-place][data-current]{color:#000b2d;font-weight:750;border-top:2px solid #000b2d}
+.one-city .screen.outcomes .screen-words{justify-content:flex-end}
+.one-city .rail{position:absolute;right:64px;top:150px;margin:0;padding:0;list-style:none;text-align:right}
+.one-city .rail li{font-size:26px;color:#8a97b4;padding:10px 0;letter-spacing:-.01em;transition:font-size .25s,color .25s}
+.one-city .rail li.rail-title{font-size:13px;letter-spacing:.12em;color:#52607d;padding:0 0 10px}
+.one-city .rail li[data-current]{font-size:64px;color:#000b2d;font-weight:800;letter-spacing:-.03em;padding:14px 0}
+.one-city .outcome-words{max-width:760px}
+.one-city .outcome-words .copy{margin-top:22px;max-width:560px;display:none}
+.one-city .outcome-words .copy[data-current]{display:block}
+.one-city .screen.comparison .screen-words{justify-content:space-between;padding-top:150px}
+.one-city .split{position:absolute;inset:0;pointer-events:none}
+.one-city .tag{position:absolute;top:420px;font-size:13px;letter-spacing:.14em;font-weight:750;color:#52607d;background:rgba(246,247,251,.85);padding:6px 10px}
+.one-city .tag-today{left:48px}.one-city .tag-proposal{right:48px}
+/* Today's half of the city, left of the line, loses its colour so the
+   proposal's half reads as the change. */
+.one-city .split-today{position:absolute;left:0;top:0;bottom:0;width:var(--split,50%);backdrop-filter:saturate(.12) brightness(1.03);-webkit-backdrop-filter:saturate(.12) brightness(1.03)}
+.one-city .split-line{position:absolute;left:var(--split,50%);top:0;bottom:0;width:2px;margin-left:-1px;background:#000b2d}
+.one-city .split-knob{position:absolute;left:var(--split,50%);top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;border:0;background:#000b2d;color:#fff;font:inherit;font-size:20px;font-weight:750;cursor:ew-resize;pointer-events:auto;touch-action:none}
+.one-city .three{display:flex;gap:60px;margin-top:40px}
+.one-city .three>div{flex:1;border-top:2px solid #000b2d;padding-top:14px;font-size:15px;line-height:1.6;color:#45536f}
+.one-city .three strong{display:block;font-size:20px;color:#000b2d;margin-bottom:4px;font-weight:750}
+.one-city .screen.closing .screen-words{justify-content:flex-end}
+.one-city .closing-copy{display:block;padding-bottom:60px;max-width:none;z-index:auto}
+.one-city .closing .eyebrow{color:#dbe3f7;font-size:11px;letter-spacing:1px;margin-bottom:25px}
+.one-city .screen.closing h2{color:#fff;max-width:none;text-shadow:0 0 28px rgba(0,11,45,.85)}
+.one-city .closing .primary{background:#febe11;color:#000b2d;margin-top:30px}
+.one-city .closing .primary:hover{background:#ffcf4c}
+.one-city .homepage-footer{max-width:none;margin:0;padding:0;display:flex;justify-content:space-between;gap:20px;font-size:13px;line-height:1.7;color:#c9d4f0}
+.one-city .homepage-footer nav{display:flex;flex-wrap:wrap;gap:12px 28px}
+.one-city .homepage-footer a{min-height:32px;display:inline-flex;align-items:center}
+/* Somebody who asked for less movement is handed a still city and words on
+   plain navy at the end, with nothing turning into anything. */
+[data-motion=still] .one-city .screen.closing:before{background:#000b2d}
+[data-motion=still] .one-city .pin{transition:none}
+/* Words arrive on the same clock as the camera: a heading a line at a time out
+   of its own mask, then what follows it, each once. Nothing here is hidden
+   unless page-motion.js is running and the reader wants the movement. */
+/* A heading cut into lines stacks them whatever the motion flag says, so a
+   heading never reads as one run-on line. */
+.platform-home .line-mask{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+[data-motion=on] .platform-home .line-body{display:block;transform:translateY(108%);transition:transform .8s cubic-bezier(.22,.61,.36,1);transition-delay:calc(var(--line-index,0)*.11s)}
+[data-motion=on] .platform-home [data-lines][data-arrived] .line-body{transform:none}
+[data-motion=on] .platform-home [data-arrive]{opacity:0;transform:translateY(24px);transition:opacity .66s cubic-bezier(.22,.61,.36,1),transform .66s cubic-bezier(.22,.61,.36,1);transition-delay:calc(var(--arrive-index,0)*.2s)}
+[data-motion=on] .platform-home [data-arrive][data-arrived]{opacity:1;transform:none}
+.platform-home .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media(max-width:1100px){
+ .platform-home .nav{gap:20px}.platform-home .nav-links{gap:20px;font-size:12px}
+ .one-city .rail li{font-size:22px}.one-city .rail li[data-current]{font-size:48px}
+}
+@media(max-width:1000px){
+ .platform-home .nav-links{display:none}.platform-home .nav>.button{margin-left:auto}
+ .platform-home .mobile-menu{display:block}.platform-home .nav{min-height:86px}
+ /* The open menu takes its own row under the header, as on every other page;
+    a row of flex items squeezed it into a box beside the name. */
+ .platform-home .nav{display:grid;row-gap:0}.platform-home .mobile-menu[open]{display:contents}
+ .one-city .hero-copy{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px}
+ .one-city h1{font-size:clamp(48px,8.4vw,90px)}
+ .platform-home .hero-copy p{font-size:14px}
+ .one-city .three{gap:30px}
+}
+@media(max-width:760px){
+ .platform-home .nav{width:calc(100% - 46px);column-gap:21px}
+ .one-city .nav{width:calc(100% - 40px)}
+ .platform-home .site-header{min-height:86px}
+ .platform-home .brand-mark{width:30px;height:30px;margin-right:10px}.platform-home .brand-word{font-size:13px}
+ .platform-home .nav .nav-sign-in{font-size:11px;min-height:44px}
+ .one-city .screen-words{padding:86px 20px 30px}
+ .one-city .hero-copy,.one-city .closing-copy{display:block}
+ .one-city h1{font-size:clamp(40px,13.8vw,64px);line-height:1.02;letter-spacing:-.04em}
+ .platform-home .eyebrow{font-size:10px;margin-bottom:14px}
+ .platform-home .hero-copy p{font-size:14px;line-height:1.75;margin-top:14px;max-width:520px}
+ .platform-home .primary{font-size:12px;padding:13px 16px;margin-top:16px}
+ .one-city .screen h2{font-size:clamp(34px,10.3vw,44px);line-height:1.02;letter-spacing:-.04em}
+ .platform-home .copy{font-size:14px;line-height:1.75}
+ .one-city .screen.proposal .screen-words{justify-content:flex-end}
+ .one-city .screen.proposal:before{background:linear-gradient(0deg,rgba(246,247,251,.97) 0,rgba(246,247,251,.85) 30%,rgba(246,247,251,0) 62%)}
+ .one-city .screen.proposal .copy{display:none}
+ .one-city .changes{margin-top:18px;max-width:none}
+ .one-city .changes>div{font-size:12px;padding:11px 0;gap:12px}
+ .one-city .screen.outcomes:before{background:linear-gradient(0deg,rgba(246,247,251,.97) 0,rgba(246,247,251,.85) 30%,rgba(246,247,251,0) 62%)}
+ .one-city .rail{right:20px;top:90px}
+ .one-city .rail li{font-size:13px;padding:5px 0}
+ .one-city .rail li.rail-title{font-size:9px;padding-bottom:5px}
+ .one-city .rail li[data-current]{font-size:28px;padding:7px 0}
+ .one-city .outcome-words .copy{margin-top:12px}
+ .one-city .screen.comparison .screen-words{padding-top:86px}
+ .one-city .screen.comparison:before{background:linear-gradient(180deg,rgba(246,247,251,.96) 0,rgba(246,247,251,0) 42%)}
+ .one-city .tag{top:330px;font-size:10px}.one-city .tag-today{left:20px}.one-city .tag-proposal{right:20px}
+ .one-city .split-knob{width:38px;height:38px;margin:-19px 0 0 -19px;font-size:14px}
+ .one-city .three{gap:16px;margin-top:24px}
+ .one-city .three>div{font-size:10px;padding-top:8px}
+ .one-city .three strong{font-size:13px}
+ .one-city .pin{font-size:11px;gap:7px}.one-city .pin i{width:10px;height:10px}.one-city .pin span{padding:6px 9px}
+ .one-city .closing-copy{padding-bottom:30px}
+ .one-city .homepage-footer{display:block;font-size:10px}
+ .one-city .homepage-footer nav{margin-top:6px;gap:4px 14px}
+}
+@media(prefers-reduced-motion:reduce){
+ .one-city .rail li,.platform-home .changes>div[data-camera-place],.one-city .site-header,.one-city .pin{transition:none}
+}
+
+/* How it works stands on the homepage's city and wears its words. It opens on
+   the number city, so the first screen's words are white on a navy foot; each
+   step after it is a screen of words on paper, on the left or, where the
+   camera stands the city on the left, on the right. */
+.how-page .screen.intro{color:#fff}
+.how-page .screen.intro:before{background:linear-gradient(0deg,rgba(0,11,45,.95) 0,rgba(0,11,45,.72) 32%,rgba(0,11,45,0) 62%)}
+.how-page .screen.intro .screen-words{justify-content:flex-end}
+.how-page .screen.intro .eyebrow{color:#dbe3f7}
+.how-page .screen.intro h1{text-shadow:0 0 28px rgba(0,11,45,.85)}
+.how-page .screen.intro .hero-copy p{color:#c9d4f0}
+.how-page .ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8)}
+.how-page .ghost:hover{background:rgba(255,255,255,.12)}
+[data-motion=still] .how-page .screen.intro:before{background:#000b2d}
+/* On a wide screen the words' paper stands under the brand in step 01 and the
+   data, so the brand keeps its dark ink while the header's right side turns
+   light over the number city. */
+.how-page[data-stage-ink=light][data-brand-ink=dark] .brand-lockup{color:#000b2d}
+.how-page[data-stage-ink=light][data-brand-ink=dark] .brand-word span{background-image:linear-gradient(90deg,#2456a8,#7b3fa0,#c23d7c)}
+.how-page[data-stage-ink=light][data-brand-ink=dark] .brand .brand-mark{display:block}
+.how-page[data-stage-ink=light][data-brand-ink=dark] .brand .brand-mark-light{display:none}
+/* A step's shading ends with its own screen. Neighbouring steps shade opposite
+   sides, so shading carried into the next screen left a hard band across it. */
+.how-page .screen.tall{overflow:clip}
+.how-page .screen.step .screen-words{justify-content:center}
+.how-page .screen.step:before{background:linear-gradient(90deg,rgba(246,247,251,.96) 0,rgba(246,247,251,.9) 26%,rgba(246,247,251,0) 52%)}
+.how-page .screen.step.right:before{background:linear-gradient(270deg,rgba(246,247,251,.96) 0,rgba(246,247,251,.9) 26%,rgba(246,247,251,0) 52%)}
+.how-page .screen.step.right .screen-words{align-items:flex-end}
+.how-page .screen.step.right .screen-words>*{width:min(560px,100%)}
+.how-page .screen.step h2{max-width:640px}
+.how-page .screen.step .copy{margin-top:26px;max-width:520px}
+.how-page .changes>div[data-step-row]{transition:opacity .5s,border-top-color .5s,color .5s}
+.how-page .changes>div[data-step-row][data-arrived]:not([data-current]){opacity:.7}
+.how-page .changes>div[data-step-row][data-current]{color:#000b2d;font-weight:750;border-top:2px solid #000b2d}
+/* On Platform the scroll itself reads these rows one at a time, so they stand
+   from the moment the screen arrives rather than fading in one after another
+   underneath the row already being read. */
+.plat-page .changes>div[data-step-row]:not([data-current]){opacity:.7}
+/* The data: every standard stands as a tile, the city's three and then the
+   other eight, three abreast, each marked while the city shows what it
+   carries. Its words take more of the screen than a step's, so its paper
+   reaches further across, its heading is smaller and its tiles are tight
+   enough that the last row still arrives while the section is held. */
+.how-page .screen.formats:before{background:linear-gradient(90deg,rgba(246,247,251,.97) 0,rgba(246,247,251,.94) 40%,rgba(246,247,251,0) 58%)}
+.how-page .screen.formats h2{font-size:clamp(40px,3.8vw,62px)}
+.how-page .screen.formats .copy{margin-top:18px;max-width:640px;font-size:15px;line-height:1.65}
+.how-page .format-group{margin:16px 0 0;font-size:11px;line-height:1.3;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#52607d}
+.how-page .format-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px;max-width:640px}
+.how-page .format-tiles>div{background:#fff;box-shadow:0 8px 22px rgba(0,11,45,.1);border-top:3px solid #b9c4da;padding:9px 14px 10px;color:#52607d;transition:opacity .5s,border-top-color .5s,color .5s}
+.how-page .format-tiles strong{display:block;font-size:19px;line-height:1.2;font-weight:800;letter-spacing:-.02em;color:#000b2d}
+.how-page .format-tiles span{display:block;margin-top:2px;font-size:12px;line-height:1.4}
+.how-page .format-tiles>div[data-arrived]:not([data-current]){opacity:.62}
+.how-page .format-tiles>div[data-current]{border-top-color:#000b2d;color:#000b2d}
+.how-page .format-kind{display:none}
+.how-page .groups{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 24px;max-width:560px}
+.how-page .groups li{border-top:1px solid #b9c4da;padding:14px 0;font-size:15px;line-height:1.4;font-weight:750;color:#000b2d}
+.one-city .closing .copy{color:#c9d4f0;max-width:520px;margin-top:22px}
+/* The cards each step raises over the city: the fit by the counting place, the
+   day's clock, the key to the change colours, the saved versions and the
+   report. The scene sets where each stands and when it shows. */
+.how-page .how-card{position:absolute;background:#fff;color:#000b2d;box-shadow:0 14px 34px rgba(0,11,45,.2);padding:14px 16px;opacity:0;transition:opacity .35s;pointer-events:none}
+.how-page .how-card[data-shown]{opacity:1}
+.how-page .card-title{margin:0 0 10px;font-size:11px;line-height:1.3;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.how-page .card-key{display:flex;align-items:center;gap:6px;margin:10px 0 0;font-size:11px;line-height:1.3;color:#52607d}
+.how-page .card-key i{display:inline-block;width:12px;height:4px;background:#fd4b08;margin-left:6px}
+.how-page .card-key i:first-child{margin-left:0}
+.how-page .card-key .key-tick{width:2px;height:12px;background:#000b2d}
+.how-page .card-key .key-dashed{height:0;background:none;border-top:2px dashed #000b2d}
+.how-page .card-key .key-today{background:#000b2d}
+/* 01: the card of the household whose survey day is open, beside its home,
+   and a mark at each stop of that day. A trip's line carries the colour of the
+   way they travelled, the same colour its leg is drawn in on the city. */
+.how-page .survey-card{left:clamp(16px,calc(var(--x) + 150px),calc(100vw - 316px));top:clamp(16px,calc(var(--y) - 230px),calc(100svh - 266px));width:300px}
+.how-page .survey-count{margin:-4px 0 10px;font-size:23px;line-height:1.1;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.how-page .survey-day{list-style:none;margin:0;padding:0}
+.how-page .survey-day li{display:none;grid-template-columns:46px minmax(0,1fr);gap:2px 10px;padding:8px 0;border-top:1px solid #e4eaf4;font-size:12px;line-height:1.3}
+.how-page .survey-day li[data-shown]{display:grid}
+.how-page .survey-day b{font-weight:750;font-variant-numeric:tabular-nums}
+.how-page .survey-day em{grid-column:2;display:flex;align-items:center;gap:6px;font-style:normal;font-size:11px;font-weight:700;color:#52607d}
+.how-page .survey-day em:before{content:'';width:16px;height:4px;background:var(--mode)}
+.how-page .by-car{--mode:#fd4b08}
+.how-page .by-foot{--mode:#e0a800}
+.how-page .by-transit{--mode:#57039b}
+.how-page .survey-stop i{width:11px;height:11px;background:#000b2d;box-shadow:0 0 0 4px rgba(0,11,45,.16)}
+.how-page .survey-stop span{padding:6px 10px;font-size:12px}
+.how-page .fit-card{left:clamp(16px,calc(var(--x) - 60px),calc(100vw - 296px));top:calc(var(--y) + 34px);width:280px;height:158px}
+.how-page .fit-pane{position:absolute;inset:14px 16px;opacity:0;transition:opacity .3s}
+.how-page .fit-pane[data-current]{opacity:1}
+.how-page .fit-bars>div{display:grid;grid-template-columns:104px minmax(0,1fr) 30px;gap:8px;align-items:center;height:18px;font-size:11px}
+.how-page .fit-bars b{position:relative;height:6px;background:#e4eaf4}
+.how-page .fit-bars b i{position:absolute;left:0;top:0;bottom:0;width:var(--model,0%);background:#fd4b08}
+.how-page .fit-bars b:after{content:'';position:absolute;left:var(--survey);top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:#000b2d}
+.how-page .fit-bars em{font-style:normal;font-weight:750;text-align:right}
+.how-page .fit-curve{display:block;width:100%;height:64px}
+.how-page .fit-curve path{fill:none}
+.how-page .survey-curve{stroke:#000b2d;stroke-width:1.5;stroke-dasharray:4 3}
+.how-page .model-curve{stroke:#fd4b08;stroke-width:2.5}
+.how-page .fit-count{display:flex;gap:36px}
+.how-page .fit-count small{display:block;font-size:11px;color:#52607d}
+.how-page .fit-count b{display:block;font-size:38px;line-height:1.15;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.how-page .stamp{display:inline-block;margin:18px 0 0 36px;border:3px solid #217b9b;color:#217b9b;font-size:26px;line-height:1.2;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:6px 16px;opacity:var(--land,0);transform:rotate(-6deg) scale(calc(1.6 - .6*var(--land,0)))}
+/* A pin on the map says when its change applies, on a line of its own. A pin
+   near the right edge stands to the left of its place. */
+.how-page .pin small{display:block;margin-top:2px;font-size:11px;font-weight:600;color:#c9d4f0}
+.how-page .pin[data-side=left]{flex-direction:row-reverse}
+.how-page .nib{position:absolute;left:0;top:0;width:0;height:0;transform:translate(var(--x),var(--y));opacity:0}
+.how-page .nib[data-shown]{opacity:1}
+.how-page .nib svg{position:absolute;left:-10px;top:-40px;width:54px;height:54px}
+/* The sun stands behind the city, so the buildings cover it as it rises. */
+.how-page .sun{position:absolute;left:0;top:0;z-index:0;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;background:#febe11;box-shadow:0 0 0 14px rgba(254,190,17,.22),0 0 64px 28px rgba(254,190,17,.26);transform:translate(var(--x),var(--y));opacity:0;transition:opacity .5s}
+.how-page .sun[data-shown]{opacity:1}
+.how-page .trip-tag{position:absolute;left:0;top:0;padding:6px 10px;background:#000b2d;color:#fff;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;transform:translate(var(--x),var(--y)) translate(-50%,calc(-100% - 10px));opacity:0;transition:opacity .3s}
+.how-page .trip-tag:after{content:'';position:absolute;left:50%;bottom:-5px;margin-left:-5px;border:5px solid transparent;border-bottom:0;border-top-color:#000b2d}
+.how-page .trip-tag[data-shown]{opacity:1}
+.how-page .day-card{left:48px;bottom:48px;width:280px}
+.how-page .day-clock{display:block;margin-bottom:10px;font-size:34px;line-height:1;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.how-page .day-curve{display:block;width:100%;height:56px;overflow:visible}
+.how-page .day-curve path{fill:none;stroke:#fd4b08}
+.how-page .day-curve line{stroke:#c6ccd8}
+.how-page .day-run{stroke-width:2;stroke-dasharray:1 1}
+.how-page .day-repeat{stroke-width:1;opacity:calc(var(--shown,0)*.45)}
+.how-page .day-spread{stroke-width:10;stroke-linecap:round;opacity:calc(var(--shown,0)*.16)}
+.how-page .day-axis{display:flex;justify-content:space-between;margin:4px 0 0;font-size:10px;color:#52607d}
+/* After dark the page goes to night with the city, and the day's words turn
+   light over it. */
+.how-page #simulate{--ink:color-mix(in srgb,#fff calc(var(--night,0)*100%),#000b2d);--quiet:color-mix(in srgb,#c9d4f0 calc(var(--night,0)*100%),#52607d);--rule:color-mix(in srgb,#39425c calc(var(--night,0)*100%),#b9c4da);color:var(--ink)}
+.how-page #simulate .copy{color:color-mix(in srgb,#c9d4f0 calc(var(--night,0)*100%),#45536f)}
+.how-page #simulate .changes>div{color:var(--quiet);border-top-color:var(--rule)}
+.how-page #simulate .changes>div[data-step-row][data-current]{color:var(--ink);border-top-color:var(--ink)}
+.how-page .screen.step.right#simulate:before{background:linear-gradient(270deg,color-mix(in srgb,rgba(11,20,51,.96) calc(var(--night,0)*100%),rgba(246,247,251,.96)) 0,color-mix(in srgb,rgba(11,20,51,.9) calc(var(--night,0)*100%),rgba(246,247,251,.9)) 26%,rgba(246,247,251,0) 52%)}
+/* The results: the group painted on the map is marked in the list, and its
+   legend stands under it. */
+.how-page .groups li{transition:color .3s}
+.how-page .groups:has([data-current]) li:not([data-current]){color:#8a97b4}
+.how-page .groups li[data-current]{border-top:2px solid #000b2d;padding-top:13px}
+.how-page .legend{position:relative;height:30px;margin-top:16px;max-width:560px}
+.how-page .legend>div{position:absolute;inset:0;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:650;color:#000b2d;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.how-page .legend>div[data-current]{opacity:1;visibility:visible}
+.how-page .legend i{display:inline-block;width:11px;height:11px;margin-right:5px;vertical-align:-1px}
+.how-page .legend b{flex:0 0 90px;height:9px}
+/* The comparison: the key to the change colours, the versions as each is
+   reached, and the report rising over the split. The column being read stands
+   out under it. */
+.how-page .compare-cards{position:absolute;inset:0;pointer-events:none}
+.how-page .change-key{right:48px;top:470px;margin:0;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:750;padding:10px 14px}
+.how-page .change-key i{width:80px;height:7px;background:linear-gradient(90deg,#049dd6,#febe11,#fd4b08)}
+.how-page .versions{position:absolute;right:48px;top:470px;width:300px;margin:0;padding:0;list-style:none;opacity:0;transition:opacity .35s}
+.how-page .versions[data-shown]{opacity:1}
+.how-page .versions li{margin-bottom:6px;padding:9px 14px;background:#fff;color:#52607d;font-size:13px;box-shadow:0 8px 20px rgba(0,11,45,.12);opacity:0;transition:opacity .3s}
+.how-page .versions li[data-reached]{opacity:1;color:#6b7793}
+.how-page .versions li[data-current]{opacity:1;color:#000b2d;font-weight:800;box-shadow:inset 3px 0 0 #fd4b08,0 8px 20px rgba(0,11,45,.16)}
+.how-page .how-card.report{left:50%;top:clamp(250px,32svh,330px);width:300px;margin-left:-150px;opacity:var(--rise,0);transform:translateY(calc((1 - var(--rise,0))*50px));transition:none}
+.how-page .report-title{margin:0 0 6px;font-size:22px;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+.how-page .report-bar{margin-top:10px;font-size:11px;font-weight:650}
+.how-page .report-bar i{display:block;width:var(--w);height:6px;margin-top:4px;background:#000b2d}
+.how-page .report-bar i+i{background:#fd4b08}
+.how-page .three>div{transition:opacity .3s}
+.how-page .three:has([data-current])>div:not([data-current]){opacity:.45}
+@media(max-width:760px){
+ /* A step's words stand still at the foot of the screen, and a row standing in
+    its last tenth never counts as arrived, so the words stop above it. */
+ .how-page .screen.step .screen-words,.how-page .screen.step.right .screen-words{justify-content:flex-end;align-items:stretch;padding-bottom:max(30px,11svh)}
+ .how-page .screen.step.right .screen-words>*{width:auto}
+ .how-page .screen.step:before,.how-page .screen.step.right:before{background:linear-gradient(0deg,rgba(246,247,251,.97) 0,rgba(246,247,251,.88) 40%,rgba(246,247,251,0) 68%)}
+ .how-page .screen.step .copy{margin-top:12px}
+ /* On a phone the rows, the cards and the labels carry every step, and the
+    steps' sentences would lift the headings into the city. */
+ .how-page .screen.step .copy{display:none}
+ /* The data's names stand as chips, the city's three in a row and the other
+    eight in two columns, the marked one filled, and the kind of data it
+    carries under them. */
+ .how-page .format-group{display:none}
+ .how-page .format-tiles{gap:6px;max-width:none;margin-top:16px}
+ .how-page .format-tiles.format-feeds{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:6px}
+ .how-page .format-tiles>div{background:rgba(255,255,255,.72);box-shadow:none;border:1px solid #b9c4da;padding:6px 8px;color:#52607d}
+ .how-page .format-tiles strong{display:block;font-size:12px;line-height:1.3;font-weight:750;letter-spacing:-.01em;color:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .how-page .format-tiles span{display:none}
+ .how-page .format-tiles>div[data-current]{background:#000b2d;border:1px solid #000b2d;color:#fff}
+ .how-page .format-kind{display:block;min-height:18px;margin:10px 0 0;font-size:13px;line-height:1.4;font-weight:650;color:#000b2d}
+ .how-page .groups{gap:0 12px;margin-top:16px}
+ .how-page .groups li{font-size:12px;padding:8px 0}
+ .how-page .groups li[data-current]{padding-top:7px}
+ .how-page .closing .copy{margin-top:14px}
+ /* The cards stand over the city, above the words at the screen's foot. The
+    fit card stands just under the counting place's label, a little shorter
+    than on a wide screen so it clears the words below. */
+ /* On a phone the card stands at the top, clear of the city and the words. */
+ .how-page .survey-card{left:12px;right:12px;top:58px;width:auto;padding:10px 14px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 14px;align-items:center}
+ .how-page .survey-card .card-title{grid-column:span 2;margin-bottom:4px}
+ .how-page .survey-count{margin:0;font-size:19px}
+ .how-page .survey-day{grid-column:2}
+ .how-page .survey-day li[data-shown]{grid-template-columns:40px minmax(0,1fr);padding:5px 0;font-size:11px}
+ .how-page .survey-day em{font-size:10px}
+ .how-page .fit-card{left:clamp(12px,calc(var(--x) - 60px),calc(100vw - 292px));top:min(calc(var(--y) + 20px),calc(89svh - 440px));height:136px;padding:12px 14px}
+ .how-page .fit-pane{inset:12px 14px}
+ .how-page .fit-card .card-title{margin-bottom:8px}
+ .how-page .fit-bars>div{height:16px}
+ .how-page .fit-curve{height:60px}
+ .how-page .fit-count b{font-size:34px}
+ .how-page .stamp{margin-top:14px}
+ .how-page .day-card{left:16px;right:16px;bottom:auto;top:72px;width:auto;display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 14px;align-items:center;padding:12px 14px}
+ .how-page .day-clock{grid-row:span 3;margin:0;font-size:30px}
+ .how-page .day-card .card-title{margin-bottom:4px}
+ .how-page .day-curve{height:40px}
+ .how-page .screen.step.right#simulate:before{background:linear-gradient(0deg,color-mix(in srgb,rgba(11,20,51,.97) calc(var(--night,0)*100%),rgba(246,247,251,.97)) 0,color-mix(in srgb,rgba(11,20,51,.88) calc(var(--night,0)*100%),rgba(246,247,251,.88)) 40%,rgba(246,247,251,0) 68%)}
+ .how-page .legend{height:26px;margin-top:10px}
+ .how-page .legend>div{gap:8px;font-size:11px}
+ .how-page .legend b{flex-basis:56px}
+ .how-page .change-key,.how-page .versions{right:auto;left:20px;top:372px}
+ .how-page .versions{width:auto;right:20px}
+ .how-page .versions li{font-size:12px;padding:8px 12px}
+ .how-page .how-card.report{top:208px;width:280px;margin-left:-140px}
+}
+@media(prefers-reduced-motion:reduce){
+ .how-page .changes>div[data-step-row],.how-page .format-tiles>div,.how-page .how-card,.how-page .fit-pane,.how-page .sun,.how-page .trip-tag,.how-page .legend>div,.how-page .groups li,.how-page .versions,.how-page .versions li,.how-page .three>div{transition:none}
+}
+
+/* Platform: the ten kinds of change with how many cards each holds, and three
+   named cards under the kind being read. The sets of results are read the same
+   way, a goal at a time. */
+/* Ten kinds, a heading and a sentence have to stand in one window, so this
+   screen's heading keeps to two lines and its rows are tighter than the rest. */
+.plat-page .screen[data-screen=changes] h2{max-width:800px;font-size:clamp(40px,4.6vw,66px)}
+.plat-page .counted{display:flex;flex-direction:column;margin-top:18px;max-width:560px}
+.plat-page .counted>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 18px;padding:9px 0;border-top:1px solid #b9c4da;font-size:15px;line-height:1.45;color:#52607d;transition:opacity .5s,border-top-color .5s,color .5s}
+.plat-page .counted strong{font-weight:650}
+.plat-page .counted span{text-align:right;font-variant-numeric:tabular-nums}
+/* The examples of the kind being read stand on one line under the list, not
+   inside the row, so the ten kinds keep the same places while the page scrolls
+   and the last of them never slides off the bottom of the window. */
+.plat-page .counted em{display:none}
+.plat-page .counted>div:not([data-current]){opacity:.7}
+.plat-page .counted>div[data-current]{color:#000b2d;border-top:2px solid #000b2d;padding-top:8px}
+.plat-page .counted>div[data-current] strong{font-weight:800}
+.plat-page .counted-examples{margin:9px 0 0;min-height:19px;max-width:560px;font-size:12px;line-height:1.55;font-weight:750;color:#fd4b08}
+.plat-page .goals{display:flex;flex-direction:column;margin-top:26px;max-width:600px}
+.plat-page .goals>div{padding:12px 0;border-top:1px solid #b9c4da;transition:opacity .5s,border-top-color .5s,color .5s}
+.plat-page .goals strong{display:block;font-size:15px;font-weight:650;color:#52607d}
+.plat-page .goals span{display:block;margin-top:3px;font-size:13px;line-height:1.5;color:#8a97b4}
+.plat-page .goals>div:not([data-current]){opacity:.72}
+.plat-page .goals>div[data-current]{border-top:2px solid #000b2d;padding-top:11px}
+.plat-page .goals>div[data-current] strong{color:#000b2d;font-weight:800}
+.plat-page .goals>div[data-current] span{color:#45536f}
+/* The one sentence under the files a run makes carries a fact the rows do not,
+   so it stays on a phone where a step's other sentences are put away. */
+.plat-page .note{margin-top:20px;max-width:520px}
+@media(max-width:760px){
+ .plat-page .counted{margin-top:16px;max-width:none}
+ .plat-page .counted>div{font-size:12px;padding:9px 0}
+ .plat-page .counted>div[data-current]{padding-top:8px}
+ .plat-page .counted-examples{margin-top:7px;min-height:16px;font-size:10px;line-height:1.5}
+ .plat-page .goals{margin-top:14px}
+ .plat-page .goals>div{padding:9px 0}
+ .plat-page .goals>div[data-current]{padding-top:8px}
+ .plat-page .goals strong{font-size:12px}
+ .plat-page .goals span{margin-top:2px;font-size:10.5px;line-height:1.45}
+ .plat-page .screen.step .copy.note{display:block;margin-top:12px;font-size:11px;line-height:1.55}
+}
+@media(prefers-reduced-motion:reduce){
+ .plat-page .counted>div,.plat-page .goals>div{transition:none}
+}

@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="en"><head>
+<script>
+// Keep this static site's assets on their own server inside the session preview.
+// This must run before external resources, which cannot load the routing fix.
+(() => {
+  const address = new URL(location.href);
+  const port = address.searchParams.get('nxport');
+  if (!port || !/^\d+$/.test(port) || Number(port) < 1 || Number(port) > 65535) return;
+  const prefix = '/api/proxy/' + port;
+  if (address.pathname === prefix || address.pathname.startsWith(prefix + '/')) return;
+  address.pathname = prefix + address.pathname;
+  history.replaceState(history.state, '', address.href);
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000b2d">
+<meta name="description" content="Follow Polycity from your city’s own data to a decision: match today, draw a change, simulate a day, read the results and compare.">
+<title>How it works — Polycity</title>
+<link rel="preload" href="./../static/assets/polycity-logo.svg?v=fdf4622226f0" as="image">
+<link rel="stylesheet" href="./../static/homepage.css?v=83f3b1119386">
+<link rel="stylesheet" href="./../static/site.css?v=7437ace2dfdc">
+<link rel="stylesheet" href="./../static/brand.css?v=b9f64335edef">
+<script src="./../static/site.js?v=9dc7ef40fed0" defer=""></script>
+<link rel="icon" type="image/svg+xml" href="./../static/assets/polycity-icon.svg?v=ac34843353e9">
+<link rel="stylesheet" href="./../static/language.css?v=021e5b3f4eb3"></head>
+<body class="home-page platform-home one-city how-page">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header" id="top"><div class="wrap nav">
+<a class="brand brand-lockup" href="./../" aria-label="Polycity home"><img class="brand-mark" src="./../static/assets/polycity-icon.svg?v=ac34843353e9" width="64" height="64" alt=""><img class="brand-mark brand-mark-light" src="./../static/assets/polycity-icon-light.svg?v=9273514d37c9" width="64" height="64" alt="" aria-hidden="true"><span class="brand-word">POLY<span>CITY</span></span></a>
+<nav class="nav-links" aria-label="Main navigation"><a href="./../platform/">Platform</a><a href="./../how-it-works/" aria-current="page">How it works</a></nav><div class="language-switch" role="group" aria-label="Language"><a href="./../how-it-works/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/how-it-works/" lang="bg" hreflang="bg" title="Български">БГ</a></div>
+<a class="button" href="./../access/">Ask for access</a>
+<details class="mobile-menu"><summary aria-label="Navigation menu"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></summary><nav class="menu-links" aria-label="Mobile navigation"><a href="./../platform/">Platform</a><a href="./../how-it-works/" aria-current="page">How it works</a><div class="language-switch" role="group" aria-label="Language"><a href="./../how-it-works/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/how-it-works/" lang="bg" hreflang="bg" title="Български">БГ</a></div></nav></details>
+</div></header>
+<main id="main" class="homepage-content">
+<!-- The homepage's city, fixed to the screen. It opens as numbers, becomes the
+     city as the data arrives, is followed through each step, and turns back
+     into numbers at the end. -->
+<div class="city-scroll-section"><div class="hero-scroll-frame">
+<span class="sun" data-sun="" aria-hidden="true"></span>
+<div class="model-stage" data-story-stage="hero" data-render-state="opening"><canvas role="img" aria-label="One geometric city that starts as numbers. Its streets, trams, people and cars turn real as each kind of data arrives, and each open standard the data is read from then shows its own part of the city. The model is fitted to the survey and the counts, three changes are drawn on the map, a day runs from dawn to midnight, nine result maps are painted, and today is set beside the proposal before the city turns back into numbers."></canvas><span class="story-loading" role="status">Opening the city study.</span></div>
+</div></div>
+<div class="pins" aria-hidden="true">
+<span class="pin" data-pin="counted"><i></i><span>Traffic counted here</span></span>
+<span class="pin" data-pin="drawnStreets"><i></i><span>Narva mnt closed to cars<small>From 2027</small></span></span>
+<span class="pin" data-pin="drawnTransit"><i></i><span>Tram every 6 min<small>7:00–19:00</small></span></span>
+<span class="pin" data-pin="drawnGrowth" data-side="left"><i></i><span>Parking 2 € an hour<small>8:00–18:00</small></span></span>
+<div class="how-card fit-card" data-fit="">
+<div class="fit-pane" data-pane="0"><p class="card-title">How people travel</p>
+<div class="fit-bars">
+<div><span>Car</span><b style="--survey:68.6%"><i data-model=""></i></b><em>48%</em></div>
+<div><span>Public transport</span><b style="--survey:38.6%"><i data-model=""></i></b><em>27%</em></div>
+<div><span>Bike</span><b style="--survey:10%"><i data-model=""></i></b><em>7%</em></div>
+<div><span>On foot</span><b style="--survey:25.7%"><i data-model=""></i></b><em>18%</em></div>
+</div>
+<p class="card-key"><i class="key-model"></i>Model<i class="key-tick"></i>Survey</p></div>
+<div class="fit-pane" data-pane="1"><p class="card-title">How far they go</p>
+<svg class="fit-curve" viewBox="0 0 200 56"><path class="survey-curve" d="M0 50C30 50 38 6 60 6S120 38 200 50"></path><path class="model-curve" data-curve="" d="M0 50C40 50 70 22 100 22S160 42 200 48"></path></svg>
+<p class="card-key"><i class="key-model"></i>Model<i class="key-dashed"></i>Survey</p></div>
+<div class="fit-pane" data-pane="2"><p class="card-title">Road capacity</p>
+<div class="fit-count"><div><small>Counted</small><b>640</b></div><div><small>Model</small><b data-count="">410</b></div></div>
+<p class="card-key">cars an hour</p></div>
+<div class="fit-pane" data-pane="3"><p class="card-title">Today’s city</p><p class="stamp" data-stamp="">Approved</p></div>
+</div>
+<span class="pin survey-stop" data-pin="surveyHome"><i></i><span>Home</span></span>
+<span class="pin survey-stop" data-pin="surveyWork"><i></i><span>Work</span></span>
+<span class="pin survey-stop" data-pin="surveyShops"><i></i><span>Shops</span></span>
+<div class="how-card survey-card" data-survey="">
+<p class="card-title">Travel survey</p>
+<p class="survey-count">2,400 households</p>
+<ul class="survey-day">
+<li data-trip=""><b>07:40</b><span>Home → Work</span><em class="by-car">Car</em></li>
+<li data-trip=""><b>12:20</b><span>Work → Shops</span><em class="by-foot">On foot</em></li>
+<li data-trip=""><b>17:50</b><span>Shops → Home</span><em class="by-transit">Public transport</em></li>
+</ul>
+</div>
+<span class="nib" data-nib=""><svg viewBox="-.5 -2 2.7 2.7"><circle r=".34" fill="#fd4b08"></circle><path d="M0 0L1.5 -1.5L2.05 -.95L.55 .55Z" fill="#000b2d"></path></svg></span>
+<span class="trip-tag" data-tag="work">Work</span>
+<span class="trip-tag" data-tag="school">School</span>
+<span class="trip-tag" data-tag="shops">Shops</span>
+<span class="trip-tag" data-tag="home">Home</span>
+<span class="trip-tag" data-format-tag="osm">OpenStreetMap</span>
+<span class="trip-tag" data-format-tag="gtfs">GTFS</span>
+<span class="trip-tag" data-format-tag="geojson">GeoJSON</span>
+<span class="trip-tag" data-format-tag="realtime">GTFS-Realtime</span>
+<span class="trip-tag" data-format-tag="datex">DATEX II</span>
+<span class="trip-tag" data-format-tag="ridership">TIDES · GTFS-ride</span>
+<span class="trip-tag" data-format-tag="gbfs">GBFS</span>
+<span class="trip-tag" data-format-tag="kerb">Curb Data Specification</span>
+<span class="trip-tag" data-format-tag="charging">OCPI</span>
+<span class="trip-tag" data-format-tag="matrix">Open Matrix</span>
+<span class="trip-tag" data-format-tag="elevation">GeoTIFF</span>
+<div class="how-card day-card" data-day="">
+<b class="day-clock" data-clock="">04:00</b>
+<p class="card-title">Trips by hour</p>
+<svg class="day-curve" viewBox="0 0 200 48"><line x1="0" x2="200" y1="47" y2="47"></line><path class="day-spread" data-spread="" d="M0 46C20 45 28 6 40 6S58 28 80 28S110 24 120 20S130 9 140 10S165 34 180 42S195 45 200 46"></path><path class="day-repeat" data-repeat="" d="M0 46C20 45 28 11 40 11S58 31 80 31S110 26 120 23S130 13 140 14S165 36 180 43S195 45 200 46"></path><path class="day-repeat" data-repeat="" d="M0 46C20 45 28 3 40 3S58 25 80 25S110 21 120 17S130 5 140 6S165 32 180 41S195 45 200 46"></path><path class="day-run" data-hours="" pathLength="1" d="M0 46C20 45 28 6 40 6S58 28 80 28S110 24 120 20S130 9 140 10S165 34 180 42S195 45 200 46"></path></svg>
+<p class="day-axis"><span>04:00</span><span>12:00</span><span>24:00</span></p>
+</div>
+</div>
+
+<section class="screen intro" data-screen="intro" aria-labelledby="how-heading">
+<div class="screen-words">
+<div class="hero-copy">
+<div><p class="eyebrow" data-arrive="">HOW IT WORKS</p><h1 id="how-heading" data-lines="">From a question<br>to a decision.</h1></div>
+<div data-arrive=""><p>Bring your city’s data and match today. Then draw a change, simulate a day and compare what happened.</p><a class="primary ghost" href="#bring">Follow the six steps <span aria-hidden="true">↓</span></a></div>
+</div>
+</div>
+</section>
+
+<section class="screen step tall" id="bring" data-screen="bring" aria-labelledby="bring-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">01 · BRING THE CITY</p>
+<h2 id="bring-heading" data-lines="">Start from your<br>city’s own data.</h2>
+<p class="copy" data-arrive="">Your organisation studies one city. Its street map and public transport timetable come with it. You add the census, the zones, a travel survey and traffic counts.</p>
+<div class="changes">
+<div data-arrive="" data-step-row=""><strong>Street map</strong><span>Comes with the city</span></div>
+<div data-arrive="" data-step-row=""><strong>Timetable</strong><span>Comes with the city</span></div>
+<div data-arrive="" data-step-row=""><strong>Census and zones</strong><span>You upload</span></div>
+<div data-arrive="" data-step-row=""><strong>Travel survey</strong><span>You upload</span></div>
+<div data-arrive="" data-step-row=""><strong>Traffic counts</strong><span>You upload</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen step tall formats" id="formats" data-screen="formats" aria-labelledby="formats-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">THE DATA · OPEN STANDARDS</p>
+<h2 id="formats-heading" data-lines="">Built from<br>open standards.</h2>
+<p class="copy" data-arrive="">The street map and the timetable are read as OpenStreetMap and GTFS files, and the zones as GeoJSON. No open standard exists for a census, a travel survey or traffic counts, so those arrive as plain tables. Every other feed Polycity reads has its own open standard.</p>
+<p class="format-group" data-arrive="">The city</p>
+<div class="format-tiles">
+<div data-arrive="" data-step-row=""><strong>OpenStreetMap</strong><span>Street map, buildings and parking</span></div>
+<div data-arrive="" data-step-row=""><strong>GTFS</strong><span>Timetable</span></div>
+<div data-arrive="" data-step-row=""><strong>GeoJSON</strong><span>Zones, land use and parcels</span></div>
+</div>
+<p class="format-group" data-arrive="">Also read</p>
+<div class="format-tiles format-feeds">
+<div data-arrive="" data-step-row=""><strong>GTFS-Realtime</strong><span>Vehicle positions</span></div>
+<div data-arrive="" data-step-row=""><strong>DATEX II</strong><span>Road sensors and journey times</span></div>
+<div data-arrive="" data-step-row=""><strong>TIDES · GTFS-ride</strong><span>Passenger counts</span></div>
+<div data-arrive="" data-step-row=""><strong>GBFS</strong><span>Shared bikes and scooters</span></div>
+<div data-arrive="" data-step-row=""><strong>Curb Data Specification</strong><span>Kerb rules</span></div>
+<div data-arrive="" data-step-row=""><strong>OCPI</strong><span>Charging stations</span></div>
+<div data-arrive="" data-step-row=""><strong>Open Matrix</strong><span>Trips between zones</span></div>
+<div data-arrive="" data-step-row=""><strong>GeoTIFF</strong><span>Elevation</span></div>
+</div>
+<p class="format-kind" data-format-kind="" aria-hidden="true"></p>
+</div>
+</section>
+
+<section class="screen step tall" id="match" data-screen="match" aria-labelledby="match-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">02 · MATCH TODAY</p>
+<h2 id="match-heading" data-lines="">Match today<br>before changing it.</h2>
+<p class="copy" data-arrive="">Polycity builds today’s city and fits it to your travel survey and traffic counts. Your team checks it and approves it. Every scenario starts from that approved city.</p>
+<div class="changes">
+<div data-arrive="" data-step-row=""><strong>How people travel</strong><span>Fitted to the survey</span></div>
+<div data-arrive="" data-step-row=""><strong>How far they go</strong><span>Fitted to the survey</span></div>
+<div data-arrive="" data-step-row=""><strong>Road capacity</strong><span>Fitted to the counts</span></div>
+<div data-arrive="" data-step-row=""><strong>Today’s city</strong><span>Approved by your team</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen step tall" id="draw" data-screen="draw" aria-labelledby="draw-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">03 · DRAW THE CHANGE</p>
+<h2 id="draw-heading" data-lines="">Draw the change<br>on the map.</h2>
+<p class="copy" data-arrive="">Close a street, change a junction, run a tram more often, price the parking or build new homes. Choose where each change applies and when: some hours, some dates, or from an opening year.</p>
+<div class="changes">
+<div data-arrive="" data-camera-place="streets"><strong>Street access</strong><span>Narva mnt closed</span></div>
+<div data-arrive="" data-camera-place="transit"><strong>Transit service</strong><span>Tram every 6 min</span></div>
+<div data-arrive="" data-camera-place="growth"><strong>Parking policy</strong><span>2 € an hour</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen step right tall" id="simulate" data-screen="simulate" aria-labelledby="simulate-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">04 · SIMULATE A DAY</p>
+<h2 id="simulate-heading" data-lines="">Let the city<br>live a day.</h2>
+<p class="copy" data-arrive="">Modelled residents plan their day and make every trip by car, bus, tram, bike and on foot. Run it again and see how far the answer moves from one run to the next.</p>
+<div class="changes">
+<div data-arrive="" data-step-row=""><strong>Residents</strong><span>Modelled from the census</span></div>
+<div data-arrive="" data-step-row=""><strong>Their day</strong><span>Home, work, school, shops</span></div>
+<div data-arrive="" data-step-row=""><strong>Repeat runs</strong><span>Show the spread</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen step right tall" id="results" data-screen="results" aria-labelledby="results-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">05 · READ THE RESULTS</p>
+<h2 id="results-heading" data-lines="">Read what<br>changed.</h2>
+<p class="copy" data-arrive="">Every result is a map, a chart and a table. About these numbers shows the files and settings each run was built from.</p>
+<ul class="groups" aria-label="Result groups">
+<li data-arrive="">Mobility</li>
+<li data-arrive="">Congestion</li>
+<li data-arrive="">Transit</li>
+<li data-arrive="">Parking</li>
+<li data-arrive="">Emissions</li>
+<li data-arrive="">Accessibility</li>
+<li data-arrive="">Noise</li>
+<li data-arrive="">Who is affected</li>
+<li data-arrive="">What people pay</li>
+</ul>
+<div class="legend">
+<div data-legend=""><span><i style="background:#fd4b08"></i>Car</span><span><i style="background:#57039b"></i>Tram</span><span><i style="background:#049dd6"></i>Bike</span><span><i style="background:#e0a800"></i>On foot</span></div>
+<div data-legend=""><span>Flowing</span><b style="background:linear-gradient(90deg,#049dd6,#febe11,#fd4b08)"></b><span>Queued</span></div>
+<div data-legend=""><span>Fewer riders</span><b style="background:linear-gradient(90deg,rgba(87,3,155,.15),#57039b)"></b><span>More riders</span></div>
+<div data-legend=""><span><i style="background:#049dd6"></i>Free</span><span><i style="background:#fd4b08"></i>Taken</span></div>
+<div data-legend=""><span>Less</span><b style="background:linear-gradient(90deg,rgba(91,77,110,.07),#5b4d6e)"></b><span>More</span></div>
+<div data-legend=""><span>5 min</span><b style="background:linear-gradient(90deg,#049dd6,rgba(4,157,214,.15))"></b><span>15 min</span></div>
+<div data-legend=""><span>Quieter</span><b style="background:linear-gradient(90deg,rgba(123,63,192,.12),rgba(123,63,192,.6))"></b><span>Louder</span></div>
+<div data-legend=""><span>Less time travelling</span><b style="background:linear-gradient(90deg,rgba(1,21,115,.1),rgba(1,21,115,.55))"></b><span>More time travelling</span></div>
+<div data-legend=""><span>Spends less</span><b style="background:linear-gradient(90deg,rgba(253,75,8,.1),rgba(253,75,8,.55))"></b><span>Spends more</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen comparison tall" id="compare" data-screen="compare" aria-labelledby="compare-heading">
+<div class="screen-words">
+<div class="comparison-top"><p class="eyebrow" data-arrive="">06 · COMPARE AND DECIDE</p><h2 id="compare-heading" data-lines="">Compare. Decide. Go again.</h2></div>
+<div class="split" data-split="">
+<div class="split-today"></div>
+<span class="tag tag-today">TODAY</span><span class="tag tag-proposal">THE PROPOSAL</span>
+<div class="split-line"></div>
+<button type="button" class="split-knob" aria-label="Move the split between today and the proposal">⇔</button>
+</div>
+<div class="compare-cards" aria-hidden="true">
+<p class="how-card change-key" data-compare-card="key"><span>Less traffic</span><i></i><span>More traffic</span></p>
+<ol class="versions" data-compare-card="versions">
+<li data-version="">Version 1 · Narva mnt closed</li>
+<li data-version="">Version 2 · Tram every 6 min</li>
+<li data-version="">Version 3 · Parking 2 € an hour</li>
+</ol>
+<div class="how-card report" data-compare-card="report">
+<p class="card-title">Decision report</p>
+<p class="report-title">Narva mnt greenway</p>
+<div class="report-bar">Congestion<i style="--w:78%"></i><i style="--w:52%"></i></div>
+<div class="report-bar">Transit<i style="--w:46%"></i><i style="--w:70%"></i></div>
+<div class="report-bar">Emissions<i style="--w:72%"></i><i style="--w:50%"></i></div>
+<div class="report-bar">Noise<i style="--w:66%"></i><i style="--w:48%"></i></div>
+<p class="card-key"><i class="key-today"></i>Today<i class="key-model"></i>The proposal</p>
+</div>
+</div>
+<div class="three">
+<div data-arrive=""><strong>Two runs, one map</strong><p>See where travel changed and who switched how they travel.</p></div>
+<div data-arrive=""><strong>Every version kept</strong><p>Go back to any saved version, or start the next one from it.</p></div>
+<div data-arrive=""><strong>A decision report</strong><p>One run’s results, ready to print for the committee.</p></div>
+</div>
+</div>
+</section>
+
+<section class="screen closing tall" data-screen="closing" aria-labelledby="closing-heading">
+<div class="screen-words">
+<div class="closing-copy">
+<div><p class="eyebrow" data-arrive="">ONE CITY PER ORGANISATION</p><h2 id="closing-heading" data-lines="">Ask the next<br>question.</h2><p class="copy" data-arrive="">Members and roles decide who can change what. The people in the model are invented from census totals, so nobody is tracked.</p><a class="primary" href="./../access/" data-arrive="">Ask for access <span aria-hidden="true">↗</span></a></div>
+</div>
+<footer class="homepage-footer"><span>Polycity · Transport simulation</span><nav aria-label="About Polycity"><a href="./../access/">Ask for access</a><a href="./../who-builds-it/">Who builds it</a><a href="./../privacy/">Privacy</a></nav><nav aria-label="Footer navigation"><a href="./../platform/">Platform</a><a href="./../how-it-works/">How it works</a></nav></footer>
+</div>
+</section>
+</main>
+<script type="module" src="./../static/page-motion.js?v=c3d06b5a0750"></script>
+<script type="module" src="./../static/how-scene.js?v=84222db08e5b"></script>
+
+
+</body></html>

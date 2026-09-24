@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="en"><head>
+<script>
+// Keep this static site's assets on their own server inside the session preview.
+// This must run before external resources, which cannot load the routing fix.
+(() => {
+  const address = new URL(location.href);
+  const port = address.searchParams.get('nxport');
+  if (!port || !/^\d+$/.test(port) || Number(port) < 1 || Number(port) > 65535) return;
+  const prefix = '/api/proxy/' + port;
+  if (address.pathname === prefix || address.pathname.startsWith(prefix + '/')) return;
+  address.pathname = prefix + address.pathname;
+  history.replaceState(history.state, '', address.href);
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000b2d">
+<meta name="description" content="Ninety-three changes a planner can make to a city, twenty-four sets of results, two runs side by side, and the files you take away.">
+<title>Platform — Polycity</title>
+<link rel="preload" href="./../static/assets/polycity-logo.svg?v=fdf4622226f0" as="image">
+<link rel="stylesheet" href="./../static/homepage.css?v=83f3b1119386">
+<link rel="stylesheet" href="./../static/site.css?v=7437ace2dfdc">
+<link rel="stylesheet" href="./../static/brand.css?v=b9f64335edef">
+<script src="./../static/site.js?v=9dc7ef40fed0" defer=""></script>
+<link rel="icon" type="image/svg+xml" href="./../static/assets/polycity-icon.svg?v=ac34843353e9">
+<link rel="stylesheet" href="./../static/language.css?v=021e5b3f4eb3"></head>
+<body class="home-page platform-home one-city how-page plat-page">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header" id="top"><div class="wrap nav">
+<a class="brand brand-lockup" href="./../" aria-label="Polycity home"><img class="brand-mark" src="./../static/assets/polycity-icon.svg?v=ac34843353e9" width="64" height="64" alt=""><img class="brand-mark brand-mark-light" src="./../static/assets/polycity-icon-light.svg?v=9273514d37c9" width="64" height="64" alt="" aria-hidden="true"><span class="brand-word">POLY<span>CITY</span></span></a>
+<nav class="nav-links" aria-label="Main navigation"><a href="./../platform/" aria-current="page">Platform</a><a href="./../how-it-works/">How it works</a></nav><div class="language-switch" role="group" aria-label="Language"><a href="./../platform/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/platform/" lang="bg" hreflang="bg" title="Български">БГ</a></div>
+<a class="button" href="./../access/">Ask for access</a>
+<details class="mobile-menu"><summary aria-label="Navigation menu"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></summary><nav class="menu-links" aria-label="Mobile navigation"><a href="./../platform/" aria-current="page">Platform</a><a href="./../how-it-works/">How it works</a><div class="language-switch" role="group" aria-label="Language"><a href="./../platform/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/platform/" lang="bg" hreflang="bg" title="Български">БГ</a></div></nav></details>
+</div></header>
+<main id="main" class="homepage-content">
+<!-- The homepage's city, fixed to the screen. Each screen of words below moves
+     its camera to the part of the city that screen is about. -->
+<div class="city-scroll-section"><div class="hero-scroll-frame">
+<div class="model-stage" data-story-stage="hero" data-render-state="opening"><canvas role="img" aria-label="One geometric city, flown over as each kind of change is named: the closed street, the signal, the parking bays, the tram stop, the new houses. It is then seen from above as a map of results, split into today and the proposal, and turned into numbers at the end."></canvas><span class="story-loading" role="status">Opening the city study.</span></div>
+</div></div>
+<div class="pins" aria-hidden="true">
+<span class="pin" data-pin="streets"><i></i><span>Narva mnt closed to cars</span></span>
+<span class="pin" data-pin="transit"><i></i><span>Tram every 6 min</span></span>
+<span class="pin" data-pin="growth"><i></i><span>Parking 2 € an hour</span></span>
+</div>
+
+<section class="screen hero" data-screen="hero" aria-labelledby="platform-heading">
+<div class="screen-words">
+<div class="hero-copy">
+<div><p class="eyebrow" data-arrive="">PLATFORM</p><h1 id="platform-heading" data-lines="">What you can change.<br>What comes back.</h1></div>
+<div data-arrive=""><p>Ninety-three changes, twenty-four sets of results, and two runs set side by side.</p><a class="primary" href="#changes">See the changes <span aria-hidden="true">↓</span></a></div>
+</div>
+</div>
+</section>
+
+<section class="screen step tall" id="changes" data-screen="changes" aria-labelledby="changes-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">01 · WHAT YOU CAN CHANGE</p>
+<h2 id="changes-heading" data-lines="">Ninety-three changes,<br>in ten kinds.</h2>
+<p class="copy" data-arrive="">Close a street, raise a fare, add a line, build somewhere new. Each one is a card you put on a scenario.</p>
+<div class="counted">
+<div data-group-row=""><strong>Street space</strong><span>14</span><em>Close street · Reallocate lane · Modal filter</em></div>
+<div data-group-row=""><strong>Junctions</strong><span>6</span><em>Ban turn · Signal timing · Transit signal priority</em></div>
+<div data-group-row=""><strong>Kerbside</strong><span>7</span><em>Parking price · Charging station · Park and ride</em></div>
+<div data-group-row=""><strong>Pricing and access</strong><span>9</span><em>Toll cordon · Low-emission zone · Distance charge</em></div>
+<div data-group-row=""><strong>Public transport</strong><span>15</span><em>New line · Frequency · Fare · Add stop · Taxi fleet</em></div>
+<div data-group-row=""><strong>Active travel</strong><span>5</span><em>Cycle lane · Bike share docks · Micromobility rules</em></div>
+<div data-group-row=""><strong>Land use and demand</strong><span>12</span><em>New development · Jobs · Remote working · Car ownership</em></div>
+<div data-group-row=""><strong>Freight</strong><span>9</span><em>Delivery demand · Loading bay · Consolidation centre</em></div>
+<div data-group-row=""><strong>Outside traffic</strong><span>2</span><em>Gateway · Through traffic</em></div>
+<div data-group-row=""><strong>Behaviour</strong><span>14</span><em>Value of time · Destination choice · Parking search</em></div>
+</div>
+<p class="counted-examples"><span data-examples=""></span></p>
+</div>
+</section>
+
+<section class="screen step tall" id="timing" data-screen="timing" aria-labelledby="timing-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">02 · WHEN IT APPLIES</p>
+<h2 id="timing-heading" data-lines="">All day, or only<br>at eight in the morning.</h2>
+<p class="copy" data-arrive="">Every change carries its own timing, so one scenario can hold a morning restriction, a summer trial and a road that opens in 2027.</p>
+<div class="changes">
+<div data-step-row=""><strong>All day</strong><span>Every hour of the run</span></div>
+<div data-step-row=""><strong>Hours</strong><span>07:00 to 09:00</span></div>
+<div data-step-row=""><strong>Dates</strong><span>1 June to 31 August</span></div>
+<div data-step-row=""><strong>Season</strong><span>Every summer</span></div>
+<div data-step-row=""><strong>Opening year</strong><span>From 2027</span></div>
+<div data-step-row=""><strong>Trial</strong><span>Six weeks, then back</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen step right tall" id="results" data-screen="results" aria-labelledby="platform-results-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">03 · WHAT COMES BACK</p>
+<h2 id="platform-results-heading" data-lines="">Twenty-four sets<br>of results.</h2>
+<p class="copy" data-arrive="">Every set is a map, a chart and a table, and each one answers a question somebody at the table will ask.</p>
+<div class="goals">
+<div data-goal-row=""><strong>Start here</strong><span>Overview</span></div>
+<div data-goal-row=""><strong>Moving people</strong><span>Mobility · Congestion · Transit · Cycling · Walking · Parking · Commercial traffic · Road safety</span></div>
+<div data-goal-row=""><strong>Environment</strong><span>Emissions · Noise</span></div>
+<div data-goal-row=""><strong>Access and fairness</strong><span>Accessibility · Who is affected</span></div>
+<div data-goal-row=""><strong>Money</strong><span>What people pay</span></div>
+<div data-goal-row=""><strong>This scenario adds</strong><span>Shuttle · Taxi · Charging · Freight · Traffic counts · Outside traffic · Destinations · Track capacity · Shared bikes and scooters · Junctions in detail</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen comparison tall" id="compare" data-screen="compare" aria-labelledby="platform-compare-heading">
+<div class="screen-words">
+<div class="comparison-top"><p class="eyebrow" data-arrive="">04 · TWO RUNS, SIDE BY SIDE</p><h2 id="platform-compare-heading" data-lines="">Set one run beside another.</h2></div>
+<div class="split" data-split="">
+<div class="split-today"></div>
+<span class="tag tag-today">TODAY</span><span class="tag tag-proposal">THE PROPOSAL</span>
+<div class="split-line"></div>
+<button type="button" class="split-knob" aria-label="Move the split between today and the proposal">⇔</button>
+</div>
+<div class="three">
+<div data-arrive=""><strong>Every street ranked</strong><p>By how far one figure moved between the two runs, street by street or zone by zone.</p></div>
+<div data-arrive=""><strong>Who switched</strong><p>Resident by resident, from one way of travelling to another.</p></div>
+<div data-arrive=""><strong>The difference in money</strong><p>Congestion, emissions and what people pay, in one figure.</p></div>
+</div>
+</div>
+</section>
+
+<section class="screen step right tall" id="take" data-screen="take" aria-labelledby="take-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">05 · WHAT YOU TAKE AWAY</p>
+<h2 id="take-heading" data-lines="">Take the answer<br>out of the room.</h2>
+<p class="copy" data-arrive="">Every run keeps the files made from it, and every file says which run it came from.</p>
+<ul class="groups" aria-label="Files a run makes">
+<li data-arrive="">Table</li>
+<li data-arrive="">Grouped table</li>
+<li data-arrive="">Map</li>
+<li data-arrive="">Map with layers</li>
+<li data-arrive="">Chart</li>
+<li data-arrive="">Comparison</li>
+<li data-arrive="">Decision report</li>
+<li data-arrive="">Presentation pack</li>
+<li data-arrive="">Car parks on the map</li>
+</ul>
+<p class="copy note" data-arrive="">A decision report or a map picture opens on a link without signing in, until the date you set.</p>
+</div>
+</section>
+
+<section class="screen step tall" id="ways" data-screen="ways" aria-labelledby="ways-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">06 · TWO WAYS TO RUN</p>
+<h2 id="ways-heading" data-lines="">A whole day,<br>or a quick answer.</h2>
+<div class="three">
+<div data-arrive=""><strong>A simulated day</strong><p>Every modelled resident makes every trip, hour by hour, and all twenty-four sets of results come back.</p></div>
+<div data-arrive=""><strong>A quick estimate</strong><p>Trips are split and loaded onto the roads without a day being lived. Congestion and mobility only.</p></div>
+</div>
+</div>
+</section>
+
+<section class="screen closing tall" data-screen="closing" aria-labelledby="platform-closing-heading">
+<div class="screen-words">
+<div class="closing-copy">
+<div><p class="eyebrow" data-arrive="">SIX STEPS TO AN ANSWER</p><h2 id="platform-closing-heading" data-lines="">Put the next<br>proposal to the test.</h2><p class="copy" data-arrive="">Bring your city's data, match today, and try the change before anybody digs up a street.</p><a class="primary" href="./../how-it-works/" data-arrive="">Follow the six steps <span aria-hidden="true">↗</span></a></div>
+</div>
+<footer class="homepage-footer"><span>Polycity · Transport simulation</span><nav aria-label="About Polycity"><a href="./../access/">Ask for access</a><a href="./../who-builds-it/">Who builds it</a><a href="./../privacy/">Privacy</a></nav><nav aria-label="Footer navigation"><a href="./../platform/">Platform</a><a href="./../how-it-works/">How it works</a></nav></footer>
+</div>
+</section>
+</main>
+<script type="module" src="./../static/page-motion.js?v=c3d06b5a0750"></script>
+<script type="module" src="./../static/platform-scene.js?v=ff4f87356465"></script>
+
+
+</body></html>

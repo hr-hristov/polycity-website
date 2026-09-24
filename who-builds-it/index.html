@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head>
+<script>
+// Keep this static site's assets on their own server inside the session preview.
+// This must run before external resources, which cannot load the routing fix.
+(() => {
+  const address = new URL(location.href);
+  const port = address.searchParams.get('nxport');
+  if (!port || !/^\d+$/.test(port) || Number(port) < 1 || Number(port) > 65535) return;
+  const prefix = '/api/proxy/' + port;
+  if (address.pathname === prefix || address.pathname.startsWith(prefix + '/')) return;
+  address.pathname = prefix + address.pathname;
+  history.replaceState(history.state, '', address.href);
+})();
+</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#000b2d">
+<title>Who builds it — Polycity</title><meta name="description" content="Polycity is built by Theoremus in Sofia, the company behind Sofia's public transport ticketing since 2021.">
+<link rel="preload" href="./../static/assets/polycity-logo.svg?v=fdf4622226f0" as="image">
+<link rel="stylesheet" href="./../static/homepage.css?v=83f3b1119386">
+<link rel="stylesheet" href="./../static/site.css?v=7437ace2dfdc">
+<link rel="stylesheet" href="./../static/brand.css?v=b9f64335edef">
+<script src="./../static/site.js?v=9dc7ef40fed0" defer=""></script>
+<link rel="icon" type="image/svg+xml" href="./../static/assets/polycity-icon.svg?v=ac34843353e9">
+<link rel="stylesheet" href="./../static/language.css?v=021e5b3f4eb3"></head>
+<body class="guide-page"><a class="skip" href="#main">Skip to content</a>
+<header class="site-header" id="top"><div class="wrap nav">
+<a class="brand brand-lockup" href="./../" aria-label="Polycity home"><img class="brand-mark" src="./../static/assets/polycity-icon.svg?v=ac34843353e9" width="64" height="64" alt=""><span class="brand-word">POLY<span>CITY</span></span></a>
+<nav class="nav-links" aria-label="Main navigation"><a href="./../platform/">Platform</a><a href="./../how-it-works/">How it works</a></nav><div class="language-switch" role="group" aria-label="Language"><a href="./../who-builds-it/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/who-builds-it/" lang="bg" hreflang="bg" title="Български">БГ</a></div>
+<a class="button" href="./../access/">Ask for access</a>
+<details class="mobile-menu"><summary aria-label="Navigation menu"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></summary><nav class="menu-links" aria-label="Mobile navigation"><a href="./../platform/">Platform</a><a href="./../how-it-works/">How it works</a><div class="language-switch" role="group" aria-label="Language"><a href="./../who-builds-it/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/who-builds-it/" lang="bg" hreflang="bg" title="Български">БГ</a></div></nav></details>
+</div></header><main id="main">
+<div class="chapter-breadcrumb wrap"><a href="./../">Polycity</a><span aria-hidden="true">/</span><span>Who builds it</span></div>
+<section class="chapter-hero wrap">
+ <div class="eyebrow">Who builds Polycity</div>
+ <h1>Built in Sofia.<br><em>Made for any city.</em></h1>
+ <div class="chapter-hero-bottom"><p>Polycity is made by Theoremus, founded in Sofia in 2018. We built the system Sofia's buses, trams and metro have sold and checked tickets on since 2021. Polycity began with the questions that work could not answer.</p><a class="studio-scroll" href="#cities" aria-label="Read where Polycity comes from"><span aria-hidden="true">↓</span></a></div>
+</section>
+<section class="editorial-section" id="cities"><div class="wrap"><div class="editorial-intro"><div><div class="eyebrow">Where it comes from</div><h2 class="editorial-heading">Years inside one<br>city's transport,<br>before a line of this.</h2></div><p>Polycity was not designed from a diagram of how cities ought to work. It came out of running real transit systems and being asked questions the data could not answer.</p></div><div class="editorial-trio">
+<article><span class="folio">01</span><h3>Sofia's ticketing, since 2021.</h3><p>Theoremus built the system Sofia's public transport sells and checks tickets on, and the analytics the city reads its network through. What a network really does, hour by hour, stops being a guess.</p></article>
+<article><span class="folio">02</span><h3>Sofia was modelled first.</h3><p>The streets, the tram and metro timetable, the counting stations, the travel survey. Sofia is also the city drawn across this website, folded into geometry.</p></article>
+<article><span class="folio">03</span><h3>Tallinn came next.</h3><p>Built from published data alone, by people who do not live there. Nothing in Polycity is written for one city, and building a second one is how we keep it that way.</p></article>
+</div></div></section>
+<section class="editorial-section soft-section" id="built-on"><div class="wrap"><div class="editorial-intro"><div><div class="eyebrow">What it is built on</div><h2 class="editorial-heading">A modelled day,<br>lived by modelled<br>residents.</h2></div><p>Polycity does not spread traffic across a map with a formula. It invents a population, gives each of them a day, and plays that day out.</p></div><div class="editorial-trio">
+<article><span class="folio">01</span><h3>Nobody real is in it.</h3><p>The residents are invented from published population totals: how many people live in each area, how old they are, whether a car stands outside. No named person, no phone, no card, no movement of anybody real.</p></article>
+<article><span class="folio">02</span><h3>A whole day, street by street.</h3><p>Every modelled journey is driven, ridden or walked through the real streets and the real timetable. That is why a queue in one place shows up as a late bus somewhere else.</p></article>
+<article><span class="folio">03</span><h3>Open data where it exists.</h3><p>Open street maps, published timetables and census totals get a city started. Your own road base, your counts and your surveys make it yours.</p></article>
+</div></div></section>
+<section class="editorial-section" id="honest"><div class="wrap"><div class="editorial-intro"><div><div class="eyebrow">What the product tells you</div><h2 class="editorial-heading">A model you can<br>argue with.</h2></div><p>A figure nobody can question is a figure nobody should trust. Polycity shows its own distance from reality rather than hiding it.</p></div><div class="editorial-trio">
+<article><span class="folio">01</span><h3>How far it is from today.</h3><p>Before anyone runs a scenario, the modelled day is held against your traffic counts and your travel survey. The distance between them is on the screen, not in a footnote.</p></article>
+<article><span class="folio">02</span><h3>What it cannot answer.</h3><p>A question the model was not built for is refused with a reason. Missing data is named as missing, never quietly filled in with a plausible number.</p></article>
+<article><span class="folio">03</span><h3>Where every number came from.</h3><p>A figure on a screen carries the run that produced it, the city model it started from and the files that went in. You can hand a report to a committee and answer where it came from.</p></article>
+</div></div></section>
+<div class="wrap field-note"><p>Every screen, every refusal and every exported file reads in English or Bulgarian. A planner switches the language and the whole product follows, the files they download included.</p><a href="./../how-it-works/">See how a study is worked out ↗</a></div>
+<section class="chapter-cta"><div class="wrap chapter-cta-inner"><div><div class="eyebrow">Theoremus · Sofia, Bulgaria</div><h2>Tell us your city,<br>and we will build it.</h2></div><a class="button" href="./../access/">Ask for access <span class="arrow" aria-hidden="true">↗</span></a></div></section>
+</main><footer class="site-footer-expanded"><div class="wrap">
+<div class="footer-map"><div class="footer-brand"><a class="brand" href="./../" aria-label="Polycity home"><img class="brand-logo" src="./../static/assets/polycity-logo.svg?v=fdf4622226f0" width="360" height="248" alt="Polycity"></a><p>A city is never finished.<br>Neither are the possibilities.</p></div>
+<div class="footer-column"><h2>Explore Polycity</h2><a href="./../">The city</a><a href="./../platform/">Platform</a><a href="./../how-it-works/">How it works</a></div>
+<div class="footer-column"><h2>Start with a question</h2><a href="./../platform/#changes">What can I change?</a><a href="./../platform/#results">What will it change?</a><a href="./../access/">How do I get in?</a></div></div>
+<div class="footer-base"><span>Rooted in Sofia. Open to possibility.</span><a href="./../access/">Ask for access</a><a href="./../who-builds-it/" aria-current="page">Who builds it</a><a href="./../privacy/">Privacy</a><a href="#top">Back to the top ↑</a></div>
+</div></footer>
+</body></html>

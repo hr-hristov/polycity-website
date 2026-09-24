@@ -1,0 +1,80 @@
+/* The approved skyline supplies the public site's color roles. */
+:root {
+  --paper: #f6f7fb;
+  --ink: #000b2d;
+  --navy: #000b2d;
+  --muted: #52607d;
+  --line: #d5dcec;
+  --accent: #57039b;
+  --blue: #011573;
+  --cyan: #0ad6ed;
+  --coral: #fd4b08;
+  --orange: #fd4b08;
+  --gold: #febe11;
+  --surface: #edf1fa;
+  --surface-strong: #e3eaf6;
+  --spectrum: linear-gradient(90deg,#0ad6ed,#049dd6 23%,#011573 43%,#57039b 62%,#ae157e 76%,#fd4b08 89%,#febe11);
+}
+
+::selection { background: #d7e9fc; color: var(--navy); }
+.site-header { border-color: var(--line); }
+.site-header::after { content: ""; position: absolute; inset: auto 0 0; height: 2px; background: var(--spectrum); opacity: .55; }
+.brand-note,.domain-intro,.manifesto p,
+.question-intro,.question-detail p,.question-image-note,.workflow-heading>p,
+.workflow-step p,.workflow-step .step-label,.outcomes-intro,.outcome p,.trust-top .eyebrow,
+.trust-item p,.footer-inner p,.network-heading,.network-caption,.process-heading,.process-footer,
+.chapter-breadcrumb,.chapter-hero-bottom p,.chapter-index-heading p,.chapter-link .chapter-meta,
+.chapter-link p,.footer-map p,.footer-base,.model-help,
+.editorial-intro p,.editorial-trio p,.faq-list details p,
+.evidence-thread p,.field-note p,
+.outcome-study-heading,.outcome-study p,
+.outcome-study-footer,.outcome-tab small { color: var(--muted); }
+
+.brand-note,.question-label,.workflow-steps,.workflow-step,.trust-item,.studio-scroll,
+.network-caption,.workflow-sketch,.chapter-link,.site-footer-expanded,.footer-base,
+.editorial-trio article,
+.faq-list,.faq-list details,.evidence-thread,.evidence-thread article+article,
+.outcome-study,.outcome-study-footer,
+.outcome-tabs,.outcome-tab { border-color: var(--line); }
+.eyebrow::before { background: var(--coral); }
+.question-index,.question-label .plus,.workflow-step .step-number,
+.editorial-trio .folio,.outcome-tab>span:first-child { color: var(--muted); }
+.manifesto h2 .muted,.section-heading .serif,.workflow h2 .serif,.outcomes h2 .serif { color: #65739b; }
+.domain,.footer-column a,.outcome-tab { color: var(--ink); }
+.domain .icon,.outcome summary .icon,.outcome summary::after,.trust-item .icon { color: var(--accent); }
+.domain:nth-child(3n) .icon { color: #007f9a; }
+.domain:nth-child(3n + 1) .icon { color: #be3d19; }
+.trust-item:nth-child(2) .icon { color: #007f9a; }
+.trust-item:nth-child(3) .icon { color: #be3d19; }
+
+.button { background: var(--navy); color: #fff; }
+.button:hover { background: var(--accent); }
+.nav .button { color: var(--navy); border-color: #a2adc8; background: transparent; }
+.nav .button:hover { background: var(--surface-strong); }
+.nav-links a[aria-current=page],.chapter-breadcrumb a:hover,.chapter-link:hover h3,
+.chapter-hero h1 em,.question-choice:checked+.question-label,
+.question-detail .text-link { color: var(--accent); }
+.workflow-step.is-current { border-color: var(--accent); }
+.workflow-step.is-current .step-number { color: var(--accent); }
+a:focus-visible,summary:focus-visible,input:focus-visible,label:has(input:focus-visible),
+button:focus-visible,.question-choice:focus-visible+.question-label {
+  outline-color: #049dd6;
+}
+
+.domain-strip,.workflow,.soft-section,.site-footer-expanded { background: var(--surface); }
+.network-art,.workflow-sketch,.outcome-study { background: var(--surface-strong); }
+.menu-links { background: var(--paper); border-color: var(--line); box-shadow: 0 16px 35px #000b2d14; }
+.outcome-tab:hover { background: #e8edf8; }
+.outcome-tab[aria-selected=true] { background: #e9e3f6; color: var(--accent); box-shadow: inset 3px 0 var(--accent); }
+
+.closing,.chapter-cta { background: var(--navy); color: #f6f7fb; }
+.closing h2,.chapter-cta h2 { color: #f6f7fb; }
+.closing p,.closing-copy .eyebrow,.closing-caption,.chapter-cta .eyebrow { color: #c6d2ee; }
+.closing-caption { border-color: #445477; }
+.closing .button,.chapter-cta .button { background: var(--gold); color: var(--navy); }
+.closing .button:hover,.chapter-cta .button:hover { background: #ffcf4c; }
+.closing-caption .motion-control input { accent-color: var(--gold); }
+
+@media (max-width:760px) {
+  .outcome-tab[aria-selected=true] { box-shadow: inset 0 -3px var(--accent); }
+}

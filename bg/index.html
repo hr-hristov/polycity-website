@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="bg"><head>
+<script>
+// Keep this static site's assets on their own server inside the session preview.
+// This must run before external resources, which cannot load the routing fix.
+(() => {
+  const address = new URL(location.href);
+  const port = address.searchParams.get('nxport');
+  if (!port || !/^\d+$/.test(port) || Number(port) < 1 || Number(port) > 65535) return;
+  const prefix = '/api/proxy/' + port;
+  if (address.pathname === prefix || address.pathname.startsWith(prefix + '/')) return;
+  address.pathname = prefix + address.pathname;
+  history.replaceState(history.state, '', address.href);
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000b2d">
+<meta name="description" content="Моделирайте транспортни сценарии, симулирайте ежедневни пътувания и сравнявайте резултатите в работното пространство на вашата организация в Polycity.">
+<title>Polycity — Проверете плана. Вижте ефекта.</title>
+<link rel="preload" href="./../static/assets/polycity-logo.svg?v=fdf4622226f0" as="image">
+<link rel="stylesheet" href="./../static/homepage.css?v=83f3b1119386">
+<link rel="stylesheet" href="./../static/site.css?v=7437ace2dfdc">
+<link rel="stylesheet" href="./../static/brand.css?v=b9f64335edef">
+<script src="./../static/site.js?v=9dc7ef40fed0" defer=""></script>
+<link rel="icon" type="image/svg+xml" href="./../static/assets/polycity-icon.svg?v=ac34843353e9">
+<link rel="stylesheet" href="./../static/language.css?v=021e5b3f4eb3"><script type="module" src="./../static/language.js?v=4a8c1b72f7fe"></script></head>
+<body class="home-page platform-home one-city">
+<a class="skip" href="#main">Към съдържанието</a>
+
+<header class="site-header" id="top"><div class="wrap nav">
+<a class="brand brand-lockup" href="./../bg/" aria-label="Начална страница на Polycity"><img class="brand-mark" src="./../static/assets/polycity-icon.svg?v=ac34843353e9" width="64" height="64" alt=""><img class="brand-mark brand-mark-light" src="./../static/assets/polycity-icon-light.svg?v=9273514d37c9" width="64" height="64" alt="" aria-hidden="true"><span class="brand-word">POLY<span>CITY</span></span></a>
+<nav class="nav-links" aria-label="Основна навигация"><a href="./../bg/platform/">Платформа</a><a href="./../bg/how-it-works/">Как работи</a></nav><div class="language-switch" role="group" aria-label="Език"><a href="./../" lang="en" hreflang="en" title="English">EN</a><a href="./../bg/" lang="bg" hreflang="bg" title="Български" aria-current="true">БГ</a></div>
+<a class="button" href="./../bg/access/">Поискайте достъп</a>
+<details class="mobile-menu"><summary aria-label="Меню за навигация"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></summary><nav class="menu-links" aria-label="Мобилна навигация"><a href="./../bg/platform/">Платформа</a><a href="./../bg/how-it-works/">Как работи</a><div class="language-switch" role="group" aria-label="Език"><a href="./../" lang="en" hreflang="en" title="English">EN</a><a href="./../bg/" lang="bg" hreflang="bg" title="Български" aria-current="true">БГ</a></div></nav></details>
+</div></header>
+<main id="main" class="homepage-content">
+<!-- One city for the whole page. It is fixed to the screen; the screens of
+     words below scroll over it, and the scroll moves its camera. -->
+<div class="city-scroll-section"><div class="hero-scroll-frame">
+<div class="model-stage" data-story-stage="hero" data-render-state="opening"><canvas role="img" aria-label="Един геометричен град с дървета с нагънати корони, златист трамвай и пешеходци, над който страницата прелита, затваря улица, обикаля шест гледни точки, разделя го на днес и предложението и накрая го превръща в падащи числа."></canvas><span class="story-loading" role="status">Градският етюд оживява.</span></div>
+</div></div>
+<div class="pins" aria-hidden="true">
+<span class="pin" data-pin="streets"><i></i><span>Narva mnt е затворена за коли</span></span>
+<span class="pin" data-pin="transit"><i></i><span>Трамвай на всеки 6 мин</span></span>
+<span class="pin" data-pin="growth"><i></i><span>Паркиране 2 € на час</span></span>
+<span class="pin" data-pin="congestion"><i></i><span>Автомобили чакат на светофара</span></span>
+</div>
+
+<section class="screen hero" data-screen="hero" aria-labelledby="hero-heading">
+<div class="screen-words">
+<div class="hero-copy">
+<div><p class="eyebrow" data-arrive="">POLYCITY / ТРАНСПОРТНИ СИМУЛАЦИИ</p><h1 id="hero-heading" data-lines="">Проверете плана.<br>Вижте ефекта.</h1></div>
+<div data-arrive=""><p>Моделирайте улици, обществен транспорт и политики. Симулирайте ежедневни пътувания. Сравнете последиците в работното пространство на вашата организация.</p><a class="primary" href="./../bg/how-it-works/">Вижте как работи <span aria-hidden="true">↗</span></a></div>
+</div>
+</div>
+</section>
+
+<section class="screen proposal tall" id="platform" data-screen="proposal" aria-labelledby="proposal-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">01 · ПРЕДЛОЖЕНИЕТО</p>
+<h2 id="proposal-heading" data-lines="">Създайте<br>цялото предложение.</h2>
+<p class="copy" data-arrive="">Затварянето на улица засяга и съседните улици. Съчетайте промени в достъпа, обществения транспорт и паркирането в един сценарий.</p>
+<div class="changes">
+<div data-arrive="" data-camera-place="streets"><strong>Достъп до улици</strong><span>Narva mnt е затворена</span></div>
+<div data-arrive="" data-camera-place="transit"><strong>Услуга на градския транспорт</strong><span>Трамвай на всеки 6 мин</span></div>
+<div data-arrive="" data-camera-place="growth"><strong>Политика за паркиране</strong><span>2 € на час</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen outcomes tall" id="outcomes" data-screen="outcomes" aria-labelledby="outcomes-heading">
+<div class="screen-words">
+<ol class="rail" aria-label="Резултати">
+<li class="rail-title">02 · ПОСЛЕДИЦИТЕ</li>
+<li data-outcome="mobility">Мобилност</li>
+<li data-outcome="congestion">Задръствания</li>
+<li data-outcome="transit">Градски транспорт</li>
+<li data-outcome="parking">Паркиране</li>
+<li data-outcome="emissions">Емисии</li>
+<li data-outcome="accessibility">Достъпност</li>
+</ol>
+<div class="outcome-words">
+<h2 id="outcomes-heading" data-lines="">Проследете<br>последиците.</h2>
+<p class="copy" data-outcome-copy="mobility">Сравнете пътуванията по вид транспорт, средно време и разстояние.</p>
+<p class="copy" data-outcome-copy="congestion">Открийте къде се натрупва трафик и колко време прекарват превозните средства на пътя.</p>
+<p class="copy" data-outcome-copy="transit">Сравнете качванията и колко пълен е всеки трамвай и автобус при различни варианти на обслужването.</p>
+<p class="copy" data-outcome-copy="parking">Разгледайте заетостта, приходите от паркиране и времето за намиране на място.</p>
+<p class="copy" data-outcome-copy="emissions">Разгледайте емисиите от симулираните пътувания. Сравнете как транспортните решения променят резултатите от модела.</p>
+<p class="copy" data-outcome-copy="accessibility">Вижте колко лесно всеки квартал достига до работа и ежедневни места и как това се променя между сценариите.</p>
+</div>
+</div>
+</section>
+
+<section class="screen comparison tall" id="workflow" data-screen="comparison" aria-labelledby="workflow-heading">
+<div class="screen-words">
+<div class="comparison-top"><p class="eyebrow" data-arrive="">03 · СРАВНЕНИЕТО</p><h2 id="workflow-heading" data-lines="">Сравнете. Подобрете. Повторете.</h2></div>
+<div class="split" data-split="">
+<div class="split-today"></div>
+<span class="tag tag-today">ДНЕС</span><span class="tag tag-proposal">ПРЕДЛОЖЕНИЕТО</span>
+<div class="split-line"></div>
+<button type="button" class="split-knob" aria-label="Преместете границата между днес и предложението">⇔</button>
+</div>
+<div class="three">
+<div data-arrive=""><strong>Запазени сценарии</strong><p>Върнете се към всяка версия и входните данни зад нея.</p></div>
+<div data-arrive=""><strong>Модел за повторна употреба</strong><p>Изграждайте само частите, които промените ви засягат.</p></div>
+<div data-arrive=""><strong>Съпоставими резултати</strong><p>Карта на промените, с графики и таблици.</p></div>
+</div>
+</div>
+</section>
+
+<section class="screen closing tall" id="closing" data-screen="closing" aria-labelledby="closing-heading">
+<div class="screen-words">
+<div class="closing-copy">
+<div><p class="eyebrow" data-arrive="">04 · ШЕСТ СТЪПКИ ДО ОТГОВОР</p><h2 id="closing-heading" data-lines="">Проверете<br>следващото предложение.</h2><p class="copy" data-arrive="">Донесете данните на вашия град, настройте го по днешния ден и изпробвайте промяната, преди някой да разкопае улица.</p><a class="primary" href="./../bg/how-it-works/" data-arrive="">Следвайте шестте стъпки <span aria-hidden="true">↗</span></a></div>
+</div>
+<footer class="homepage-footer"><span>Polycity · Транспортни симулации</span><nav aria-label="За Polycity"><a href="./../bg/access/">Поискайте достъп</a><a href="./../bg/who-builds-it/">Кой го изгражда</a><a href="./../bg/privacy/">Поверителност</a></nav><nav aria-label="Навигация в долната част"><a href="./../bg/platform/">Платформа</a><a href="./../bg/how-it-works/">Как работи</a></nav></footer>
+</div>
+</section>
+</main>
+<script type="module" src="./../static/page-motion.js?v=c3d06b5a0750"></script>
+<script type="module" src="./../static/home-scene.js?v=94f539127ac3"></script>
+
+
+</body></html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="en"><head>
+<script>
+// Keep this static site's assets on their own server inside the session preview.
+// This must run before external resources, which cannot load the routing fix.
+(() => {
+  const address = new URL(location.href);
+  const port = address.searchParams.get('nxport');
+  if (!port || !/^\d+$/.test(port) || Number(port) < 1 || Number(port) > 65535) return;
+  const prefix = '/api/proxy/' + port;
+  if (address.pathname === prefix || address.pathname.startsWith(prefix + '/')) return;
+  address.pathname = prefix + address.pathname;
+  history.replaceState(history.state, '', address.href);
+})();
+</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#000b2d">
+<title>Ask for access — Polycity</title><meta name="description" content="Polycity is not open to sign up. Write to us with your city, and we will say what it can answer and what it cannot.">
+<link rel="preload" href="./../static/assets/polycity-logo.svg?v=fdf4622226f0" as="image">
+<link rel="stylesheet" href="./../static/homepage.css?v=83f3b1119386">
+<link rel="stylesheet" href="./../static/site.css?v=7437ace2dfdc">
+<link rel="stylesheet" href="./../static/brand.css?v=b9f64335edef">
+<script src="./../static/site.js?v=9dc7ef40fed0" defer=""></script>
+<link rel="icon" type="image/svg+xml" href="./../static/assets/polycity-icon.svg?v=ac34843353e9">
+<link rel="stylesheet" href="./../static/language.css?v=021e5b3f4eb3"></head>
+<body class="guide-page"><a class="skip" href="#main">Skip to content</a>
+<header class="site-header" id="top"><div class="wrap nav">
+<a class="brand brand-lockup" href="./../" aria-label="Polycity home"><img class="brand-mark" src="./../static/assets/polycity-icon.svg?v=ac34843353e9" width="64" height="64" alt=""><span class="brand-word">POLY<span>CITY</span></span></a>
+<nav class="nav-links" aria-label="Main navigation"><a href="./../platform/">Platform</a><a href="./../how-it-works/">How it works</a></nav><div class="language-switch" role="group" aria-label="Language"><a href="./../access/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/access/" lang="bg" hreflang="bg" title="Български">БГ</a></div>
+<a class="button" href="./../access/" aria-current="page">Ask for access</a>
+<details class="mobile-menu"><summary aria-label="Navigation menu"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></summary><nav class="menu-links" aria-label="Mobile navigation"><a href="./../platform/">Platform</a><a href="./../how-it-works/">How it works</a><div class="language-switch" role="group" aria-label="Language"><a href="./../access/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/access/" lang="bg" hreflang="bg" title="Български">БГ</a></div></nav></details>
+</div></header><main id="main">
+<div class="chapter-breadcrumb wrap"><a href="./../">Polycity</a><span aria-hidden="true">/</span><span>Ask for access</span></div>
+<section class="chapter-hero wrap">
+ <div class="eyebrow">Not open to sign up yet</div>
+ <h1>Tell us your city.<br><em>We will build it.</em></h1>
+ <div class="chapter-hero-bottom"><p>Polycity opens one city at a time, with the people who will use it. Write to us with the change you are weighing, and we will say what Polycity can answer for it and what it cannot.</p><a class="studio-scroll" href="#after" aria-label="Read what happens after you write"><span aria-hidden="true">↓</span></a></div>
+</section>
+<section class="editorial-section" id="after"><div class="wrap"><div class="editorial-intro"><div><div class="eyebrow">After you write</div><h2 class="editorial-heading">No form.<br>A conversation.</h2></div><p>One address reaches the people who build Polycity. There is no sign-up, no trial to start on your own, and nothing on this website to sign in to.</p></div><div class="editorial-trio">
+<article><span class="folio">01</span><h3>We answer honestly.</h3><p>You describe the street, the line or the fare you are thinking about changing. We answer with what Polycity would work out for it, and where it would leave you guessing.</p></article>
+<article><span class="folio">02</span><h3>We build your city.</h3><p>Your street map, your timetable and what people do today become a model of a whole day in your city. You see how far it sits from the traffic counts you already hold, before you trust it.</p></article>
+<article><span class="folio">03</span><h3>Your team signs in.</h3><p>Everyone works from one approved city. Owners, planners, analysts and readers each get what their work needs, and nothing beyond it.</p></article>
+</div></div></section>
+<section class="editorial-section soft-section" id="brings"><div class="wrap"><div class="editorial-intro"><div><div class="eyebrow">What a city brings</div><h2 class="editorial-heading">Three things,<br>and most cities<br>already hold them.</h2></div><p>Polycity starts from what a transport department keeps anyway. Nothing about a named person is wanted, and nothing about one is used.</p></div><div class="editorial-trio">
+<article><span class="folio">01</span><h3>A street map.</h3><p>Streets with their speed limits and how many lanes they carry. An open street map is enough to begin. Your own road base makes the answer sharper.</p></article>
+<article><span class="folio">02</span><h3>A timetable.</h3><p>Bus, tram and metro lines with their stops and their times, in the published timetable files most cities already hand to journey planners.</p></article>
+<article><span class="folio">03</span><h3>What people do today.</h3><p>A travel survey, counts from your counting stations, or both. They decide how close the modelled day comes to the day you can measure.</p></article>
+</div></div></section>
+<div class="wrap field-note"><p>Polycity has no sign-in on this website, and this website has no way into the product. Access is opened by us, for a named city and a named team.</p><a href="./../how-it-works/">See how a study is worked out ↗</a></div>
+<section class="chapter-cta"><div class="wrap chapter-cta-inner"><div><div class="eyebrow">One address, read by the people who build it</div><h2>Write to us,<br>and name your city.</h2></div><a class="button" href="mailto:hristo.hristov@theoremus.com">hristo.hristov@theoremus.com <span class="arrow" aria-hidden="true">↗</span></a></div></section>
+</main><footer class="site-footer-expanded"><div class="wrap">
+<div class="footer-map"><div class="footer-brand"><a class="brand" href="./../" aria-label="Polycity home"><img class="brand-logo" src="./../static/assets/polycity-logo.svg?v=fdf4622226f0" width="360" height="248" alt="Polycity"></a><p>A city is never finished.<br>Neither are the possibilities.</p></div>
+<div class="footer-column"><h2>Explore Polycity</h2><a href="./../">The city</a><a href="./../platform/">Platform</a><a href="./../how-it-works/">How it works</a></div>
+<div class="footer-column"><h2>Start with a question</h2><a href="./../platform/#changes">What can I change?</a><a href="./../platform/#results">What will it change?</a><a href="./../who-builds-it/">Who builds Polycity?</a></div></div>
+<div class="footer-base"><span>Rooted in Sofia. Open to possibility.</span><a href="./../access/" aria-current="page">Ask for access</a><a href="./../who-builds-it/">Who builds it</a><a href="./../privacy/">Privacy</a><a href="#top">Back to the top ↑</a></div>
+</div></footer>
+</body></html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="en"><head>
+<script>
+// Keep this static site's assets on their own server inside the session preview.
+// This must run before external resources, which cannot load the routing fix.
+(() => {
+  const address = new URL(location.href);
+  const port = address.searchParams.get('nxport');
+  if (!port || !/^\d+$/.test(port) || Number(port) < 1 || Number(port) > 65535) return;
+  const prefix = '/api/proxy/' + port;
+  if (address.pathname === prefix || address.pathname.startsWith(prefix + '/')) return;
+  address.pathname = prefix + address.pathname;
+  history.replaceState(history.state, '', address.href);
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000b2d">
+<meta name="description" content="Model transport scenarios, simulate daily journeys and compare outcomes in your organisation’s Polycity workspace.">
+<title>Polycity — Test the plan. See the impact.</title>
+<link rel="preload" href="./static/assets/polycity-logo.svg?v=fdf4622226f0" as="image">
+<link rel="stylesheet" href="./static/homepage.css?v=83f3b1119386">
+<link rel="stylesheet" href="./static/site.css?v=7437ace2dfdc">
+<link rel="stylesheet" href="./static/brand.css?v=b9f64335edef">
+<script src="./static/site.js?v=9dc7ef40fed0" defer=""></script>
+<link rel="icon" type="image/svg+xml" href="./static/assets/polycity-icon.svg?v=ac34843353e9">
+<link rel="stylesheet" href="./static/language.css?v=021e5b3f4eb3"></head>
+<body class="home-page platform-home one-city">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header" id="top"><div class="wrap nav">
+<a class="brand brand-lockup" href="./" aria-label="Polycity home"><img class="brand-mark" src="./static/assets/polycity-icon.svg?v=ac34843353e9" width="64" height="64" alt=""><img class="brand-mark brand-mark-light" src="./static/assets/polycity-icon-light.svg?v=9273514d37c9" width="64" height="64" alt="" aria-hidden="true"><span class="brand-word">POLY<span>CITY</span></span></a>
+<nav class="nav-links" aria-label="Main navigation"><a href="./platform/">Platform</a><a href="./how-it-works/">How it works</a></nav><div class="language-switch" role="group" aria-label="Language"><a href="./" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./bg/" lang="bg" hreflang="bg" title="Български">БГ</a></div>
+<a class="button" href="./access/">Ask for access</a>
+<details class="mobile-menu"><summary aria-label="Navigation menu"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></summary><nav class="menu-links" aria-label="Mobile navigation"><a href="./platform/">Platform</a><a href="./how-it-works/">How it works</a><div class="language-switch" role="group" aria-label="Language"><a href="./" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./bg/" lang="bg" hreflang="bg" title="Български">БГ</a></div></nav></details>
+</div></header>
+<main id="main" class="homepage-content">
+<!-- One city for the whole page. It is fixed to the screen; the screens of
+     words below scroll over it, and the scroll moves its camera. -->
+<div class="city-scroll-section"><div class="hero-scroll-frame">
+<div class="model-stage" data-story-stage="hero" data-render-state="opening"><canvas role="img" aria-label="One geometric city with folded trees, a golden tram and walkers, which the page flies over, closes a street in, tours from six vantage points, splits into today and the proposal, and turns into falling numbers at the end."></canvas><span class="story-loading" role="status">Opening the city study.</span></div>
+</div></div>
+<div class="pins" aria-hidden="true">
+<span class="pin" data-pin="streets"><i></i><span>Narva mnt closed to cars</span></span>
+<span class="pin" data-pin="transit"><i></i><span>Tram every 6 min</span></span>
+<span class="pin" data-pin="growth"><i></i><span>Parking 2 € an hour</span></span>
+<span class="pin" data-pin="congestion"><i></i><span>Cars queue at the signal</span></span>
+</div>
+
+<section class="screen hero" data-screen="hero" aria-labelledby="hero-heading">
+<div class="screen-words">
+<div class="hero-copy">
+<div><p class="eyebrow" data-arrive="">POLYCITY / TRANSPORT SIMULATION</p><h1 id="hero-heading" data-lines="">Test the plan.<br>See the impact.</h1></div>
+<div data-arrive=""><p>Model streets, transit and policies. Simulate daily journeys. Compare the consequences in your organisation’s workspace.</p><a class="primary" href="./how-it-works/">Explore how it works <span aria-hidden="true">↗</span></a></div>
+</div>
+</div>
+</section>
+
+<section class="screen proposal tall" id="platform" data-screen="proposal" aria-labelledby="proposal-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">01 · THE PROPOSAL</p>
+<h2 id="proposal-heading" data-lines="">Build the<br>whole proposal.</h2>
+<p class="copy" data-arrive="">A street closure affects more than one street. Combine changes to access, transit service and parking in a single scenario.</p>
+<div class="changes">
+<div data-arrive="" data-camera-place="streets"><strong>Street access</strong><span>Narva mnt closed</span></div>
+<div data-arrive="" data-camera-place="transit"><strong>Transit service</strong><span>Tram every 6 min</span></div>
+<div data-arrive="" data-camera-place="growth"><strong>Parking policy</strong><span>2 € an hour</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen outcomes tall" id="outcomes" data-screen="outcomes" aria-labelledby="outcomes-heading">
+<div class="screen-words">
+<ol class="rail" aria-label="Outcomes">
+<li class="rail-title">02 · THE CONSEQUENCES</li>
+<li data-outcome="mobility">Mobility</li>
+<li data-outcome="congestion">Congestion</li>
+<li data-outcome="transit">Transit</li>
+<li data-outcome="parking">Parking</li>
+<li data-outcome="emissions">Emissions</li>
+<li data-outcome="accessibility">Accessibility</li>
+</ol>
+<div class="outcome-words">
+<h2 id="outcomes-heading" data-lines="">Follow the<br>consequences.</h2>
+<p class="copy" data-outcome-copy="mobility">Compare trips by mode, average travel time and distance.</p>
+<p class="copy" data-outcome-copy="congestion">Find where traffic concentrates and how much time vehicles spend on the road.</p>
+<p class="copy" data-outcome-copy="transit">Compare boardings and how full each tram and bus runs across service alternatives.</p>
+<p class="copy" data-outcome-copy="parking">Understand parking occupancy, revenue and the time spent finding a space.</p>
+<p class="copy" data-outcome-copy="emissions">Examine emissions from simulated journeys. Compare how transport choices change the modelled outcome.</p>
+<p class="copy" data-outcome-copy="accessibility">See how easily each district reaches jobs and everyday places, and how that changes between scenarios.</p>
+</div>
+</div>
+</section>
+
+<section class="screen comparison tall" id="workflow" data-screen="comparison" aria-labelledby="workflow-heading">
+<div class="screen-words">
+<div class="comparison-top"><p class="eyebrow" data-arrive="">03 · THE COMPARISON</p><h2 id="workflow-heading" data-lines="">Compare. Refine. Repeat.</h2></div>
+<div class="split" data-split="">
+<div class="split-today"></div>
+<span class="tag tag-today">TODAY</span><span class="tag tag-proposal">THE PROPOSAL</span>
+<div class="split-line"></div>
+<button type="button" class="split-knob" aria-label="Move the split between today and the proposal">⇔</button>
+</div>
+<div class="three">
+<div data-arrive=""><strong>Saved scenarios</strong><p>Return to every version and the inputs behind it.</p></div>
+<div data-arrive=""><strong>Reusable model</strong><p>Build only the parts your changes touch.</p></div>
+<div data-arrive=""><strong>Comparable results</strong><p>A map of what changed, with charts and tables.</p></div>
+</div>
+</div>
+</section>
+
+<section class="screen closing tall" id="closing" data-screen="closing" aria-labelledby="closing-heading">
+<div class="screen-words">
+<div class="closing-copy">
+<div><p class="eyebrow" data-arrive="">04 · SIX STEPS TO AN ANSWER</p><h2 id="closing-heading" data-lines="">Put the next<br>proposal to the test.</h2><p class="copy" data-arrive="">Bring your city's data, match today, and try the change before anybody digs up a street.</p><a class="primary" href="./how-it-works/" data-arrive="">Follow the six steps <span aria-hidden="true">↗</span></a></div>
+</div>
+<footer class="homepage-footer"><span>Polycity · Transport simulation</span><nav aria-label="About Polycity"><a href="./access/">Ask for access</a><a href="./who-builds-it/">Who builds it</a><a href="./privacy/">Privacy</a></nav><nav aria-label="Footer navigation"><a href="./platform/">Platform</a><a href="./how-it-works/">How it works</a></nav></footer>
+</div>
+</section>
+</main>
+<script type="module" src="./static/page-motion.js?v=c3d06b5a0750"></script>
+<script type="module" src="./static/home-scene.js?v=94f539127ac3"></script>
+
+
+</body></html>

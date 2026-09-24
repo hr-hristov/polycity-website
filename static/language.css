@@ -1,0 +1,32 @@
+/* The EN/БГ switch: two links, each opening the same page in its language. */
+.language-switch { display:flex; align-items:center; gap:2px; margin-left:8px; padding:3px; border:1px solid #b5bfd5; border-radius:7px; }
+.language-switch a { display:grid; place-items:center; min-width:36px; min-height:36px; padding:5px; border-radius:4px; color:#000b2d; text-decoration:none; font:600 11px Manrope,sans-serif; }
+.language-switch a[aria-current=true] { color:white; background:#000b2d; }
+.language-switch a:focus-visible { outline:2px solid #3374ef; outline-offset:2px; }
+.menu-links .language-switch { display:none; }
+.platform-home .language-switch{border:0;padding:0;gap:2px;margin:0}
+.platform-home .language-switch a{min-width:36px;min-height:36px;border-radius:0;background:transparent;color:#52607d}
+.platform-home .language-switch a[aria-current=true]{color:#000b2d;text-decoration:underline;text-underline-offset:5px}
+/* Over the navy end of the homepage the header's words are white, and the
+   language choice follows them. */
+.one-city[data-stage-ink=light] .nav>.language-switch a{color:#c9d4f0}
+.one-city[data-stage-ink=light] .nav>.language-switch a[aria-current=true]{color:#fff}
+html[lang=bg] .platform-home h1{font-size:clamp(48px,5.3vw,76px);line-height:1.12}
+html[lang=bg] .platform-home h2{font-size:clamp(34px,3.8vw,51px);overflow-wrap:normal}
+html[lang=bg] .platform-home .closing h2{font-size:clamp(34px,3.5vw,47px)}
+html[lang=bg] .platform-home .study h3{font-size:25px}
+html[lang=bg] h1 { font-size:clamp(64px,7.6vw,118px); overflow-wrap:normal; }
+html[lang=bg] .brand-note { max-width:100px; }
+html[lang=bg] .nav-links { gap:20px; }
+@media(max-width:1000px) {
+  .nav>.language-switch { display:none; }
+  .menu-links .language-switch { display:flex; width:max-content; margin:10px 14px; }
+}
+@media(max-width:760px) {
+  html[lang=bg] .platform-home h1{font-size:clamp(35px,8.9vw,57px)}
+  html[lang=bg] .platform-home h2,html[lang=bg] .platform-home .closing h2{font-size:clamp(30px,7.7vw,41px)}
+  .platform-home .menu-links .language-switch{margin:10px 14px}
+  html[lang=bg] h1 { font-size:clamp(44px,11vw,76px); }
+  html[lang=bg] h2 { overflow-wrap:break-word; }
+  html[lang=bg] .brand-note { display:none; }
+}

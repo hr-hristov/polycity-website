@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="bg"><head>
+<script>
+// Keep this static site's assets on their own server inside the session preview.
+// This must run before external resources, which cannot load the routing fix.
+(() => {
+  const address = new URL(location.href);
+  const port = address.searchParams.get('nxport');
+  if (!port || !/^\d+$/.test(port) || Number(port) < 1 || Number(port) > 65535) return;
+  const prefix = '/api/proxy/' + port;
+  if (address.pathname === prefix || address.pathname.startsWith(prefix + '/')) return;
+  address.pathname = prefix + address.pathname;
+  history.replaceState(history.state, '', address.href);
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000b2d">
+<meta name="description" content="Деветдесет и три промени, които плановик може да направи в един град, двайсет и четири групи резултати, две изпълнения едно до друго и файловете, които отнасяте със себе си.">
+<title>Платформа — Polycity</title>
+<link rel="preload" href="./../../static/assets/polycity-logo.svg?v=fdf4622226f0" as="image">
+<link rel="stylesheet" href="./../../static/homepage.css?v=83f3b1119386">
+<link rel="stylesheet" href="./../../static/site.css?v=7437ace2dfdc">
+<link rel="stylesheet" href="./../../static/brand.css?v=b9f64335edef">
+<script src="./../../static/site.js?v=9dc7ef40fed0" defer=""></script>
+<link rel="icon" type="image/svg+xml" href="./../../static/assets/polycity-icon.svg?v=ac34843353e9">
+<link rel="stylesheet" href="./../../static/language.css?v=021e5b3f4eb3"><script type="module" src="./../../static/language.js?v=4a8c1b72f7fe"></script></head>
+<body class="home-page platform-home one-city how-page plat-page">
+<a class="skip" href="#main">Към съдържанието</a>
+
+<header class="site-header" id="top"><div class="wrap nav">
+<a class="brand brand-lockup" href="./../../bg/" aria-label="Начална страница на Polycity"><img class="brand-mark" src="./../../static/assets/polycity-icon.svg?v=ac34843353e9" width="64" height="64" alt=""><img class="brand-mark brand-mark-light" src="./../../static/assets/polycity-icon-light.svg?v=9273514d37c9" width="64" height="64" alt="" aria-hidden="true"><span class="brand-word">POLY<span>CITY</span></span></a>
+<nav class="nav-links" aria-label="Основна навигация"><a href="./../../bg/platform/" aria-current="page">Платформа</a><a href="./../../bg/how-it-works/">Как работи</a></nav><div class="language-switch" role="group" aria-label="Език"><a href="./../../platform/" lang="en" hreflang="en" title="English">EN</a><a href="./../../bg/platform/" lang="bg" hreflang="bg" title="Български" aria-current="true">БГ</a></div>
+<a class="button" href="./../../bg/access/">Поискайте достъп</a>
+<details class="mobile-menu"><summary aria-label="Меню за навигация"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></summary><nav class="menu-links" aria-label="Мобилна навигация"><a href="./../../bg/platform/" aria-current="page">Платформа</a><a href="./../../bg/how-it-works/">Как работи</a><div class="language-switch" role="group" aria-label="Език"><a href="./../../platform/" lang="en" hreflang="en" title="English">EN</a><a href="./../../bg/platform/" lang="bg" hreflang="bg" title="Български" aria-current="true">БГ</a></div></nav></details>
+</div></header>
+<main id="main" class="homepage-content">
+<!-- The homepage's city, fixed to the screen. Each screen of words below moves
+     its camera to the part of the city that screen is about. -->
+<div class="city-scroll-section"><div class="hero-scroll-frame">
+<div class="model-stage" data-story-stage="hero" data-render-state="opening"><canvas role="img" aria-label="Един геометричен град, над който летим, докато се назовава всеки вид промяна: затворената улица, светофарът, паркоместата, трамвайната спирка, новите къщи. После е видян отгоре като карта на резултатите, разделен на днес и предложението, и накрая превърнат в числа."></canvas><span class="story-loading" role="status">Градският етюд оживява.</span></div>
+</div></div>
+<div class="pins" aria-hidden="true">
+<span class="pin" data-pin="streets"><i></i><span>Narva mnt е затворена за коли</span></span>
+<span class="pin" data-pin="transit"><i></i><span>Трамвай на всеки 6 мин</span></span>
+<span class="pin" data-pin="growth"><i></i><span>Паркиране 2 € на час</span></span>
+</div>
+
+<section class="screen hero" data-screen="hero" aria-labelledby="platform-heading">
+<div class="screen-words">
+<div class="hero-copy">
+<div><p class="eyebrow" data-arrive="">ПЛАТФОРМА</p><h1 id="platform-heading" data-lines="">Какво можете да промените.<br>Какво се връща.</h1></div>
+<div data-arrive=""><p>Деветдесет и три промени, двайсет и четири групи резултати и две изпълнения, поставени едно до друго.</p><a class="primary" href="#changes">Вижте промените <span aria-hidden="true">↓</span></a></div>
+</div>
+</div>
+</section>
+
+<section class="screen step tall" id="changes" data-screen="changes" aria-labelledby="changes-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">01 · КАКВО МОЖЕТЕ ДА ПРОМЕНИТЕ</p>
+<h2 id="changes-heading" data-lines="">Деветдесет и три промени,<br>в десет вида.</h2>
+<p class="copy" data-arrive="">Затворете улица, вдигнете цената на билета, добавете линия, постройте на ново място. Всяка промяна е карта, която слагате в сценарий.</p>
+<div class="counted">
+<div data-group-row=""><strong>Улично пространство</strong><span>14</span><em>Затваряне на улица · Преразпределяне на лента · Филтър за движение</em></div>
+<div data-group-row=""><strong>Кръстовища</strong><span>6</span><em>Забрана за завой · Фази на светофара · Приоритет за градския транспорт</em></div>
+<div data-group-row=""><strong>Крайтротоарна зона</strong><span>7</span><em>Цена за паркиране · Зарядна станция · Буферен паркинг</em></div>
+<div data-group-row=""><strong>Такси и достъп</strong><span>9</span><em>Такса за влизане · Нискоемисионна зона · Такса за изминато разстояние</em></div>
+<div data-group-row=""><strong>Градски транспорт</strong><span>15</span><em>Нова линия · Честота · Цена на билета · Нова спирка · Таксиметров парк</em></div>
+<div data-group-row=""><strong>Пеша и с колело</strong><span>5</span><em>Велоалея · Станции за споделени колела · Правила за тротинетки</em></div>
+<div data-group-row=""><strong>Земеползване и търсене</strong><span>12</span><em>Ново строителство · Работни места · Работа от вкъщи · Притежание на автомобил</em></div>
+<div data-group-row=""><strong>Товарен транспорт</strong><span>9</span><em>Доставки · Зона за товарене · Консолидационен център</em></div>
+<div data-group-row=""><strong>Трафик отвън</strong><span>2</span><em>Входна точка · Преминаващ трафик</em></div>
+<div data-group-row=""><strong>Поведение</strong><span>14</span><em>Стойност на времето · Избор на дестинация · Търсене на паркомясто</em></div>
+</div>
+<p class="counted-examples"><span data-examples=""></span></p>
+</div>
+</section>
+
+<section class="screen step tall" id="timing" data-screen="timing" aria-labelledby="timing-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">02 · КОГА ДЕЙСТВА</p>
+<h2 id="timing-heading" data-lines="">Цял ден или само<br>в осем сутринта.</h2>
+<p class="copy" data-arrive="">Всяка промяна носи свой период на действие, така че един сценарий може да съдържа сутрешно ограничение, лятно изпробване и улица, която се открива през 2027 г.</p>
+<div class="changes">
+<div data-step-row=""><strong>Цял ден</strong><span>Всеки час от изпълнението</span></div>
+<div data-step-row=""><strong>Часове</strong><span>07:00 до 09:00</span></div>
+<div data-step-row=""><strong>Дати</strong><span>1 юни до 31 август</span></div>
+<div data-step-row=""><strong>Сезон</strong><span>Всяко лято</span></div>
+<div data-step-row=""><strong>Година на откриване</strong><span>От 2027 г.</span></div>
+<div data-step-row=""><strong>Изпробване</strong><span>Шест седмици, после както преди</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen step right tall" id="results" data-screen="results" aria-labelledby="platform-results-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">03 · КАКВО СЕ ВРЪЩА</p>
+<h2 id="platform-results-heading" data-lines="">Двайсет и четири групи<br>резултати.</h2>
+<p class="copy" data-arrive="">Всяка група е карта, графика и таблица и всяка отговаря на въпрос, който някой на масата ще зададе.</p>
+<div class="goals">
+<div data-goal-row=""><strong>Започнете оттук</strong><span>Общ преглед</span></div>
+<div data-goal-row=""><strong>Придвижване на хората</strong><span>Мобилност · Задръствания · Градски транспорт · Велосипеди · Пешеходци · Паркиране · Служебен трафик · Пътна безопасност</span></div>
+<div data-goal-row=""><strong>Околна среда</strong><span>Емисии · Шум</span></div>
+<div data-goal-row=""><strong>Достъп и справедливост</strong><span>Достъпност · Кой е засегнат</span></div>
+<div data-goal-row=""><strong>Пари</strong><span>Какво плащат хората</span></div>
+<div data-goal-row=""><strong>Този сценарий добавя</strong><span>Совалка · Такси · Зареждане · Товарен транспорт · Броене на трафика · Трафик отвън · Дестинации · Капацитет на релсите · Споделени колела и тротинетки · Кръстовища в детайл</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen comparison tall" id="compare" data-screen="compare" aria-labelledby="platform-compare-heading">
+<div class="screen-words">
+<div class="comparison-top"><p class="eyebrow" data-arrive="">04 · ДВЕ ИЗПЪЛНЕНИЯ, ЕДНО ДО ДРУГО</p><h2 id="platform-compare-heading" data-lines="">Поставете едно изпълнение до друго.</h2></div>
+<div class="split" data-split="">
+<div class="split-today"></div>
+<span class="tag tag-today">ДНЕС</span><span class="tag tag-proposal">ПРЕДЛОЖЕНИЕТО</span>
+<div class="split-line"></div>
+<button type="button" class="split-knob" aria-label="Преместете границата между днес и предложението">⇔</button>
+</div>
+<div class="three">
+<div data-arrive=""><strong>Всяка улица, подредена</strong><p>По това колко се е променила една стойност между двете изпълнения, улица по улица или зона по зона.</p></div>
+<div data-arrive=""><strong>Кой е сменил</strong><p>Жител по жител, от един начин на придвижване към друг.</p></div>
+<div data-arrive=""><strong>Разликата в пари</strong><p>Задръствания, емисии и това, което хората плащат, в една стойност.</p></div>
+</div>
+</div>
+</section>
+
+<section class="screen step right tall" id="take" data-screen="take" aria-labelledby="take-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">05 · КАКВО ОТНАСЯТЕ</p>
+<h2 id="take-heading" data-lines="">Вземете отговора<br>извън залата.</h2>
+<p class="copy" data-arrive="">Всяко изпълнение пази файловете, направени от него, и всеки файл казва от кое изпълнение идва.</p>
+<ul class="groups" aria-label="Файлове, които едно изпълнение прави">
+<li data-arrive="">Таблица</li>
+<li data-arrive="">Групирана таблица</li>
+<li data-arrive="">Карта</li>
+<li data-arrive="">Карта със слоеве</li>
+<li data-arrive="">Графика</li>
+<li data-arrive="">Сравнение</li>
+<li data-arrive="">Доклад за решение</li>
+<li data-arrive="">Пакет за представяне</li>
+<li data-arrive="">Паркинги върху картата</li>
+</ul>
+<p class="copy note" data-arrive="">Доклад за решение или картина на карта се отваря по връзка, без вписване, до датата, която зададете.</p>
+</div>
+</section>
+
+<section class="screen step tall" id="ways" data-screen="ways" aria-labelledby="ways-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">06 · ДВА НАЧИНА ЗА ИЗПЪЛНЕНИЕ</p>
+<h2 id="ways-heading" data-lines="">Цял ден<br>или бърз отговор.</h2>
+<div class="three">
+<div data-arrive=""><strong>Симулиран ден</strong><p>Всеки моделиран жител прави всяко свое пътуване, час по час, и се връщат всичките двайсет и четири групи резултати.</p></div>
+<div data-arrive=""><strong>Бърза оценка</strong><p>Пътуванията се разпределят и натоварват по улиците, без да се изживява ден. Само задръствания и мобилност.</p></div>
+</div>
+</div>
+</section>
+
+<section class="screen closing tall" data-screen="closing" aria-labelledby="platform-closing-heading">
+<div class="screen-words">
+<div class="closing-copy">
+<div><p class="eyebrow" data-arrive="">ШЕСТ СТЪПКИ ДО ОТГОВОР</p><h2 id="platform-closing-heading" data-lines="">Проверете<br>следващото предложение.</h2><p class="copy" data-arrive="">Донесете данните на вашия град, настройте го по днешния ден и изпробвайте промяната, преди някой да разкопае улица.</p><a class="primary" href="./../../bg/how-it-works/" data-arrive="">Следвайте шестте стъпки <span aria-hidden="true">↗</span></a></div>
+</div>
+<footer class="homepage-footer"><span>Polycity · Транспортни симулации</span><nav aria-label="За Polycity"><a href="./../../bg/access/">Поискайте достъп</a><a href="./../../bg/who-builds-it/">Кой го изгражда</a><a href="./../../bg/privacy/">Поверителност</a></nav><nav aria-label="Навигация в долната част"><a href="./../../bg/platform/">Платформа</a><a href="./../../bg/how-it-works/">Как работи</a></nav></footer>
+</div>
+</section>
+</main>
+<script type="module" src="./../../static/page-motion.js?v=c3d06b5a0750"></script>
+<script type="module" src="./../../static/platform-scene.js?v=ff4f87356465"></script>
+
+
+</body></html>

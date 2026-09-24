@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head>
+<script>
+// Keep this static site's assets on their own server inside the session preview.
+// This must run before external resources, which cannot load the routing fix.
+(() => {
+  const address = new URL(location.href);
+  const port = address.searchParams.get('nxport');
+  if (!port || !/^\d+$/.test(port) || Number(port) < 1 || Number(port) > 65535) return;
+  const prefix = '/api/proxy/' + port;
+  if (address.pathname === prefix || address.pathname.startsWith(prefix + '/')) return;
+  address.pathname = prefix + address.pathname;
+  history.replaceState(history.state, '', address.href);
+})();
+</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#000b2d">
+<title>Privacy — Polycity</title><meta name="description" content="This website sets no cookies, counts no visitors and loads nothing from another company. Who is responsible, and what happens to an email you send.">
+<link rel="preload" href="./../static/assets/polycity-logo.svg?v=fdf4622226f0" as="image">
+<link rel="stylesheet" href="./../static/homepage.css?v=83f3b1119386">
+<link rel="stylesheet" href="./../static/site.css?v=7437ace2dfdc">
+<link rel="stylesheet" href="./../static/brand.css?v=b9f64335edef">
+<script src="./../static/site.js?v=9dc7ef40fed0" defer=""></script>
+<link rel="icon" type="image/svg+xml" href="./../static/assets/polycity-icon.svg?v=ac34843353e9">
+<link rel="stylesheet" href="./../static/language.css?v=021e5b3f4eb3"></head>
+<body class="guide-page"><a class="skip" href="#main">Skip to content</a>
+<header class="site-header" id="top"><div class="wrap nav">
+<a class="brand brand-lockup" href="./../" aria-label="Polycity home"><img class="brand-mark" src="./../static/assets/polycity-icon.svg?v=ac34843353e9" width="64" height="64" alt=""><span class="brand-word">POLY<span>CITY</span></span></a>
+<nav class="nav-links" aria-label="Main navigation"><a href="./../platform/">Platform</a><a href="./../how-it-works/">How it works</a></nav><div class="language-switch" role="group" aria-label="Language"><a href="./../privacy/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/privacy/" lang="bg" hreflang="bg" title="Български">БГ</a></div>
+<a class="button" href="./../access/">Ask for access</a>
+<details class="mobile-menu"><summary aria-label="Navigation menu"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></summary><nav class="menu-links" aria-label="Mobile navigation"><a href="./../platform/">Platform</a><a href="./../how-it-works/">How it works</a><div class="language-switch" role="group" aria-label="Language"><a href="./../privacy/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/privacy/" lang="bg" hreflang="bg" title="Български">БГ</a></div></nav></details>
+</div></header><main id="main">
+<div class="chapter-breadcrumb wrap"><a href="./../">Polycity</a><span aria-hidden="true">/</span><span>Privacy</span></div>
+<section class="chapter-hero wrap">
+ <div class="eyebrow">Privacy</div>
+ <h1>This website<br><em>watches nobody.</em></h1>
+ <div class="chapter-hero-bottom"><p>No cookies, no visitor counting, nothing fetched from another company while you read. There is nothing here to sign in to, and nothing here that knows you came.</p><a class="studio-scroll" href="#three" aria-label="Read the three plain facts"><span aria-hidden="true">↓</span></a></div>
+</section>
+<section class="editorial-section" id="three"><div class="wrap"><div class="editorial-intro"><div><div class="eyebrow">Three plain facts</div><h2 class="editorial-heading">Nothing is kept,<br>because nothing<br>is taken.</h2></div><p>These pages are plain files on a web server. Reading them leaves nothing behind on your machine and sends nothing about you anywhere.</p></div><div class="editorial-trio">
+<article><span class="folio">01</span><h3>No cookies.</h3><p>This website sets none. Nothing is written into your browser's storage, and nothing is read back out of it. There is no banner to dismiss because there is nothing to ask you about.</p></article>
+<article><span class="folio">02</span><h3>No counting.</h3><p>No visitor counter, no heat map, no advertising tag, no third-party script of any kind. We do not know how many people read this page, or which pages they read.</p></article>
+<article><span class="folio">03</span><h3>Nothing from elsewhere.</h3><p>Every picture, font, stylesheet and script on these pages is served from this website itself. Your browser contacts no other company while a page loads.</p></article>
+</div></div></section>
+<section class="editorial-section soft-section" id="questions"><div class="wrap faq-layout">
+<div><div class="eyebrow">The rest of it</div><h2>What happens if<br>you write to us.</h2></div>
+<div class="faq-list">
+<details><summary>What happens to an email I send you?</summary><p>It reaches the people who build Polycity and nobody else. We keep it while we are talking to you and for as long as we need it to answer, and we reply from the same address. Ask us to delete it and we will.</p></details>
+<details><summary>Do you pass anything to anyone else?</summary><p>No. We sell nothing about you, share nothing with advertisers, and buy nothing about you from anybody. There is no mailing list on this website to be added to.</p></details>
+<details><summary>Does any link leave this website?</summary><p>No. Every link on these pages opens another page of this website. The one exception is the email address, which opens your own mail program.</p></details>
+<details><summary>What about the Polycity product itself?</summary><p>The product is a separate matter from this website, and a team that uses it gets its own terms in writing. Two things hold in every case. A team's city models, scenarios and runs stay inside that team's own organisation. And nothing about a named person goes into a model: the residents in a simulated day are invented from published population totals, never from anybody's phone, card or journey.</p></details>
+<details><summary>Who is responsible for this website?</summary><p>Theoremus, 22 San Stefano Street, Building 1, Block 4, Floor 7, 1504 Sofia, Bulgaria. Write to hristo.hristov@theoremus.com about anything on this page, including a request to delete something you sent us.</p></details>
+<details><summary>When was this last changed?</summary><p>24 September 2026. If this page changes, the date changes with it.</p></details>
+</div>
+</div></section>
+<div class="wrap field-note"><p>These pages carry no form, no field and no way to sign in. The only way to reach us is the email address above, chosen and sent by you.</p><a href="./../access/">Ask for access ↗</a></div>
+<section class="chapter-cta"><div class="wrap chapter-cta-inner"><div><div class="eyebrow">Theoremus · Sofia, Bulgaria</div><h2>Questions about<br>any of this?</h2></div><a class="button" href="mailto:hristo.hristov@theoremus.com">hristo.hristov@theoremus.com <span class="arrow" aria-hidden="true">↗</span></a></div></section>
+</main><footer class="site-footer-expanded"><div class="wrap">
+<div class="footer-map"><div class="footer-brand"><a class="brand" href="./../" aria-label="Polycity home"><img class="brand-logo" src="./../static/assets/polycity-logo.svg?v=fdf4622226f0" width="360" height="248" alt="Polycity"></a><p>A city is never finished.<br>Neither are the possibilities.</p></div>
+<div class="footer-column"><h2>Explore Polycity</h2><a href="./../">The city</a><a href="./../platform/">Platform</a><a href="./../how-it-works/">How it works</a></div>
+<div class="footer-column"><h2>Start with a question</h2><a href="./../who-builds-it/">Who builds Polycity?</a><a href="./../access/">How do I get in?</a><a href="./../platform/#changes">What can I change?</a></div></div>
+<div class="footer-base"><span>Rooted in Sofia. Open to possibility.</span><a href="./../access/">Ask for access</a><a href="./../who-builds-it/">Who builds it</a><a href="./../privacy/" aria-current="page">Privacy</a><a href="#top">Back to the top ↑</a></div>
+</div></footer>
+</body></html>
