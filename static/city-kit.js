@@ -216,12 +216,25 @@ export function createCityKit({ THREE, crownGeometry, palette }) {
       renderer.render(scene,camera);
       if(context)context.drawImage(renderer.domElement,0,0,canvas.width,canvas.height);
     };
+    // A phone's address bar hides and shows as the page scrolls, and the
+    // stage grows and shrinks with it. Resizing the picture empties it, and
+    // the city is next drawn a frame later, so the last picture is put back
+    // first: centred when only the height changed, as the camera keeps the
+    // city's width, and stretched to the new frame otherwise.
     const resize=()=>{
       const r=host.getBoundingClientRect();if(!r.width||!r.height)return;
       if(context){
-        const ratio=density();
-        canvas.width=Math.round(r.width*ratio);
-        canvas.height=Math.round(r.height*ratio);
+        const ratio=density(),width=Math.round(r.width*ratio),height=Math.round(r.height*ratio);
+        let kept=null;
+        if(s.frame>0&&canvas.width&&canvas.height&&(width!==canvas.width||height!==canvas.height)){
+          kept=document.createElement('canvas');kept.width=canvas.width;kept.height=canvas.height;
+          kept.getContext('2d').drawImage(canvas,0,0);
+        }
+        canvas.width=width;canvas.height=height;
+        if(kept){
+          if(kept.width===width)context.drawImage(kept,0,Math.round((height-kept.height)/2));
+          else context.drawImage(kept,0,0,width,height);
+        }
       }else renderer.setSize(r.width,r.height,false);
       const half=span/2,aspect=r.width/r.height;
       camera.left=-half*aspect;camera.right=half*aspect;camera.top=half;camera.bottom=-half;camera.updateProjectionMatrix();

@@ -285,10 +285,14 @@
 .one-city .screen.tall .screen-words{position:sticky;top:0;height:100svh;min-height:0}
 .one-city .screen.tall:before{position:sticky;top:0;display:block;height:100svh;margin-bottom:-100svh}
 /* The consequences take a screen of scrolling for each close-up; the scene
-   sets how many. The page's rests at each close-up are the scene's too, and
-   not scroll snapping: a browser's snapping pulls one notch of a mouse wheel
-   back to the rest it left, and lets a wheel flick run past every rest. */
+   sets how many. Under a mouse wheel the page's rests at each close-up are the
+   scene's too, and not scroll snapping: a browser's snapping pulls one notch of
+   a mouse wheel back to the rest it left, and lets a wheel flick run past every
+   rest. Under a finger they are snap points, the one thing that stops a phone's
+   flick at the next close-up; the scene places the marks and says when. */
 .one-city .screen.outcomes.tall{min-height:calc((1 + 6*var(--outcome-screens,1))*100svh)}
+html[data-snap-rests]{scroll-snap-type:y mandatory}
+.one-city .rest-mark{position:absolute;left:0;width:1px;height:1px;pointer-events:none;scroll-snap-align:start;scroll-snap-stop:always}
 .one-city .screen.hero:before{background:linear-gradient(0deg,rgba(246,247,251,.97) 0,rgba(246,247,251,.85) 30%,rgba(246,247,251,0) 62%)}
 .one-city .screen.proposal:before{background:linear-gradient(90deg,rgba(246,247,251,.96) 0,rgba(246,247,251,.9) 26%,rgba(246,247,251,0) 52%)}
 .one-city .screen.outcomes:before{background:linear-gradient(270deg,rgba(246,247,251,.92) 0,rgba(246,247,251,.7) 18%,rgba(246,247,251,0) 38%),linear-gradient(0deg,rgba(246,247,251,.8) 0,rgba(246,247,251,.3) 22%,rgba(246,247,251,0) 40%)}
@@ -625,6 +629,89 @@
 }
 @media(prefers-reduced-motion:reduce){
  .how-page .changes>div[data-step-row],.how-page .format-tiles>div,.how-page .how-card,.how-page .fit-pane,.how-page .sun,.how-page .trip-tag,.how-page .legend>div,.how-page .groups li,.how-page .versions,.how-page .versions li,.how-page .three>div{transition:none}
+}
+
+/* Technical stands on How it works' page and wears its words. Its own cards:
+   the ways of travelling and the hour while the quick estimate runs, one
+   resident's plan and the rounds while the day runs, and the trace while the
+   junction is studied. A veil pales the city round the study's stretch, and
+   the three ways' screen has a line where each slice meets the next and a tag
+   over each; the lines stop short of the heading and the three columns. The
+   scene sets where each stands and when it shows. */
+.tech-page .card-key{flex-wrap:wrap;row-gap:6px}
+.tech-page .card-key i{background:var(--mode,#fd4b08)}
+.tech-page .by-bike{--mode:#049dd6}
+.tech-page .card-key .key-car{width:16px;height:2px;background:#000b2d}
+.tech-page .mode-card,.tech-page .hour-card{right:48px;bottom:48px;width:300px}
+.tech-page .hour-clock{display:block;margin-bottom:10px;font-size:34px;line-height:1;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.tech-page .flow-key{gap:10px}
+.tech-page .flow-key b{flex:0 0 90px;height:7px;background:linear-gradient(90deg,#049dd6,#febe11,#fd4b08)}
+.tech-page .plan-card,.tech-page .rounds-card{left:48px;bottom:48px;width:300px}
+.tech-page .plan-trips{list-style:none;margin:0;padding:0}
+.tech-page .plan-trips li{display:grid;grid-template-columns:46px minmax(0,1fr);gap:2px 10px;padding:8px 0;border-top:1px solid #e4eaf4;font-size:12px;line-height:1.3}
+.tech-page .plan-trips b{font-weight:750;font-variant-numeric:tabular-nums}
+.tech-page .plan-trips em{grid-column:2;display:flex;align-items:center;gap:6px;font-style:normal;font-size:11px;font-weight:700;color:#52607d}
+.tech-page .plan-trips em:before{content:'';width:16px;height:4px;background:var(--mode)}
+.tech-page .plan-card:not([data-changed]) .now,.tech-page .plan-card[data-changed] .was{display:none}
+.tech-page .plan-card[data-changed] li:first-child b{color:#049dd6}
+.tech-page .plan-score{display:none;margin-top:4px;padding-top:8px;border-top:2px solid #000b2d}
+.tech-page .plan-card[data-weighed] .plan-score{display:block}
+.tech-page .plan-score div{display:flex;justify-content:space-between;padding:3px 0;font-size:12px;line-height:1.3;color:#52607d}
+.tech-page .plan-score b{color:#000b2d;font-weight:800;font-variant-numeric:tabular-nums}
+.tech-page .plan-card[data-changed] .plan-score b{color:#049dd6}
+.tech-page .round-count{display:flex;align-items:baseline;gap:8px;margin:-2px 0 8px;font-size:34px;line-height:1;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.tech-page .round-count small{font-size:13px;font-weight:700;letter-spacing:0;color:#52607d}
+.tech-page .rounds-curve{display:block;width:100%;height:auto}
+.tech-page .rounds-curve path{fill:none;stroke:#fd4b08;stroke-width:2.4;stroke-dasharray:1 1}
+.tech-page .trace-card{right:48px;top:112px;width:300px}
+.tech-page .trace{display:block;width:100%;height:110px;overflow:visible}
+.tech-page .trace path{fill:none;vector-effect:non-scaling-stroke}
+.tech-page .trace-red{stroke:#e23b3b;stroke-width:4}
+.tech-page .trace-green{stroke:#2fa36b;stroke-width:4}
+.tech-page .trace-cars{stroke:#000b2d;stroke-width:1.4;stroke-linejoin:round}
+.tech-page .study-pin i{background:#fd4b08}
+.tech-page .study-pin span{background:#fd4b08}
+.tech-page .veil{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .5s;background:radial-gradient(ellipse 32vw 40vh at var(--x,50%) var(--y,50%),rgba(246,247,251,0) 0,rgba(246,247,251,0) 62%,rgba(246,247,251,.72) 100%)}
+.tech-page .veil[data-shown]{opacity:1}
+.tech-page .slices{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s}
+.tech-page .slices[data-shown]{opacity:1}
+.tech-page .screen.comparison:before{background:linear-gradient(180deg,rgba(246,247,251,.97) 0,rgba(246,247,251,.88) 30%,rgba(246,247,251,0) 42%)}
+.tech-page .slice-line{position:absolute;top:290px;bottom:170px;width:2px;margin-left:-1px;background:#000b2d;opacity:0}
+.tech-page .slice-line[data-shown]{opacity:1}
+.tech-page .slice-line[data-slice-line="1"]{left:var(--cut1,0%)}
+.tech-page .slice-line[data-slice-line="2"]{left:var(--cut2,0%)}
+.tech-page .slice-tag{top:300px;white-space:nowrap;transform:translateX(-50%);opacity:0;transition:opacity .3s}
+.tech-page .slice-tag[data-shown]{opacity:1}
+.tech-page .slice-tag[data-slice-tag=quick]{left:calc(var(--cut1,0%)/2)}
+.tech-page .slice-tag[data-slice-tag=day]{left:calc((var(--cut1,0%) + var(--cut2,0%))/2)}
+.tech-page .slice-tag[data-slice-tag=junction]{left:calc((var(--cut2,0%) + 100%)/2)}
+@media(max-width:760px){
+ /* On a phone every card stands at the top of the screen, clear of the city
+    and of the words at its foot. */
+ .tech-page .mode-card,.tech-page .hour-card,.tech-page .plan-card,.tech-page .rounds-card,.tech-page .trace-card{left:16px;right:16px;top:72px;bottom:auto;width:auto;padding:10px 14px}
+ .tech-page .card-title{margin-bottom:6px}
+ .tech-page .card-key{margin-top:6px;font-size:10px}
+ .tech-page .hour-card,.tech-page .rounds-card{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 14px;align-items:center}
+ .tech-page .hour-clock{grid-row:span 2;margin:0;font-size:30px}
+ .tech-page .hour-card .card-key{margin-top:0}
+ .tech-page .rounds-card .card-title{grid-column:span 2}
+ .tech-page .round-count{grid-row:span 2;flex-direction:column;align-items:flex-start;gap:2px;margin:0;font-size:30px}
+ .tech-page .round-count small{font-size:10px}
+ .tech-page .rounds-curve{height:40px}
+ .tech-page .rounds-card .card-key{margin-top:2px}
+ .tech-page .plan-trips li{grid-template-columns:40px minmax(0,1fr) auto;padding:4px 0;font-size:11px}
+ .tech-page .plan-trips em{grid-column:auto;font-size:10px}
+ .tech-page .plan-score{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding-top:6px}
+ .tech-page .plan-card[data-weighed] .plan-score{display:grid}
+ .tech-page .plan-score div{display:block;padding:0;font-size:10px}
+ .tech-page .plan-score b{display:block;font-size:14px}
+ .tech-page .trace{height:60px}
+ .tech-page .veil{background:radial-gradient(ellipse 48vw 30vh at var(--x,50%) var(--y,50%),rgba(246,247,251,0) 0,rgba(246,247,251,0) 62%,rgba(246,247,251,.72) 100%)}
+ .tech-page .slice-tag{top:250px;font-size:9px;letter-spacing:.1em;padding:4px 6px}
+ .tech-page .slice-line{bottom:150px}
+}
+@media(prefers-reduced-motion:reduce){
+ .tech-page .veil,.tech-page .slices,.tech-page .slice-tag{transition:none}
 }
 
 /* Platform: the ten kinds of change with how many cards each holds, and three

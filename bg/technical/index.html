@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="bg"><head>
+<script>
+// Keep this static site's assets on their own server inside the session preview.
+// This must run before external resources, which cannot load the routing fix.
+(() => {
+  const address = new URL(location.href);
+  const port = address.searchParams.get('nxport');
+  if (!port || !/^\d+$/.test(port) || Number(port) < 1 || Number(port) > 65535) return;
+  const prefix = '/api/proxy/' + port;
+  if (address.pathname === prefix || address.pathname.startsWith(prefix + '/')) return;
+  address.pathname = prefix + address.pathname;
+  history.replaceState(history.state, '', address.href);
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000b2d">
+<meta name="description" content="Как Polycity симулира един град по три начина: бърза оценка за целия град, симулиран ден за всеки жител и изследване на кръстовище за един ъгъл, секунда по секунда.">
+<title>Технически детайли — Polycity</title>
+<link rel="preload" href="./../../static/assets/polycity-logo.svg?v=fdf4622226f0" as="image">
+<link rel="stylesheet" href="./../../static/homepage.css?v=83f3b1119386">
+<link rel="stylesheet" href="./../../static/site.css?v=ffd915f3eb6c">
+<link rel="stylesheet" href="./../../static/brand.css?v=b9f64335edef">
+<script src="./../../static/site.js?v=9dc7ef40fed0" defer=""></script>
+<link rel="icon" type="image/svg+xml" href="./../../static/assets/polycity-icon.svg?v=ac34843353e9">
+<link rel="stylesheet" href="./../../static/language.css?v=021e5b3f4eb3"><script type="module" src="./../../static/language.js?v=103b1ca63f78"></script></head>
+<body class="home-page platform-home one-city how-page tech-page">
+<a class="skip" href="#main">Към съдържанието</a>
+
+<header class="site-header" id="top"><div class="wrap nav">
+<a class="brand brand-lockup" href="./../../bg/" aria-label="Начална страница на Polycity"><img class="brand-mark" src="./../../static/assets/polycity-icon.svg?v=ac34843353e9" width="64" height="64" alt=""><img class="brand-mark brand-mark-light" src="./../../static/assets/polycity-icon-light.svg?v=9273514d37c9" width="64" height="64" alt="" aria-hidden="true"><span class="brand-word">POLY<span>CITY</span></span></a>
+<nav class="nav-links" aria-label="Основна навигация"><a href="./../../bg/platform/">Платформа</a><a href="./../../bg/technical/" aria-current="page">Технически детайли</a><a href="./../../bg/how-it-works/">Как работи</a></nav><div class="language-switch" role="group" aria-label="Език"><a href="./../../technical/" lang="en" hreflang="en" title="English">EN</a><a href="./../../bg/technical/" lang="bg" hreflang="bg" title="Български" aria-current="true">БГ</a></div>
+<a class="button" href="./../../bg/access/">Поискайте достъп</a>
+<details class="mobile-menu"><summary aria-label="Меню за навигация"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></summary><nav class="menu-links" aria-label="Мобилна навигация"><a href="./../../bg/platform/">Платформа</a><a href="./../../bg/technical/" aria-current="page">Технически детайли</a><a href="./../../bg/how-it-works/">Как работи</a><div class="language-switch" role="group" aria-label="Език"><a href="./../../technical/" lang="en" hreflang="en" title="English">EN</a><a href="./../../bg/technical/" lang="bg" hreflang="bg" title="Български" aria-current="true">БГ</a></div></nav></details>
+</div></header>
+<main id="main" class="homepage-content">
+<!-- The homepage's city, fixed to the screen. It opens as numbers, is run the
+     three ways Polycity runs a city, is cut into three slices, one for each
+     way, and turns back into numbers at the end. -->
+<div class="city-scroll-section"><div class="hero-scroll-frame">
+<div class="model-stage" data-story-stage="hero" data-render-state="opening"><canvas role="img" aria-label="Един геометричен град, симулиран по три начина. Бързата оценка издига стъклен блок над всяка зона, пренася пътуванията ѝ между зоните в дъги от четири цвята и натоварва пътуванията с кола по улиците час по час. Симулираният ден изпраща всички жители навън едновременно, претегля всеки ден, променя някои планове и наслагва кръговете на учене над града, докато той се успокои. Изследването на кръстовище очертава линия около един участък от пътя и отбелязва всяко возило всяка секунда, дистанцията между колите, светофара и най-дългата опашка. След това градът се разрязва на три части, по една за всеки начин, преди отново да стане на числа."></canvas><span class="story-loading" role="status">Градският етюд оживява.</span></div>
+<span class="veil" data-veil="" aria-hidden="true"></span>
+</div></div>
+<div class="pins" aria-hidden="true">
+<span class="pin study-pin" data-pin="junctionStudy"><i></i><span>Изследване на кръстовище</span></span>
+<span class="pin" data-pin="longestTailback"><i></i><span>Най-дългата опашка</span></span>
+<span class="trip-tag" data-round-tag="first">Кръг 1</span>
+<span class="trip-tag" data-round-tag="last">Кръг 30</span>
+<div class="how-card mode-card" data-card="modes">
+<p class="card-title">Как пътуват</p>
+<p class="card-key"><i class="by-car"></i>Кола<i class="by-transit"></i>Градски транспорт<i class="by-bike"></i>Велосипед<i class="by-foot"></i>Пеша</p>
+</div>
+<div class="how-card hour-card" data-card="hours">
+<b class="hour-clock" data-hour-clock="">05:00</b>
+<p class="card-title">Пътувания с кола по улиците</p>
+<p class="card-key flow-key"><span>Свободно</span><b></b><span>Задръстено</span></p>
+</div>
+<div class="how-card plan-card" data-card="plan">
+<p class="card-title">Планът на един жител</p>
+<ul class="plan-trips">
+<li><b><span class="was">07:30</span><span class="now">07:05</span></b><span>Дом → Работа</span><em class="was by-car">Кола</em><em class="now by-bike">Велосипед</em></li>
+<li><b>12:40</b><span>Работа → Магазини</span><em class="by-foot">Пеша</em></li>
+<li><b>17:20</b><span>Магазини → Дом</span><em class="by-transit">Градски транспорт</em></li>
+</ul>
+<div class="plan-score">
+<div><span>Време</span><b><span class="was">34</span><span class="now">29</span> мин</b></div>
+<div><span>Пари</span><b><span class="was">3.40</span><span class="now">0.00</span> €</b></div>
+<div><span>Чакане</span><b><span class="was">12</span><span class="now">0</span> мин</b></div>
+</div>
+</div>
+<div class="how-card rounds-card" data-card="rounds">
+<p class="card-title">Кръгове на учене</p>
+<p class="round-count"><small>Кръг</small><b data-round="">1</b></p>
+<svg class="rounds-curve" viewBox="0 0 200 50"><path data-rounds-curve="" pathLength="1" d="M0,6C30,8 50,34 90,40S160,44 200,44"></path></svg>
+<p class="card-key"><i class="by-car"></i>Време, загубено в трафика</p>
+</div>
+<div class="how-card trace-card" data-card="trace">
+<p class="card-title">Секунда по секунда</p>
+<svg class="trace" viewBox="0 0 240 90" preserveAspectRatio="none" aria-hidden="true"><path class="trace-red" data-trace="red" d="M0 30.5H70M150 30.5H220"></path><path class="trace-green" data-trace="green" d="M70 30.5H150M220 30.5H240"></path><path class="trace-cars" data-trace="cars" d="M0,78L40,50L70,50L100,20L125,2M10,88L55,53L75,53L108,22L130,2M30,88L62,56L82,56L115,24L138,2M50,88L72,59L90,59L122,26L146,2M100,88L130,50L160,4M150,88L180,50L220,50L240,36"></path></svg>
+<p class="card-key"><i class="key-car"></i>Една кола</p>
+</div>
+</div>
+
+<section class="screen intro" data-screen="intro" aria-labelledby="technical-heading">
+<div class="screen-words">
+<div class="hero-copy">
+<div><p class="eyebrow" data-arrive="">ТЕХНИЧЕСКИ ДЕТАЙЛИ</p><h1 id="technical-heading" data-lines="">Три начина<br>да симулирате град.</h1></div>
+<div data-arrive=""><p>Бърза оценка за целия град, симулиран ден за всеки жител и изследване на кръстовище за един ъгъл, секунда по секунда.</p><a class="primary ghost" href="#quick">Следвайте трите <span aria-hidden="true">↓</span></a></div>
+</div>
+</div>
+</section>
+
+<section class="screen step tall" id="quick" data-screen="quick" aria-labelledby="quick-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">01 · БЪРЗА ОЦЕНКА</p>
+<h2 id="quick-heading" data-lines="">Четири стъпки,<br>целият град.</h2>
+<p class="copy" data-arrive="">Градът се разделя на зони. Оценката преброява пътуванията, които прави всяка зона, разпределя ги между зоните, поделя ги между начините на придвижване и натоварва пътуванията с кола по улиците, час по час. Тя работи с общи числа, затова никой не тръгва по-рано и никой не остава у дома.</p>
+<div class="changes">
+<div data-arrive="" data-step-row=""><strong>Направени пътувания</strong><span>От преброяването</span></div>
+<div data-arrive="" data-step-row=""><strong>Накъде отиват</strong><span>Настроено по анкетата за пътуванията</span></div>
+<div data-arrive="" data-step-row=""><strong>Как пътуват</strong><span>Кола, градски транспорт, велосипед, пеша</span></div>
+<div data-arrive="" data-step-row=""><strong>Кои улици</strong><span>Пътувания с кола, час по час</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen step right tall" id="day" data-screen="day" aria-labelledby="day-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">02 · СИМУЛИРАН ДЕН</p>
+<h2 id="day-heading" data-lines="">Всеки жител<br>със свой собствен ден.</h2>
+<p class="copy" data-arrive="">Всеки жител получава дом, всекидневие и план за деня. Всички пътуват едновременно, по същите улици и със същите трамваи. Всеки ден се претегля по време, пари и чакане и някои жители променят плана си за следващия кръг.</p>
+<div class="changes">
+<div data-arrive="" data-step-row=""><strong>План за всеки</strong><span>Дом, работа, училище, магазини</span></div>
+<div data-arrive="" data-step-row=""><strong>Всички едновременно</strong><span>Същите улици, същите трамваи</span></div>
+<div data-arrive="" data-step-row=""><strong>Всеки ден се претегля</strong><span>Време, пари и чакане</span></div>
+<div data-arrive="" data-step-row=""><strong>Плановете се променят</strong><span>Друг маршрут, друг час, друг начин</span></div>
+<div data-arrive="" data-step-row=""><strong>Кръгове на учене</strong><span>Докато градът се успокои</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen step tall" id="junction" data-screen="junction" aria-labelledby="junction-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">03 · ИЗСЛЕДВАНЕ НА КРЪСТОВИЩЕ</p>
+<h2 id="junction-heading" data-lines="">Един ъгъл,<br>секунда по секунда.</h2>
+<p class="copy" data-arrive="">Изследването взема возилата и маршрутите, на които се е спрял симулираният ден, и възпроизвежда един ъгъл секунда по секунда. Всяка кола, автобус, трамвай, камион и велосипед пази своята лента, своята дистанция и своя ред.</p>
+<div class="changes">
+<div data-arrive="" data-step-row=""><strong>Очертано около кръстовище</strong><span>Ъгъл от симулирания ден</span></div>
+<div data-arrive="" data-step-row=""><strong>Всяка секунда</strong><span>Коли, автобуси, трамваи, камиони, велосипеди</span></div>
+<div data-arrive="" data-step-row=""><strong>Пази дистанция</strong><span>Близо при бавно, далеч при бързо</span></div>
+<div data-arrive="" data-step-row=""><strong>Светофари и предимство</strong><span>Опашките растат и се разчистват</span></div>
+<div data-arrive="" data-step-row=""><strong>Какво се връща</strong><span>Опашки, закъснения, опасни ситуации</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen comparison tall" id="which" data-screen="which" aria-labelledby="which-heading">
+<div class="screen-words">
+<div class="comparison-top"><p class="eyebrow" data-arrive="">04 · КОЙ ОТ ТРИТЕ</p><h2 id="which-heading" data-lines="">Три начина, един град.</h2></div>
+<div class="slices" data-slices="" aria-hidden="true">
+<span class="slice-line" data-slice-line="1"></span><span class="slice-line" data-slice-line="2"></span>
+<span class="tag slice-tag" data-slice-tag="quick">БЪРЗА ОЦЕНКА</span>
+<span class="tag slice-tag" data-slice-tag="day">СИМУЛИРАН ДЕН</span>
+<span class="tag slice-tag" data-slice-tag="junction">ИЗСЛЕДВАНЕ НА КРЪСТОВИЩЕ</span>
+</div>
+<div class="three">
+<div data-arrive=""><strong>Бърза оценка</strong><p>Целият град, цял ден, час по час. Около десет минути.</p></div>
+<div data-arrive=""><strong>Симулиран ден</strong><p>Всеки жител и всяко пътуване, кръг след кръг, докато градът се успокои.</p></div>
+<div data-arrive=""><strong>Изследване на кръстовище</strong><p>Един ъгъл от симулиран ден, всяко возило, всяка секунда.</p></div>
+</div>
+</div>
+</section>
+
+<section class="screen closing tall" id="closing" data-screen="closing" aria-labelledby="closing-heading">
+<div class="screen-words">
+<div class="closing-copy">
+<div><p class="eyebrow" data-arrive="">ЕДИН ГРАД ЗА ВСЯКА ОРГАНИЗАЦИЯ</p><h2 id="closing-heading" data-lines="">Изберете как<br>да го симулирате.</h2><p class="copy" data-arrive="">Всяка организация изучава един град и го симулира по трите начина, от едни и същи данни и едни и същи начертани промени.</p><a class="primary" href="./../../bg/access/" data-arrive="">Поискайте достъп <span aria-hidden="true">↗</span></a></div>
+</div>
+<footer class="homepage-footer"><span>Polycity · Транспортни симулации</span><nav aria-label="За Polycity"><a href="./../../bg/access/">Поискайте достъп</a><a href="./../../bg/who-builds-it/">Кой го изгражда</a><a href="./../../bg/privacy/">Поверителност</a></nav><nav aria-label="Навигация в долната част"><a href="./../../bg/platform/">Платформа</a><a href="./../../bg/technical/">Технически детайли</a><a href="./../../bg/how-it-works/">Как работи</a></nav></footer>
+</div>
+</section>
+</main>
+<script type="module" src="./../../static/page-motion.js?v=c3d06b5a0750"></script>
+<script type="module" src="./../../static/technical-scene.js?v=3a7901599d92"></script>
+
+
+</body></html>

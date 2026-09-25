@@ -2,7 +2,7 @@
 // a page into Bulgarian, but the city scenes change their labels in English
 // while they play, so each label they write is put into Bulgarian as it
 // appears. The language switch is a pair of plain links and needs nothing here.
-import { words } from './words.js?v=fc83f5c81499';
+import { words } from './words.js?v=ec835b5c55e5';
 
 const normalize = value => value.replace(/\s+/g, ' ').trim();
 const translate = value => {

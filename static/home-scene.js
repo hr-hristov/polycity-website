@@ -1,4 +1,4 @@
-import { createOneCity, smooth } from './one-city.js?v=a34a2d176474';
+import { createOneCity, smooth } from './one-city.js?v=93d1433f0575';
 
 // The homepage is one city. It is fixed to the screen and the page's five
 // screens of words scroll over it; the scroll moves the camera, closes a
@@ -48,18 +48,53 @@ for(const element of document.querySelectorAll('.screen'))if(element.dataset.scr
 // every rest. Here a rest never pulls back somebody who is moving away from
 // it, a scroll that ends within REST_REACH of a rest settles onto it, and a
 // wheel or trackpad flick that would pass a rest is taken to it and held there
-// until the flick has died down, or REST_HOLD at the longest. A finger's
-// flick is the browser's own and is only settled once it ends.
+// until the flick has died down, or REST_HOLD at the longest.
+// A phone's flick is its own momentum, which no script can stop part way: it
+// ran past the next close-up and the page then drifted back up to it. So where
+// the screen is worked by a finger, the scene's rests stand aside and the
+// browser's snapping takes over, only while the page rests among the
+// close-ups: every flick or drag there comes to rest on the next close-up in
+// its direction. Two more stops, the proposal's last view above the first
+// close-up and the comparison's arrival below the last, let a reader out; once
+// the page rests on either, the snapping is off and the page scrolls freely.
 const REST_REACH=.3,REST_HOLD=900,REST_GAP=160;
+const fingers=matchMedia('(pointer: coarse)');
 const restTops=()=>{
   const box=outcomesScreen.getBoundingClientRect(),span=(box.height-innerHeight)/outcomeKeys.length;
   return outcomeKeys.map((key,i)=>Math.round(box.top+scrollY+(i+PACE.hold*.75)*span));
 };
-const resting=()=>PACE.rests&&!reducedMotion.matches&&document.documentElement.dataset.motion==='on';
+const moving=()=>PACE.rests&&!reducedMotion.matches&&document.documentElement.dataset.motion==='on';
+const resting=()=>moving()&&!fingers.matches;
+const snapping=()=>moving()&&fingers.matches;
 if(PACE.rests){
-  const say=()=>{outcomesScreen.dataset.rests=restTops().join(' ');};
-  say();addEventListener('resize',say,{passive:true});
-  let left=-1,way=0,seenY=scrollY,touching=false,idle=0;
+  const marks=[...outcomeKeys,'above','below'].map(()=>{
+    const mark=document.createElement('i');
+    mark.className='rest-mark';mark.setAttribute('aria-hidden','true');
+    outcomesScreen.append(mark);return mark;
+  });
+  const say=()=>{
+    const tops=restTops(),box=outcomesScreen.getBoundingClientRect(),top=box.top+scrollY;
+    outcomesScreen.dataset.rests=tops.join(' ');
+    // A snap point comes to rest under the page's scroll padding, so each
+    // mark stands that far below its stop.
+    const padding=parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)||0;
+    [...tops,top-innerHeight,top+box.height].forEach((stop,i)=>{marks[i].style.top=(stop-top+padding)+'px';});
+  };
+  // Where a finger's scroll came to rest: among the close-ups the snapping
+  // comes on, and a page it caught between two of them goes to the nearer.
+  const place=()=>{
+    if(!snapping()){document.documentElement.removeAttribute('data-snap-rests');return;}
+    if(touching)return;
+    const tops=restTops(),among=scrollY>=tops[0]-2&&scrollY<=tops.at(-1)+2;
+    if(among===document.documentElement.hasAttribute('data-snap-rests'))return;
+    document.documentElement.toggleAttribute('data-snap-rests',among);
+    const near=tops.reduce((best,top)=>Math.abs(top-scrollY)<Math.abs(best-scrollY)?top:best);
+    if(among&&Math.abs(near-scrollY)>=2)scrollTo({top:near,behavior:'smooth'});
+  };
+  const change=()=>{say();place();};
+  addEventListener('resize',say,{passive:true});
+  reducedMotion.addEventListener('change',change);fingers.addEventListener('change',change);
+  let left=-1,way=0,seenY=scrollY,movedAt=0,touching=false,idle=0;
   let aim=0,from=0,lastWheel=-1e9,caught=-1e9,held=false;
   const settle=()=>{
     if(!resting())return;
@@ -73,13 +108,18 @@ if(PACE.rests){
     if(near===left&&Math.sign(off)===way)return;
     scrollTo({top:near,behavior:'smooth'});
   };
+  const ended=()=>{settle();place();};
+  change();
   addEventListener('scroll',()=>{
+    movedAt=performance.now();
     if(scrollY!==seenY){way=Math.sign(scrollY-seenY);seenY=scrollY;}
-    if(!('onscrollend' in window)){clearTimeout(idle);idle=setTimeout(settle,200);}
+    if(!('onscrollend' in window)){clearTimeout(idle);idle=setTimeout(ended,200);}
   },{passive:true});
-  addEventListener('scrollend',settle,{passive:true});
+  addEventListener('scrollend',ended,{passive:true});
   addEventListener('touchstart',()=>{touching=true;},{passive:true});
-  const lifted=()=>{touching=false;clearTimeout(idle);idle=setTimeout(settle,200);};
+  // A lifted finger whose flick is still running is settled when the flick
+  // ends, and not part way through it.
+  const lifted=()=>{touching=false;clearTimeout(idle);idle=setTimeout(()=>{if(performance.now()-movedAt>150)ended();},200);};
   addEventListener('touchend',lifted,{passive:true});addEventListener('touchcancel',lifted,{passive:true});
   addEventListener('wheel',event=>{
     if(!resting()||event.ctrlKey||!event.deltaY)return;

@@ -75,6 +75,10 @@ export const CROSSINGS=[
   {x:-7.6,z:3.4,turn:0,name:'south street',narrows:true}
 ];
 export const STOP_LINE={x:-6,z:1.62};
+// The Technical page's junction study: the stretch of the west road round the
+// signal, from the north street's tram crossing to the south street's, which
+// the study replays second by second.
+export const JUNCTION={x0:-7.6,x1:-4.5,z0:-4.4,z1:4.4};
 
 // ---- Lines things move along -------------------------------------------------
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
@@ -359,7 +363,19 @@ export const POSES={
   // A phone keeps a strip of sky above it for the day's clock and the sun.
   day:{target:[0,.9,0],span:29,from:[17,20,23],dx:6.5,dy:.4,lift:.1,phone:26},
   comparison:{target:[0,.9,0],span:29,from:[14,16,19],dx:0,dy:-.5},
-  closing:{target:[0,.9,0],span:32,from:[17,20,23],dx:0,dy:1.5}
+  closing:{target:[0,.9,0],span:32,from:[17,20,23],dx:0,dy:1.5},
+  // Technical: the quick estimate over the whole city, right of the words,
+  // with room above it for the blocks of trips and the arcs between them.
+  quick:{target:[0,2,0],span:34,from:[17,20,23],dx:-5.6,dy:.2,lift:.12,phone:31},
+  // The rounds of learning stack over the city: back and up, so the whole
+  // stack stands left of the words on the right.
+  rounds:{target:[0,8.2,0],span:42,from:[17,20,23],dx:9.9,dy:.4,lift:.19,phone:44},
+  // The junction study from the east, along the west road, so the queue at
+  // the signal lies across the frame beside the words.
+  junction:{target:[-6,.4,0],span:20,from:[16,12,-1],dx:-3.4,dy:.2,lift:.16,phone:10.5},
+  // The three ways side by side, from the north, so the junction stands in
+  // the right-hand slice; set low, so the heading stands over the far side.
+  threeWays:{target:[0,.9,0],span:34,from:[0,16,-24],dx:-1,dy:-.4,lift:-.05,phone:28}
 };
 // A label stands to the right of its place, or to the left where the place is
 // near the right edge of the frame. The homepage labels the proposal's rows
@@ -375,7 +391,11 @@ export const PINS={
   drawnGrowth:{place:[BAYS.x,.2,BAYS.zs[0]],pose:'map',seen:['map'],side:'left'},
   surveyHome:{place:[BUILDINGS[8].x,3.5,BUILDINGS[8].z],pose:'survey',seen:['survey']},
   surveyWork:{place:[BUILDINGS[1].x,1.2,doorOf(BUILDINGS[1])[1]],pose:'survey',seen:['survey']},
-  surveyShops:{place:[BUILDINGS[2].x,1.2,doorOf(BUILDINGS[2])[1]],pose:'survey',seen:['survey']}
+  surveyShops:{place:[BUILDINGS[2].x,1.2,doorOf(BUILDINGS[2])[1]],pose:'survey',seen:['survey']},
+  // Technical: the corner of the junction study's line nearest the words, and
+  // the kerb beside the queue the longest tailback is measured along.
+  junctionStudy:{place:[JUNCTION.x0,.2,JUNCTION.z1],pose:'junction',seen:['junction']},
+  longestTailback:{place:[-5.5,.3,-.6],pose:'junction',seen:['junction']}
 };
 // Where traffic is counted: a loop in the road at each place, the first under
 // the label of the step that fits the model to the counts.
@@ -415,6 +435,7 @@ export const SUBJECTS={
   congestion:[[CAR_W,.5,.9],[CAR_W,.5,-.5],[SIGNAL.x,1.7,SIGNAL.z]],
   emissions:[[CAR_W,.5,.9],[CAR_W,.5,-.5]],
   counts:[[CAR_W,.5,.9],[CAR_W,.5,-.5],[SIGNAL.x,1.7,SIGNAL.z]],
+  junction:[[CAR_W,.5,STOP_LINE.z],[CAR_W,.5,-.5],[CAR_W,.5,-2.6],[SIGNAL.x,1.7,SIGNAL.z]],
   transitStop:[[-1.6,.35,-4.46],[-1,.35,-4.46],[-.4,.35,-4.46],[-1,1.1,-3.8]],
   accessibility:[[-10.15,.4,6.9],[-7.6,.2,3.4],[-6,.2,2.05],[-2.95,.3,.9],[-2.95,.3,-5.12]],
   mobility:[[0,.3,-2.25],[0,.3,-1.5],[0,.5,-3.8]]

@@ -1,5 +1,5 @@
-import { createOneCity, smooth, clamp01, plan } from './one-city.js?v=a34a2d176474';
-import { createHowLayers } from './how-layers.js?v=78a7c514a523';
+import { createOneCity, smooth, clamp01, plan } from './one-city.js?v=93d1433f0575';
+import { createHowLayers } from './how-layers.js?v=ae9d555e1ed6';
 import { WEST, EAST } from './hero-numbers.js?v=61b49655c33d';
 
 // How it works stands on the homepage's city, and each step moves the way its

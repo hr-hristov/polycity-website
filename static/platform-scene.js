@@ -1,4 +1,4 @@
-import { createOneCity, smooth, clamp01 } from './one-city.js?v=a34a2d176474';
+import { createOneCity, smooth, clamp01 } from './one-city.js?v=93d1433f0575';
 
 // Platform stands on the homepage's city and walks it past what the product
 // holds:

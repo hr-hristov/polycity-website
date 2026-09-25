@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="en"><head>
+<script>
+// Keep this static site's assets on their own server inside the session preview.
+// This must run before external resources, which cannot load the routing fix.
+(() => {
+  const address = new URL(location.href);
+  const port = address.searchParams.get('nxport');
+  if (!port || !/^\d+$/.test(port) || Number(port) < 1 || Number(port) > 65535) return;
+  const prefix = '/api/proxy/' + port;
+  if (address.pathname === prefix || address.pathname.startsWith(prefix + '/')) return;
+  address.pathname = prefix + address.pathname;
+  history.replaceState(history.state, '', address.href);
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000b2d">
+<meta name="description" content="How Polycity runs a city three ways: a quick estimate for the whole city, a simulated day for every resident, and a junction study for one corner, second by second.">
+<title>Technical — Polycity</title>
+<link rel="preload" href="./../static/assets/polycity-logo.svg?v=fdf4622226f0" as="image">
+<link rel="stylesheet" href="./../static/homepage.css?v=83f3b1119386">
+<link rel="stylesheet" href="./../static/site.css?v=ffd915f3eb6c">
+<link rel="stylesheet" href="./../static/brand.css?v=b9f64335edef">
+<script src="./../static/site.js?v=9dc7ef40fed0" defer=""></script>
+<link rel="icon" type="image/svg+xml" href="./../static/assets/polycity-icon.svg?v=ac34843353e9">
+<link rel="stylesheet" href="./../static/language.css?v=021e5b3f4eb3"></head>
+<body class="home-page platform-home one-city how-page tech-page">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header" id="top"><div class="wrap nav">
+<a class="brand brand-lockup" href="./../" aria-label="Polycity home"><img class="brand-mark" src="./../static/assets/polycity-icon.svg?v=ac34843353e9" width="64" height="64" alt=""><img class="brand-mark brand-mark-light" src="./../static/assets/polycity-icon-light.svg?v=9273514d37c9" width="64" height="64" alt="" aria-hidden="true"><span class="brand-word">POLY<span>CITY</span></span></a>
+<nav class="nav-links" aria-label="Main navigation"><a href="./../platform/">Platform</a><a href="./../technical/" aria-current="page">Technical</a><a href="./../how-it-works/">How it works</a></nav><div class="language-switch" role="group" aria-label="Language"><a href="./../technical/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/technical/" lang="bg" hreflang="bg" title="Български">БГ</a></div>
+<a class="button" href="./../access/">Ask for access</a>
+<details class="mobile-menu"><summary aria-label="Navigation menu"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></summary><nav class="menu-links" aria-label="Mobile navigation"><a href="./../platform/">Platform</a><a href="./../technical/" aria-current="page">Technical</a><a href="./../how-it-works/">How it works</a><div class="language-switch" role="group" aria-label="Language"><a href="./../technical/" lang="en" hreflang="en" title="English" aria-current="true">EN</a><a href="./../bg/technical/" lang="bg" hreflang="bg" title="Български">БГ</a></div></nav></details>
+</div></header>
+<main id="main" class="homepage-content">
+<!-- The homepage's city, fixed to the screen. It opens as numbers, is run the
+     three ways Polycity runs a city, is cut into three slices, one for each
+     way, and turns back into numbers at the end. -->
+<div class="city-scroll-section"><div class="hero-scroll-frame">
+<div class="model-stage" data-story-stage="hero" data-render-state="opening"><canvas role="img" aria-label="One geometric city run three ways. A quick estimate raises a glass block over each zone, carries its trips between the zones in arcs of four colours and loads the car trips onto the roads hour by hour. A simulated day sends every resident out at once, weighs each day, changes some plans and stacks the rounds of learning over the city until it settles. A junction study draws a line round one stretch of road and marks every vehicle every second, the gaps between cars, the signal and the longest tailback. The city is then cut into three slices, one for each way, before it turns back into numbers."></canvas><span class="story-loading" role="status">Opening the city study.</span></div>
+<span class="veil" data-veil="" aria-hidden="true"></span>
+</div></div>
+<div class="pins" aria-hidden="true">
+<span class="pin study-pin" data-pin="junctionStudy"><i></i><span>Junction study</span></span>
+<span class="pin" data-pin="longestTailback"><i></i><span>Longest tailback</span></span>
+<span class="trip-tag" data-round-tag="first">Round 1</span>
+<span class="trip-tag" data-round-tag="last">Round 30</span>
+<div class="how-card mode-card" data-card="modes">
+<p class="card-title">How they travel</p>
+<p class="card-key"><i class="by-car"></i>Car<i class="by-transit"></i>Public transport<i class="by-bike"></i>Bike<i class="by-foot"></i>On foot</p>
+</div>
+<div class="how-card hour-card" data-card="hours">
+<b class="hour-clock" data-hour-clock="">05:00</b>
+<p class="card-title">Car trips on the roads</p>
+<p class="card-key flow-key"><span>Flowing</span><b></b><span>Queued</span></p>
+</div>
+<div class="how-card plan-card" data-card="plan">
+<p class="card-title">One resident’s plan</p>
+<ul class="plan-trips">
+<li><b><span class="was">07:30</span><span class="now">07:05</span></b><span>Home → Work</span><em class="was by-car">Car</em><em class="now by-bike">Bike</em></li>
+<li><b>12:40</b><span>Work → Shops</span><em class="by-foot">On foot</em></li>
+<li><b>17:20</b><span>Shops → Home</span><em class="by-transit">Public transport</em></li>
+</ul>
+<div class="plan-score">
+<div><span>Time</span><b><span class="was">34</span><span class="now">29</span> min</b></div>
+<div><span>Money</span><b><span class="was">3.40</span><span class="now">0.00</span> €</b></div>
+<div><span>Waiting</span><b><span class="was">12</span><span class="now">0</span> min</b></div>
+</div>
+</div>
+<div class="how-card rounds-card" data-card="rounds">
+<p class="card-title">Rounds of learning</p>
+<p class="round-count"><small>Round</small><b data-round="">1</b></p>
+<svg class="rounds-curve" viewBox="0 0 200 50"><path data-rounds-curve="" pathLength="1" d="M0,6C30,8 50,34 90,40S160,44 200,44"></path></svg>
+<p class="card-key"><i class="by-car"></i>Time lost in traffic</p>
+</div>
+<div class="how-card trace-card" data-card="trace">
+<p class="card-title">Second by second</p>
+<svg class="trace" viewBox="0 0 240 90" preserveAspectRatio="none" aria-hidden="true"><path class="trace-red" data-trace="red" d="M0 30.5H70M150 30.5H220"></path><path class="trace-green" data-trace="green" d="M70 30.5H150M220 30.5H240"></path><path class="trace-cars" data-trace="cars" d="M0,78L40,50L70,50L100,20L125,2M10,88L55,53L75,53L108,22L130,2M30,88L62,56L82,56L115,24L138,2M50,88L72,59L90,59L122,26L146,2M100,88L130,50L160,4M150,88L180,50L220,50L240,36"></path></svg>
+<p class="card-key"><i class="key-car"></i>One car</p>
+</div>
+</div>
+
+<section class="screen intro" data-screen="intro" aria-labelledby="technical-heading">
+<div class="screen-words">
+<div class="hero-copy">
+<div><p class="eyebrow" data-arrive="">TECHNICAL</p><h1 id="technical-heading" data-lines="">Three ways<br>to run a city.</h1></div>
+<div data-arrive=""><p>A quick estimate for the whole city, a simulated day for every resident, and a junction study for one corner, second by second.</p><a class="primary ghost" href="#quick">Follow the three <span aria-hidden="true">↓</span></a></div>
+</div>
+</div>
+</section>
+
+<section class="screen step tall" id="quick" data-screen="quick" aria-labelledby="quick-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">01 · QUICK ESTIMATE</p>
+<h2 id="quick-heading" data-lines="">Four steps,<br>the whole city.</h2>
+<p class="copy" data-arrive="">The city is cut into zones. The estimate counts the trips each zone makes, spreads them between zones, shares them between the ways of travelling and loads the car trips onto the roads, hour by hour. It works in totals, so nobody leaves earlier or stays at home.</p>
+<div class="changes">
+<div data-arrive="" data-step-row=""><strong>Trips made</strong><span>From the census</span></div>
+<div data-arrive="" data-step-row=""><strong>Where they go</strong><span>Fitted to the travel survey</span></div>
+<div data-arrive="" data-step-row=""><strong>How they travel</strong><span>Car, public transport, bike, on foot</span></div>
+<div data-arrive="" data-step-row=""><strong>Which roads</strong><span>Car trips, hour by hour</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen step right tall" id="day" data-screen="day" aria-labelledby="day-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">02 · SIMULATED DAY</p>
+<h2 id="day-heading" data-lines="">Every resident,<br>a day of their own.</h2>
+<p class="copy" data-arrive="">Every resident gets a home, a routine and a plan for the day. Everyone travels at once, on the same streets and trams. Each day is weighed by time, money and waiting, and some residents change their plan for the next round.</p>
+<div class="changes">
+<div data-arrive="" data-step-row=""><strong>A plan each</strong><span>Home, work, school, shops</span></div>
+<div data-arrive="" data-step-row=""><strong>Everyone at once</strong><span>The same streets, the same trams</span></div>
+<div data-arrive="" data-step-row=""><strong>Each day weighed</strong><span>Time, money and waiting</span></div>
+<div data-arrive="" data-step-row=""><strong>Plans change</strong><span>Another route, another hour, another way</span></div>
+<div data-arrive="" data-step-row=""><strong>Rounds of learning</strong><span>Until the city settles</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen step tall" id="junction" data-screen="junction" aria-labelledby="junction-heading">
+<div class="screen-words">
+<p class="eyebrow" data-arrive="">03 · JUNCTION STUDY</p>
+<h2 id="junction-heading" data-lines="">One corner,<br>second by second.</h2>
+<p class="copy" data-arrive="">The study takes the vehicles and routes the simulated day settled on, and replays one corner second by second. Every car, bus, tram, lorry and bicycle keeps its lane, its gap and its turn.</p>
+<div class="changes">
+<div data-arrive="" data-step-row=""><strong>Drawn round a junction</strong><span>A corner of the simulated day</span></div>
+<div data-arrive="" data-step-row=""><strong>Every second</strong><span>Cars, buses, trams, lorries, bicycles</span></div>
+<div data-arrive="" data-step-row=""><strong>Keeps its distance</strong><span>Close when slow, far when fast</span></div>
+<div data-arrive="" data-step-row=""><strong>Signals and give way</strong><span>Queues grow and clear</span></div>
+<div data-arrive="" data-step-row=""><strong>What comes back</strong><span>Tailback, delay, near misses</span></div>
+</div>
+</div>
+</section>
+
+<section class="screen comparison tall" id="which" data-screen="which" aria-labelledby="which-heading">
+<div class="screen-words">
+<div class="comparison-top"><p class="eyebrow" data-arrive="">04 · WHICH ONE</p><h2 id="which-heading" data-lines="">Three ways, one city.</h2></div>
+<div class="slices" data-slices="" aria-hidden="true">
+<span class="slice-line" data-slice-line="1"></span><span class="slice-line" data-slice-line="2"></span>
+<span class="tag slice-tag" data-slice-tag="quick">QUICK ESTIMATE</span>
+<span class="tag slice-tag" data-slice-tag="day">SIMULATED DAY</span>
+<span class="tag slice-tag" data-slice-tag="junction">JUNCTION STUDY</span>
+</div>
+<div class="three">
+<div data-arrive=""><strong>Quick estimate</strong><p>The whole city, a whole day, hour by hour. About ten minutes.</p></div>
+<div data-arrive=""><strong>Simulated day</strong><p>Every resident and every trip, round after round until the city settles.</p></div>
+<div data-arrive=""><strong>Junction study</strong><p>One corner of a simulated day, every vehicle, every second.</p></div>
+</div>
+</div>
+</section>
+
+<section class="screen closing tall" id="closing" data-screen="closing" aria-labelledby="closing-heading">
+<div class="screen-words">
+<div class="closing-copy">
+<div><p class="eyebrow" data-arrive="">ONE CITY PER ORGANISATION</p><h2 id="closing-heading" data-lines="">Choose how<br>it runs.</h2><p class="copy" data-arrive="">Each organisation studies one city and runs it all three ways, from the same data and the same drawn changes.</p><a class="primary" href="./../access/" data-arrive="">Ask for access <span aria-hidden="true">↗</span></a></div>
+</div>
+<footer class="homepage-footer"><span>Polycity · Transport simulation</span><nav aria-label="About Polycity"><a href="./../access/">Ask for access</a><a href="./../who-builds-it/">Who builds it</a><a href="./../privacy/">Privacy</a></nav><nav aria-label="Footer navigation"><a href="./../platform/">Platform</a><a href="./../technical/">Technical</a><a href="./../how-it-works/">How it works</a></nav></footer>
+</div>
+</section>
+</main>
+<script type="module" src="./../static/page-motion.js?v=c3d06b5a0750"></script>
+<script type="module" src="./../static/technical-scene.js?v=3a7901599d92"></script>
+
+
+</body></html>

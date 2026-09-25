@@ -1,8 +1,8 @@
 import * as THREE from './vendor/three.module.min.js';
-import { createCityKit, palette as cityPalette, foldedCrown } from './city-kit.js?v=93d8c5e59a1a';
+import { createCityKit, palette as cityPalette, foldedCrown } from './city-kit.js?v=7c4acbfa47ff';
 import { createNumberCity } from './hero-numbers.js?v=61b49655c33d';
 import { createCityDetail } from './city-detail.js?v=acf713bdcf2d';
-import * as plan from './city-plan.js?v=a0d7971b55f3';
+import * as plan from './city-plan.js?v=bb2a86585d63';
 
 // The one city the homepage and How it works both stand on. It is fixed to the
 // screen and screens of words scroll over it. This module builds the city, its
@@ -376,12 +376,21 @@ function shoot(){
 // within a few frames instead of trailing them by rows; slower than half a
 // second, there is no motion left to ease, and the camera goes straight to
 // where the scroll is.
+// A finger's scroll is smooth already, and a flick crosses three screens in a
+// second, so the city trailed the words by nearly half a screen of it. While
+// a finger moves the page, the drawn scroll follows it FINGER times as
+// closely, and the city trails a flick by about what it trails a wheel.
+const FINGER=3;
+let finger=matchMedia('(pointer: coarse)').matches;
+addEventListener('touchstart',()=>{finger=true;},{passive:true});
+addEventListener('wheel',()=>{finger=false;},{passive:true});
+addEventListener('keydown',()=>{finger=false;},{passive:true});
 const screens=[...document.querySelectorAll('.screen')].map(element=>({element,name:element.dataset.screen}));
 let easedY=null,lastRead=performance.now();
 function readScreens(paused){
   const now=performance.now(),elapsed=(now-lastRead)/1000,dt=Math.min(elapsed,.25);lastRead=now;
   if(easedY===null||paused||reducedMotion.matches||elapsed>.5)easedY=scrollY;
-  else easedY+=(scrollY-easedY)*(1-Math.exp(-dt*glide));
+  else easedY+=(scrollY-easedY)*(1-Math.exp(-dt*glide*(finger?FINGER:1)));
   if(Math.abs(scrollY-easedY)<.3)easedY=scrollY;
   const lag=scrollY-easedY,vh=innerHeight;
   return Object.fromEntries(screens.map(({element,name})=>{
@@ -491,20 +500,40 @@ function density(){
 // of what changed: today's side has nothing to compare against.
 const proposalOnly=new Set();
 function onlyInProposal(object){proposalOnly.add(object);return object;}
-function renderSplit(fraction){
+// Draws the city in slices side by side, all from the same camera. Each slice
+// reaches to a share of the width, 0 to 1, and its look sets what it shows
+// before it is drawn; the last slice's look is what the city keeps. The split
+// is two slices, today and the proposal; the Technical page's three ways are
+// three.
+function renderSlices(list){
   hero.renderer.setPixelRatio(density());
   hero.renderer.setSize(hero.host.clientWidth,hero.host.clientHeight,false);
-  const w=hero.canvas.width,h=hero.canvas.height,cut=Math.round(w*fraction);
+  const w=hero.canvas.width,h=hero.canvas.height,source=hero.renderer.domElement,k=source.width/w;
   context.clearRect(0,0,w,h);
-  applyProposal({street:0,transit:0,growth:0});
-  const shownThere=[...proposalOnly].map(object=>[object,object.visible]);
-  shownThere.forEach(([object])=>{object.visible=false;});
-  hero.renderer.render(hero.scene,hero.camera);
-  if(cut>0)context.drawImage(hero.renderer.domElement,0,0,cut*(hero.renderer.domElement.width/w),hero.renderer.domElement.height,0,0,cut,h);
-  shownThere.forEach(([object,visible])=>{object.visible=visible;});
-  applyProposal(weights);
-  hero.renderer.render(hero.scene,hero.camera);
-  if(cut<w)context.drawImage(hero.renderer.domElement,cut*(hero.renderer.domElement.width/w),0,(w-cut)*(hero.renderer.domElement.width/w),hero.renderer.domElement.height,cut,0,w-cut,h);
+  let from=0;
+  for(const slice of list){
+    const to=Math.max(from,Math.round(w*clamp01(slice.to)));
+    slice.look?.();
+    if(to>from){
+      hero.renderer.render(hero.scene,hero.camera);
+      context.drawImage(source,from*k,0,(to-from)*k,source.height,from,0,to-from,h);
+    }
+    from=to;
+  }
+}
+function renderSplit(fraction){
+  let shownThere=[];
+  renderSlices([
+    {to:fraction,look(){
+      applyProposal({street:0,transit:0,growth:0});
+      shownThere=[...proposalOnly].map(object=>[object,object.visible]);
+      shownThere.forEach(([object])=>{object.visible=false;});
+    }},
+    {to:1,look(){
+      shownThere.forEach(([object,visible])=>{object.visible=visible;});
+      applyProposal(weights);
+    }}
+  ]);
 }
 // The haze the far city fades into: the page's paper by day, the night sky
 // after dark, and navy while the city is numbers.
@@ -513,14 +542,21 @@ const haze=new THREE.Color(palette.haze),nightHaze=new THREE.Color('#0b1433'),na
 // number city, each part's turn back to real (see hero-numbers.js), how dark
 // the day is, and the split open by its share, 0 closed. Returns where the
 // split's line stands, as a share of the width.
-function paint({field=0,opened=0,parts,night:dark=night}={}){
+// slices, when given, draws the city as those slices instead of the split:
+// each is {to, parts, look}, and a slice with parts of its own turns those
+// parts to numbers or back before its look runs.
+function paint({field=0,opened=0,parts,night:dark=night,slices}={}){
   const cut=opened>0?THREE.MathUtils.lerp(0,split,opened):0;
   splitElement?.style.setProperty('--split',(cut*100).toFixed(2)+'%');
   pondRing.visible=field<.01&&(parts?.streets??1)>=1;
   const wash=numbers.update(field,hero.time,parts);
   numbers.shade(Math.max(wash,dark));
   if(hero.scene.fog)hero.scene.fog.color.copy(haze).lerp(nightHaze,dark).lerp(navy,wash);
-  if(cut>0.001)renderSplit(cut);else hero.render();
+  if(slices)renderSlices(slices.map(slice=>({to:slice.to,look(){
+    numbers.update(field,hero.time,slice.parts??parts);
+    slice.look?.();
+  }})));
+  else if(cut>0.001)renderSplit(cut);else hero.render();
   return cut;
 }
 

@@ -1,4 +1,4 @@
-import { createCityKit } from './city-kit.js?v=93d8c5e59a1a';
+import { createCityKit } from './city-kit.js?v=7c4acbfa47ff';
 import { createScrollProgress } from './scroll-motion.js?v=5c3d066fb57c';
 import { attachOutcomeStudies } from './outcome-studies.js?v=9b86233f75cc';
 
