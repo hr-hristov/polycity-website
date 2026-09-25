@@ -2,7 +2,7 @@ import * as THREE from './vendor/three.module.min.js';
 import { createCityKit, palette as cityPalette, foldedCrown } from './city-kit.js?v=7c4acbfa47ff';
 import { createNumberCity } from './hero-numbers.js?v=61b49655c33d';
 import { createCityDetail } from './city-detail.js?v=acf713bdcf2d';
-import * as plan from './city-plan.js?v=bb2a86585d63';
+import * as plan from './city-plan.js?v=601cda15485c';
 
 // The one city the homepage and How it works both stand on. It is fixed to the
 // screen and screens of words scroll over it. This module builds the city, its

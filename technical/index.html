@@ -19,7 +19,7 @@
 <title>Technical — Polycity</title>
 <link rel="preload" href="./../static/assets/polycity-logo.svg?v=fdf4622226f0" as="image">
 <link rel="stylesheet" href="./../static/homepage.css?v=83f3b1119386">
-<link rel="stylesheet" href="./../static/site.css?v=ffd915f3eb6c">
+<link rel="stylesheet" href="./../static/site.css?v=b0566ec29448">
 <link rel="stylesheet" href="./../static/brand.css?v=b9f64335edef">
 <script src="./../static/site.js?v=9dc7ef40fed0" defer=""></script>
 <link rel="icon" type="image/svg+xml" href="./../static/assets/polycity-icon.svg?v=ac34843353e9">
@@ -38,46 +38,170 @@
      three ways Polycity runs a city, is cut into three slices, one for each
      way, and turns back into numbers at the end. -->
 <div class="city-scroll-section"><div class="hero-scroll-frame">
-<div class="model-stage" data-story-stage="hero" data-render-state="opening"><canvas role="img" aria-label="One geometric city run three ways. A quick estimate raises a glass block over each zone, carries its trips between the zones in arcs of four colours and loads the car trips onto the roads hour by hour. A simulated day sends every resident out at once, weighs each day, changes some plans and stacks the rounds of learning over the city until it settles. A junction study draws a line round one stretch of road and marks every vehicle every second, the gaps between cars, the signal and the longest tailback. The city is then cut into three slices, one for each way, before it turns back into numbers."></canvas><span class="story-loading" role="status">Opening the city study.</span></div>
+<span class="slice-night" data-slice-night="" aria-hidden="true"></span>
+<div class="model-stage" data-story-stage="hero" data-render-state="opening"><canvas role="img" aria-label="One geometric city run three ways. A quick estimate turns the city into numbers, raises a column of light over each zone as tall as the trips it makes, carries the trips between the zones in glowing arcs of four colours and pours the car trips onto the roads as flowing light. A simulated day sends every resident out at once, draws each resident's day as a thread rising over the city hour by hour, weighs each day and settles round after round while the tailbacks shrink. A junction study draws a line round one stretch of road, where every vehicle leaves a trail coloured by its speed, each car keeps its gap, the signal turns and the longest tailback is marked. The city is then cut into three slices, one for each way, before it turns back into numbers."></canvas><span class="story-loading" role="status">Opening the city study.</span></div>
 <span class="veil" data-veil="" aria-hidden="true"></span>
 </div></div>
 <div class="pins" aria-hidden="true">
 <span class="pin study-pin" data-pin="junctionStudy"><i></i><span>Junction study</span></span>
 <span class="pin" data-pin="longestTailback"><i></i><span>Longest tailback</span></span>
-<span class="trip-tag" data-round-tag="first">Round 1</span>
-<span class="trip-tag" data-round-tag="last">Round 30</span>
-<div class="how-card mode-card" data-card="modes">
+<span class="zone-tag" data-zone-tag="0"><small>1</small><b></b></span><span class="zone-tag" data-zone-tag="1"><small>2</small><b></b></span><span class="zone-tag" data-zone-tag="2"><small>3</small><b></b></span>
+<span class="zone-tag" data-zone-tag="3"><small>4</small><b></b></span><span class="zone-tag" data-zone-tag="4"><small>5</small><b></b></span><span class="zone-tag" data-zone-tag="5"><small>6</small><b></b></span>
+<span class="zone-tag" data-zone-tag="6"><small>7</small><b></b></span><span class="zone-tag" data-zone-tag="7"><small>8</small><b></b></span><span class="zone-tag" data-zone-tag="8"><small>9</small><b></b></span>
+<span class="trip-tag hour-tag" data-hour-tag="">08:00</span>
+<span class="axis-tag" data-axis-tag="6">06:00</span><span class="axis-tag" data-axis-tag="12">12:00</span><span class="axis-tag" data-axis-tag="18">18:00</span><span class="axis-tag" data-axis-tag="24">24:00</span>
+</div>
+<!-- The cards each row raises over the city. Every number in them is worked
+     out by the page's scripts from the rules the product runs. -->
+<div class="pins story-cards">
+<div class="how-card night-card trips-card" data-card="trips">
+<p class="card-title">Trips made</p>
+<p class="big-number"><b data-trip-rate="">2.4</b><span>trips per resident a day</span></p>
+</div>
+<div class="how-card night-card story-card gravity-card" data-card="gravity">
+<p class="card-title">Where they go</p>
+<math class="formula" display="block"><msub><mi>T</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>A</mi><mi>i</mi></msub><msub><mi>O</mi><mi>i</mi></msub><msub><mi>B</mi><mi>j</mi></msub><msub><mi>D</mi><mi>j</mi></msub><msup><mi>e</mi><mrow><mo>−</mo><mi class="greek">β</mi><msub><mi>d</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow></msup></math>
+<svg class="curve" viewBox="0 0 160 66" aria-hidden="true"><path class="axes" d="M5 4V62H158"></path><polyline class="curve-line" data-fall-line="" points=""></polyline><g class="curve-dots" data-fall-dots=""></g><circle class="curve-now" data-fall-now="" r="4" cx="-10" cy="-10"></circle></svg>
+<p class="axis"><span>0</span><span><span>Distance</span>, <span>km</span></span><span>8</span></p>
+<p class="live"><span>Zone</span> <b data-from="">5</b> → <span>zone</span> <b data-to="">1</b> · <b data-km="">4.3</b> <span>km</span> · <math><msup><mi>e</mi><mrow><mo>−</mo><mn>0.12</mn><mo>×</mo><mn data-km-math="">4.3</mn></mrow></msup><mo>=</mo><mn data-pull="">0.60</mn></math></p>
+<dl class="terms">
+<dt><math><msub><mi>O</mi><mi>i</mi></msub></math></dt><dd>Trips leaving zone i</dd>
+<dt><math><msub><mi>D</mi><mi>j</mi></msub></math></dt><dd>Trips arriving in zone j</dd>
+<dt><math><msub><mi>d</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></math></dt><dd>Kilometres between them</dd>
+<dt><math><mi class="greek">β</mi></math></dt><dd>How quickly distance puts people off, 0.12 a km</dd>
+<dt><math><mi>A</mi><mo>,</mo><mi>B</mi></math></dt><dd>Kept so every total adds up</dd>
+</dl>
+</div>
+<div class="how-card night-card modes-card" data-card="modes">
 <p class="card-title">How they travel</p>
+<div class="share-bar"><i class="by-car" data-share="0"><b></b></i><i class="by-transit" data-share="1"><b></b></i><i class="by-bike" data-share="2"><b></b></i><i class="by-foot" data-share="3"><b></b></i></div>
 <p class="card-key"><i class="by-car"></i>Car<i class="by-transit"></i>Public transport<i class="by-bike"></i>Bike<i class="by-foot"></i>On foot</p>
 </div>
-<div class="how-card hour-card" data-card="hours">
-<b class="hour-clock" data-hour-clock="">05:00</b>
-<p class="card-title">Car trips on the roads</p>
-<p class="card-key flow-key"><span>Flowing</span><b></b><span>Queued</span></p>
+<div class="how-card night-card story-card roads-card" data-card="roads">
+<p class="card-title">Which roads</p>
+<div class="roads-top"><b class="hour-clock" data-hour-clock="">05:00</b><math class="formula" display="block"><mi>t</mi><mo>=</mo><msub><mi>t</mi><mn>0</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><mn>0.15</mn><msup><mrow><mo>(</mo><mfrac><mi>v</mi><mi>c</mi></mfrac><mo>)</mo></mrow><mn>4</mn></msup><mo stretchy="false">)</mo></math></div>
+<svg class="curve" viewBox="0 0 150 62" aria-hidden="true"><path class="axes" d="M0 60H150"></path><line class="full" data-road-full="" x1="100" y1="0" x2="100" y2="60"></line><polyline class="curve-line hot" data-road-line="" points=""></polyline><circle class="curve-now" data-road-now="" r="3.6" cx="-10" cy="-10"></circle></svg>
+<p class="axis"><span>0</span><math><mi>v</mi><mo>/</mo><mi>c</mi></math><span>1.5</span></p>
+<p class="live"><b data-cars="">1 920</b> <span>cars an hour</span> · <span>built for</span> <b data-capacity="">1 800</b> · <b data-slower="">19</b> <span>% slower</span></p>
+<dl class="terms">
+<dt><math><msub><mi>t</mi><mn>0</mn></msub></math></dt><dd>Minutes on an empty road</dd>
+<dt><math><mi>v</mi><mo>/</mo><mi>c</mi></math></dt><dd>Cars an hour over what the road carries</dd>
+</dl>
+<p class="card-key flow-key"><span>Flowing</span><b></b><span>Tailback</span></p>
 </div>
-<div class="how-card plan-card" data-card="plan">
-<p class="card-title">One resident’s plan</p>
-<ul class="plan-trips">
-<li><b><span class="was">07:30</span><span class="now">07:05</span></b><span>Home → Work</span><em class="was by-car">Car</em><em class="now by-bike">Bike</em></li>
-<li><b>12:40</b><span>Work → Shops</span><em class="by-foot">On foot</em></li>
-<li><b>17:20</b><span>Shops → Home</span><em class="by-transit">Public transport</em></li>
+<div class="how-card people-card" data-card="people">
+<p class="card-title">People who live here</p>
+<div class="resident">
+<p class="resident-head"><i></i>One modelled resident</p>
+<dl>
+<dt>Home zone</dt><dd><span>Zone</span> 7</dd>
+<dt>Income band</dt><dd>Middle income</dd>
+<dt>Car ownership</dt><dd>Has a car</dd>
+<dt class="plan-lit">Routine</dt><dd class="plan-lit chain"><b>Home</b><em>›</em><b class="at-work">Work</b><em>›</em><b class="at-shop">Shop</b><em>›</em><b>Home</b></dd>
+<dt class="plan-lit">Leaves home</dt><dd class="plan-lit">06:00–10:00</dd>
+<dt class="plan-lit">Leaves work</dt><dd class="plan-lit">15:00–20:00</dd>
+</dl>
+</div>
+<div class="bands">
+<span></span><b>Residents</b><b>Has a car</b>
+<span><i class="inc-low"></i>Lower income</span><span class="meter"><i style="--w:30%"></i><b>30 %</b></span><span class="meter"><i style="--w:50%"></i><b>50 %</b></span>
+<span><i class="inc-mid"></i>Middle income</span><span class="meter"><i style="--w:50%"></i><b>50 %</b></span><span class="meter"><i style="--w:80%"></i><b>80 %</b></span>
+<span><i class="inc-high"></i>Higher income</span><span class="meter"><i style="--w:20%"></i><b>20 %</b></span><span class="meter"><i style="--w:90%"></i><b>90 %</b></span>
+</div>
+<p class="live">Share of residents modelled: <b>1 %</b> by default. Roads shrink to match, and totals are scaled back up.</p>
+</div>
+<div class="how-card crowd-card" data-card="crowd">
+<p class="card-title">Everyone at once</p>
+<ul class="crowd-key">
+<li><i class="k-road"></i><b>Cars and buses</b><span>The same streets</span></li>
+<li><i class="k-rail"></i><b>Trams and trains</b><span>Their own track</span></li>
+<li><i class="k-tail"></i><b>Tailback</b><span>Into the side streets</span></li>
 </ul>
-<div class="plan-score">
-<div><span>Time</span><b><span class="was">34</span><span class="now">29</span> min</b></div>
-<div><span>Money</span><b><span class="was">3.40</span><span class="now">0.00</span> €</b></div>
-<div><span>Waiting</span><b><span class="was">12</span><span class="now">0</span> min</b></div>
 </div>
+<div class="how-card weigh-card" data-card="weigh">
+<div class="weigh-head"><p class="card-title">Each day weighed</p><p class="weigh-score"><span>Score</span><b data-weigh-score="">126.0</b></p></div>
+<math class="formula" display="block"><mi>S</mi><mo>=</mo><mrow class="half-places" data-half="places"><munder><mo>∑</mo><mi>a</mi></munder><mi class="greek">β</mi><msubsup><mi>t</mi><mi>a</mi><mo>*</mo></msubsup><mi>ln</mi><mfrac><msub><mi>t</mi><mi>a</mi></msub><msub><mi>t</mi><mn>0</mn></msub></mfrac></mrow><mo>+</mo><mrow class="half-trips" data-half="trips"><munder><mo>∑</mo><mi>k</mi></munder><mo stretchy="false">(</mo><msub><mi>C</mi><mi>m</mi></msub><mo>+</mo><msub><mi class="greek">β</mi><mi>m</mi></msub><msub><mi>t</mi><mi>k</mi></msub><mo>+</mo><msub><mi class="greek">β</mi><mi>c</mi></msub><msub><mi>c</mi><mi>k</mi></msub><mo stretchy="false">)</mo></mrow></math>
+<div class="weigh-strip"><i class="at" data-part="0"><span>Home</span></i><i class="trip" data-part="1"></i><i class="at at-work" data-part="2"><span>Work</span></i><i class="trip" data-part="3"></i><i class="at at-shop" data-part="4"></i><i class="trip" data-part="5"></i><i class="at" data-part="6"><span>Home</span></i><b class="weigh-now" data-weigh-now=""></b></div>
+<p class="weigh-hours"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></p>
+<p class="weigh-bar"><i class="bar-score" data-bar="score"></i><i class="bar-trips" data-bar="trips"></i></p>
+<div class="weigh-sums">
+<p class="sum-places" data-half="places" tabindex="0"><b>Time at places</b><span data-sum="places">+138.5</span><small><span>Home</span> <span data-place-score="home"></span> · <span>Work</span> <span data-place-score="work"></span> · <span>Shop</span> <span data-place-score="shop"></span></small></p>
+<p class="sum-trips" data-half="trips" tabindex="0"><b>Trips</b><span data-sum="trips">−12.5</span><small><span data-trip-minutes=""></span> <span>min</span> · <span data-trip-minutes=""></span> <span>min</span> · <span data-trip-minutes=""></span> <span>min</span></small></p>
+</div>
+<div class="weigh-ways"><button type="button" data-way="car">Car<b data-way-score=""></b></button><button type="button" data-way="transit">Public transport<b data-way-score=""></b></button><button type="button" data-way="bike">Bike<b data-way-score=""></b></button><button type="button" data-way="foot">On foot<b data-way-score=""></b></button></div>
+<dl class="terms">
+<dt><math><msub><mi>t</mi><mi>a</mi></msub></math></dt><dd>Hours at a place</dd>
+<dt><math><msubsup><mi>t</mi><mi>a</mi><mo>*</mo></msubsup></math></dt><dd>Usual hours: home 12, work 8, shop 1</dd>
+<dt><math><mi class="greek">β</mi></math></dt><dd>An hour at a place, +6</dd>
+<dt><math><msub><mi>t</mi><mn>0</mn></msub></math></dt><dd>Hours below which a stay loses points</dd>
+<dt><math><msub><mi class="greek">β</mi><mi>m</mi></msub></math></dt><dd>An hour travelling: car and public transport −12, bike −18, on foot −24</dd>
+<dt><math><msub><mi>C</mi><mi>m</mi></msub></math></dt><dd>Public transport, −1 a trip</dd>
+<dt><math><msub><mi class="greek">β</mi><mi>c</mi></msub><msub><mi>c</mi><mi>k</mi></msub></math></dt><dd>Money spent, 0.20 € a km by car or public transport</dd>
+</dl>
+</div>
+<div class="how-card memory-card" data-card="memory">
+<p class="card-title">Plans change</p>
+<p class="mix-label">Five remembered days</p>
+<div class="remembered">
+<p data-remembered="car"><span><span>Car</span> · <b data-leaves=""></b><em>Kept</em></span><i></i><b data-score=""></b></p>
+<p data-remembered="route"><span><span>Car, another route</span> · <b data-leaves=""></b><em>Kept</em></span><i></i><b data-score=""></b></p>
+<p data-remembered="bike"><span><span>Bike</span> · <b data-leaves=""></b><em>Kept</em></span><i></i><b data-score=""></b></p>
+<p data-remembered="transit"><span><span>Public transport</span> · <b data-leaves=""></b><em>Kept</em></span><i></i><b data-score=""></b></p>
+<p data-remembered="foot"><span><span>On foot</span> · <b data-leaves=""></b><em>Kept</em></span><i></i><b data-score=""></b></p>
+</div>
+<p class="mix-label">Each round</p>
+<p class="round-dots" data-round-dots=""><i class="keep"></i><i class="keep"></i><i class="keep"></i><i class="keep"></i><i class="keep"></i><i class="keep"></i><i class="route"></i><i class="route"></i><i class="hour"></i><i class="way"></i></p>
+<p class="dot-key"><span><i class="keep"></i>Best kept <b>60 %</b></span><span><i class="route"></i>New route <b>20 %</b></span><span><i class="hour"></i>New hour, up to 30 min <b>10 %</b></span><span><i class="way"></i>Another way <b>10 %</b></span></p>
+<p class="live">After 80 % of the rounds, nobody tries anything new, and everyone keeps their best day.</p>
 </div>
 <div class="how-card rounds-card" data-card="rounds">
-<p class="card-title">Rounds of learning</p>
-<p class="round-count"><small>Round</small><b data-round="">1</b></p>
-<svg class="rounds-curve" viewBox="0 0 200 50"><path data-rounds-curve="" pathLength="1" d="M0,6C30,8 50,34 90,40S160,44 200,44"></path></svg>
-<p class="card-key"><i class="by-car"></i>Time lost in traffic</p>
+<div class="rounds-head"><p class="card-title">Rounds of learning</p><p class="round-count"><small>Round</small><b data-round="">1</b></p></div>
+<svg class="rounds-chart" viewBox="0 0 300 130" aria-hidden="true"><rect class="plot" x="14" y="4" width="282" height="112" rx="10"></rect><rect class="tenth" data-rounds-tenth="" x="0" y="4" width="0" height="112"></rect><path class="grid" data-rounds-grid="" d=""></path><line class="stop" data-rounds-stop="" x1="0" y1="8" x2="0" y2="112"></line><polyline class="line" data-rounds-line="" points=""></polyline><circle class="now" data-rounds-now="" r="4" cx="-10" cy="-10"></circle><g class="ticks" data-rounds-ticks=""></g></svg>
+<p class="dot-key"><span><i class="k-line"></i>Average score</span><span><i class="k-stop"></i>Nothing new after round <b data-stop-round="">24</b></span><span><i class="k-tenth"></i>The last tenth</span></p>
+<p class="badges"><span data-badge=""><b>Scores settled</b><small>Moved 1 % or less</small></span><span data-badge=""><b>Mode shares settled</b><small>Moved one point or less</small></span></p>
+<p class="live">30 rounds here. Each city sets its own, from 1 to 1 000.</p>
 </div>
-<div class="how-card trace-card" data-card="trace">
-<p class="card-title">Second by second</p>
-<svg class="trace" viewBox="0 0 240 90" preserveAspectRatio="none" aria-hidden="true"><path class="trace-red" data-trace="red" d="M0 30.5H70M150 30.5H220"></path><path class="trace-green" data-trace="green" d="M70 30.5H150M220 30.5H240"></path><path class="trace-cars" data-trace="cars" d="M0,78L40,50L70,50L100,20L125,2M10,88L55,53L75,53L108,22L130,2M30,88L62,56L82,56L115,24L138,2M50,88L72,59L90,59L122,26L146,2M100,88L130,50L160,4M150,88L180,50L220,50L240,36"></path></svg>
-<p class="card-key"><i class="key-car"></i>One car</p>
+<div class="how-card results-card" data-card="results">
+<p class="card-title">What comes back</p>
+<p class="mix-label">Results</p>
+<p class="chips"><span>Mobility</span><span>Congestion</span><span>Transit</span><span>Parking</span><span>Emissions</span><span>Accessibility</span><span>Noise</span><span>Cycling</span><span>Walking</span><span>What people pay</span><span class="lit">Who is affected</span></p>
+<p class="mix-label">Who is affected</p>
+<div class="by">
+<p><b>Income band</b><span><i class="inc-low"></i>Lower income</span><span><i class="inc-mid"></i>Middle income</span><span><i class="inc-high"></i>Higher income</span></p>
+<p><b>Car ownership</b><span>Has a car</span><span>No car</span></p>
+<p><b>Home zone</b><span>Zone by zone</span></p>
+</div>
+<p class="mix-label">Resident by resident</p>
+<p class="chips"><span>Who switched</span><span>Residents' days</span></p>
+<p class="mix-label">Run health</p>
+<p class="chips pale"><span>Scores settled</span><span>Mode shares settled</span><span>Stuck residents</span><span>Rounds of learning</span></p>
+</div>
+<div class="how-card speed-card" data-card="speed">
+<p class="card-title">Every second</p>
+<p class="speed-key"><span>Standing</span><b></b><span>50 <span>km/h</span></span></p>
+</div>
+<div class="how-card gap-card" data-card="gap">
+<p class="card-title">Keeps its distance</p>
+<svg class="gap-road" viewBox="0 0 280 40" aria-hidden="true"><path class="kerb" d="M0 33H280"></path><rect class="follower" data-follower="" x="40" y="19" width="44" height="12" rx="3"></rect><rect class="leader" x="228" y="19" width="44" height="12" rx="3"></rect><path class="bracket" data-gap-bracket="" d=""></path></svg>
+<div class="safe-wrap"><svg class="safe-chart" viewBox="0 0 280 96" aria-hidden="true"><path class="axes" d="M4 4V92H276"></path><line class="limit" data-safe-limit="" x1="4" y1="0" x2="276" y2="0"></line><polyline class="curve-line" data-safe-line="" points=""></polyline><circle class="curve-now" data-safe-now="" r="4.5" cx="-10" cy="-10"></circle></svg><span class="limit-label">50 <span>km/h</span></span></div>
+<p class="axis"><span>0</span><span><span>Gap</span>, <span>m</span></span><span>40</span></p>
+<p class="live"><span>Car ahead standing</span> · <span>gap</span> <b data-gap="">9</b> <span>m</span> · <span>safe speed</span> <b data-speed="">20</b> <span>km/h</span></p>
+</div>
+<div class="how-card signals-card" data-card="signals">
+<p class="card-title">Signals and give way</p>
+<div class="signals-top">
+<svg class="cycle-ring" viewBox="0 0 80 80" aria-hidden="true"><g data-cycle-ring=""></g><line class="hand" data-hand="" x1="40" y1="40" x2="40" y2="7"></line><circle class="hub" cx="40" cy="40" r="3"></circle></svg>
+<div>
+<math class="formula" display="block"><msub><mi>g</mi><mn>1</mn></msub><mo>=</mo><mn>80</mn><mo>·</mo><mfrac><msub><mi>q</mi><mn>1</mn></msub><mrow><msub><mi>q</mi><mn>1</mn></msub><mo>+</mo><msub><mi>q</mi><mn>2</mn></msub></mrow></mfrac></math>
+<div class="green-split"><span></span><b>Cars a lane</b><b>Green</b><span><i class="k-main"></i>Main road</span><b data-q="1"></b><b><span data-g="1"></span> <span>s</span></b><span><i class="k-side"></i>Side street</span><b data-q="2"></b><b><span data-g="2"></span> <span>s</span></b></div>
+</div>
+</div>
+<svg class="signal-trace" viewBox="0 0 300 178" aria-hidden="true"><g data-trace-strip=""></g><rect class="plot" x="18" y="18" width="278" height="150" rx="10"></rect><path class="grid" data-trace-grid="" d=""></path><polygon class="wedge" data-trace-wedge="" points=""></polygon><line class="stop-line" data-trace-stop="" x1="24" y1="0" x2="292" y2="0"></line><path class="moving" data-trace-moving="" d=""></path><path class="standing" data-trace-standing="" d=""></path><path class="away" data-trace-away="" d=""></path><path class="forming" data-trace-forming="" d=""></path><path class="clearing" data-trace-clearing="" d=""></path><line class="now" data-trace-now="" x1="0" y1="18" x2="0" y2="168"></line><g class="ticks" data-trace-ticks=""></g></svg>
+<p class="trace-key"><span><i class="k-moving"></i>Moving</span><span><i class="k-standing"></i>Standing</span><span><i class="k-away"></i>Pulling away</span><span class="k-axis">Seconds · metres before the stop line</span></p>
+<dl class="terms">
+<dt><math><msub><mi>q</mi><mn>1</mn></msub><mo>,</mo><msub><mi>q</mi><mn>2</mn></msub></math></dt><dd>Cars on the busiest lane of each street</dd>
+<dt><math><mn>80</mn></math></dt><dd>Green seconds in the 90-second cycle</dd>
+</dl>
 </div>
 </div>
 
@@ -108,13 +232,15 @@
 <div class="screen-words">
 <p class="eyebrow" data-arrive="">02 · SIMULATED DAY</p>
 <h2 id="day-heading" data-lines="">Every resident,<br>a day of their own.</h2>
-<p class="copy" data-arrive="">Every resident gets a home, a routine and a plan for the day. Everyone travels at once, on the same streets and trams. Each day is weighed by time, money and waiting, and some residents change their plan for the next round.</p>
+<p class="copy" data-arrive="">The main way Polycity runs a city. Every resident is modelled from the census and the travel survey: a home, an income, a car or not, and a routine for the day. Everyone travels at once, so tailbacks reach back into side streets. Each day is weighed, some residents try another route, hour or way, and round after round the city settles.</p>
 <div class="changes">
+<div data-arrive="" data-step-row=""><strong>People who live here</strong><span>From the census and travel survey</span></div>
 <div data-arrive="" data-step-row=""><strong>A plan each</strong><span>Home, work, school, shops</span></div>
-<div data-arrive="" data-step-row=""><strong>Everyone at once</strong><span>The same streets, the same trams</span></div>
+<div data-arrive="" data-step-row=""><strong>Everyone at once</strong><span>The same streets, buses and trams</span></div>
 <div data-arrive="" data-step-row=""><strong>Each day weighed</strong><span>Time, money and waiting</span></div>
 <div data-arrive="" data-step-row=""><strong>Plans change</strong><span>Another route, another hour, another way</span></div>
 <div data-arrive="" data-step-row=""><strong>Rounds of learning</strong><span>Until the city settles</span></div>
+<div data-arrive="" data-step-row=""><strong>What comes back</strong><span>Who switched, who is affected</span></div>
 </div>
 </div>
 </section>
@@ -128,7 +254,7 @@
 <div data-arrive="" data-step-row=""><strong>Drawn round a junction</strong><span>A corner of the simulated day</span></div>
 <div data-arrive="" data-step-row=""><strong>Every second</strong><span>Cars, buses, trams, lorries, bicycles</span></div>
 <div data-arrive="" data-step-row=""><strong>Keeps its distance</strong><span>Close when slow, far when fast</span></div>
-<div data-arrive="" data-step-row=""><strong>Signals and give way</strong><span>Queues grow and clear</span></div>
+<div data-arrive="" data-step-row=""><strong>Signals and give way</strong><span>Tailbacks grow and clear</span></div>
 <div data-arrive="" data-step-row=""><strong>What comes back</strong><span>Tailback, delay, near misses</span></div>
 </div>
 </div>
@@ -144,9 +270,9 @@
 <span class="tag slice-tag" data-slice-tag="junction">JUNCTION STUDY</span>
 </div>
 <div class="three">
-<div data-arrive=""><strong>Quick estimate</strong><p>The whole city, a whole day, hour by hour. About ten minutes.</p></div>
-<div data-arrive=""><strong>Simulated day</strong><p>Every resident and every trip, round after round until the city settles.</p></div>
-<div data-arrive=""><strong>Junction study</strong><p>One corner of a simulated day, every vehicle, every second.</p></div>
+<div data-arrive=""><strong>Quick estimate</strong><dl class="facts"><dt>Follows</dt><dd>Totals between zones</dd><dt>Clock</dt><dd>Hour by hour</dd><dt>Area</dt><dd>The whole city, in about ten minutes</dd></dl></div>
+<div data-arrive=""><strong>Simulated day</strong><dl class="facts"><dt>Follows</dt><dd>Every resident's plan, the best of five kept</dd><dt>Clock</dt><dd>A whole day, round after round</dd><dt>Area</dt><dd>The whole city</dd></dl></div>
+<div data-arrive=""><strong>Junction study</strong><dl class="facts"><dt>Follows</dt><dd>Every vehicle and its gap</dd><dt>Clock</dt><dd>Every second</dd><dt>Area</dt><dd>One corner, after a simulated day</dd></dl></div>
 </div>
 </div>
 </section>
@@ -161,7 +287,7 @@
 </section>
 </main>
 <script type="module" src="./../static/page-motion.js?v=c3d06b5a0750"></script>
-<script type="module" src="./../static/technical-scene.js?v=3a7901599d92"></script>
+<script type="module" src="./../static/technical-scene.js?v=64019106159f"></script>
 
 
 </body></html>

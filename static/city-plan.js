@@ -367,9 +367,9 @@ export const POSES={
   // Technical: the quick estimate over the whole city, right of the words,
   // with room above it for the blocks of trips and the arcs between them.
   quick:{target:[0,2,0],span:34,from:[17,20,23],dx:-5.6,dy:.2,lift:.12,phone:31},
-  // The rounds of learning stack over the city: back and up, so the whole
-  // stack stands left of the words on the right.
-  rounds:{target:[0,8.2,0],span:42,from:[17,20,23],dx:9.9,dy:.4,lift:.19,phone:44},
+  // The residents' days rise over the city as threads, an hour a step up:
+  // stood back and low enough to see them rise, left of the words on the right.
+  threads:{target:[0,3.8,0],span:37,from:[17,10,23],dx:7,dy:.2,lift:.12,phone:34},
   // The junction study from the east, along the west road, so the queue at
   // the signal lies across the frame beside the words.
   junction:{target:[-6,.4,0],span:20,from:[16,12,-1],dx:-3.4,dy:.2,lift:.16,phone:10.5},

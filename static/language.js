@@ -2,7 +2,7 @@
 // a page into Bulgarian, but the city scenes change their labels in English
 // while they play, so each label they write is put into Bulgarian as it
 // appears. The language switch is a pair of plain links and needs nothing here.
-import { words } from './words.js?v=ec835b5c55e5';
+import { words } from './words.js?v=1cead86154c0';
 
 const normalize = value => value.replace(/\s+/g, ' ').trim();
 const translate = value => {
@@ -14,7 +14,7 @@ const translate = value => {
 // Only words a person reads change; scene names, values and motion are left alone.
 function visit(node) {
   if (node.nodeType === Node.TEXT_NODE) {
-    if (!node.parentElement?.closest('script,style,svg,.language-switch')) {
+    if (!node.parentElement?.closest('script,style,svg,math,.language-switch')) {
       const translated = translate(node.textContent);
       if (translated !== node.textContent) node.textContent = translated;
     }

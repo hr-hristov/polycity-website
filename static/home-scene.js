@@ -1,4 +1,4 @@
-import { createOneCity, smooth } from './one-city.js?v=93d1433f0575';
+import { createOneCity, smooth } from './one-city.js?v=a2f722dbad15';
 
 // The homepage is one city. It is fixed to the screen and the page's five
 // screens of words scroll over it; the scroll moves the camera, closes a

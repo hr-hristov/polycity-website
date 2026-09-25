@@ -428,13 +428,6 @@ html[data-snap-rests]{scroll-snap-type:y mandatory}
 .how-page .ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8)}
 .how-page .ghost:hover{background:rgba(255,255,255,.12)}
 [data-motion=still] .how-page .screen.intro:before{background:#000b2d}
-/* On a wide screen the words' paper stands under the brand in step 01 and the
-   data, so the brand keeps its dark ink while the header's right side turns
-   light over the number city. */
-.how-page[data-stage-ink=light][data-brand-ink=dark] .brand-lockup{color:#000b2d}
-.how-page[data-stage-ink=light][data-brand-ink=dark] .brand-word span{background-image:linear-gradient(90deg,#2456a8,#7b3fa0,#c23d7c)}
-.how-page[data-stage-ink=light][data-brand-ink=dark] .brand .brand-mark{display:block}
-.how-page[data-stage-ink=light][data-brand-ink=dark] .brand .brand-mark-light{display:none}
 /* A step's shading ends with its own screen. Neighbouring steps shade opposite
    sides, so shading carried into the next screen left a hard band across it. */
 .how-page .screen.tall{overflow:clip}
@@ -631,44 +624,288 @@ html[data-snap-rests]{scroll-snap-type:y mandatory}
  .how-page .changes>div[data-step-row],.how-page .format-tiles>div,.how-page .how-card,.how-page .fit-pane,.how-page .sun,.how-page .trip-tag,.how-page .legend>div,.how-page .groups li,.how-page .versions,.how-page .versions li,.how-page .three>div{transition:none}
 }
 
-/* Technical stands on How it works' page and wears its words. Its own cards:
-   the ways of travelling and the hour while the quick estimate runs, one
-   resident's plan and the rounds while the day runs, and the trace while the
-   junction is studied. A veil pales the city round the study's stretch, and
-   the three ways' screen has a line where each slice meets the next and a tag
-   over each; the lines stop short of the heading and the three columns. The
-   scene sets where each stands and when it shows. */
+/* Technical stands on How it works' page and wears its words. Each row of its
+   three ways raises a card over the city, and a picture on the card shows the
+   rule of the row at work. The quick estimate stands in the number city, so
+   its words and cards are light on navy; the simulated day's cards stand
+   beside the city on the left and the junction study's at the top right. A
+   veil pales the city round the study's stretch, and the three ways' screen
+   has a line where each slice meets the next, a tag over each and navy
+   behind the first. The scene sets where each stands and when it shows. */
+.tech-page .how-card{border-radius:12px;visibility:hidden;transition:opacity .35s,visibility 0s .35s}
+.tech-page .how-card[data-shown]{visibility:visible;transition:opacity .35s}
+.tech-page .weigh-card[data-shown]{pointer-events:auto}
+/* A formula keeps the browser's own math layout: plain "block" would stack
+   its letters one under another. Beta is drawn from the font's own italic,
+   since not every font carries the mathematical italic letters. */
+.tech-page math{font-family:"STIX Two Math","Cambria Math","Latin Modern Math",serif}
+.tech-page math mi.greek{text-transform:none;font-style:italic}
+.tech-page .formula{display:block;display:block math;margin:2px 0 8px;font-size:21px;line-height:1.25}
 .tech-page .card-key{flex-wrap:wrap;row-gap:6px}
 .tech-page .card-key i{background:var(--mode,#fd4b08)}
 .tech-page .by-bike{--mode:#049dd6}
-.tech-page .card-key .key-car{width:16px;height:2px;background:#000b2d}
-.tech-page .mode-card,.tech-page .hour-card{right:48px;bottom:48px;width:300px}
-.tech-page .hour-clock{display:block;margin-bottom:10px;font-size:34px;line-height:1;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.tech-page .live{margin:8px 0 0;font-size:12px;line-height:1.45;color:#52607d}
+.tech-page .live b{color:#000b2d;font-weight:800;font-variant-numeric:tabular-nums}
+.tech-page .live math{font-size:15px}
+.tech-page .axis{display:flex;justify-content:space-between;margin:2px 0 0;font-size:10px;line-height:1.3;color:#8b97b0}
+.tech-page .axis math{font-size:12px}
+.tech-page .terms{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 10px;align-items:baseline;margin:10px 0 0;padding-top:8px;border-top:1px solid #e3e8f1;font-size:11px;line-height:1.35;color:#52607d}
+.tech-page .terms dt{text-align:right;font-size:14px;color:#000b2d}
+.tech-page .terms dd{margin:0}
+.tech-page .mix-label{margin:0 0 6px;font-size:9.5px;line-height:1.3;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#52607d}
+.tech-page .curve{display:block;width:100%;height:auto;overflow:visible}
+.tech-page .curve .axes{fill:none;stroke:#5a6fa8;stroke-width:1}
+.tech-page .curve .full{stroke:#5a6fa8;stroke-width:1;stroke-dasharray:2 3}
+.tech-page .curve-line{fill:none;stroke:#0ad6ed;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.tech-page .curve-line.hot{stroke:#fd4b08}
+.tech-page .curve-dots circle{fill:#bff6fc;opacity:.75}
+.tech-page .curve-now{fill:#fff;stroke:#0ad6ed;stroke-width:1.5}
+/* 01: the quick estimate's words and cards, light on the navy of the number
+   city. */
+.tech-page #quick{color:#fff}
+.tech-page .screen.step#quick:before{background:linear-gradient(90deg,rgba(0,11,45,.94) 0,rgba(0,11,45,.82) 28%,rgba(0,11,45,0) 54%)}
+.tech-page #quick .eyebrow{color:#9fb0d8}
+.tech-page #quick .copy{color:#b9c6e6}
+.tech-page #quick .changes>div{color:#9fb0d8;border-top-color:rgba(255,255,255,.2)}
+.tech-page #quick .changes>div[data-step-row][data-current]{color:#fff;border-top-color:#fff}
+.tech-page .night-card{background:rgba(6,20,64,.93);color:#fff;box-shadow:0 0 0 1px rgba(10,214,237,.35),0 14px 34px rgba(0,0,0,.4)}
+.tech-page .night-card .card-title{color:#8fe9f5}
+.tech-page .night-card .live,.tech-page .night-card .card-key{color:#b9c6e6}
+.tech-page .night-card .live b{color:#fff}
+.tech-page .night-card .axis{color:#9fb0d8}
+.tech-page .night-card .terms{border-top-color:rgba(255,255,255,.14);color:#b9c6e6}
+.tech-page .night-card .terms dt{color:#fff}
+.tech-page .night-card .by-transit{--mode:#a35ef0}
+.tech-page .night-card .by-bike{--mode:#2bb4ec}
+.tech-page .night-card .by-foot{--mode:#febe11}
+.tech-page .trips-card,.tech-page .gravity-card,.tech-page .modes-card,.tech-page .roads-card{right:48px;bottom:48px;width:340px}
+.tech-page .big-number{display:flex;align-items:center;gap:14px;margin:0}
+.tech-page .big-number b{font-size:56px;line-height:1;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:#bff6fc}
+.tech-page .big-number span{max-width:140px;font-size:13px;line-height:1.35;color:#b9c6e6}
+.tech-page .share-bar{display:flex;gap:2px;height:24px;margin:2px 0 0}
+.tech-page .share-bar i{flex:0 1 var(--w);min-width:0;display:flex;align-items:center;justify-content:center;background:var(--mode)}
+.tech-page .share-bar b{font-size:10px;font-weight:800;color:#fff;white-space:nowrap}
+.tech-page .share-bar .by-foot b{color:#000b2d}
+.tech-page .roads-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.tech-page .roads-top .formula{margin:0}
+.tech-page .hour-clock{display:block;font-size:34px;line-height:1;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.tech-page .roads-card .curve{margin-top:10px}
+.tech-page .roads-card .curve-now{stroke:#fd4b08}
 .tech-page .flow-key{gap:10px}
-.tech-page .flow-key b{flex:0 0 90px;height:7px;background:linear-gradient(90deg,#049dd6,#febe11,#fd4b08)}
-.tech-page .plan-card,.tech-page .rounds-card{left:48px;bottom:48px;width:300px}
-.tech-page .plan-trips{list-style:none;margin:0;padding:0}
-.tech-page .plan-trips li{display:grid;grid-template-columns:46px minmax(0,1fr);gap:2px 10px;padding:8px 0;border-top:1px solid #e4eaf4;font-size:12px;line-height:1.3}
-.tech-page .plan-trips b{font-weight:750;font-variant-numeric:tabular-nums}
-.tech-page .plan-trips em{grid-column:2;display:flex;align-items:center;gap:6px;font-style:normal;font-size:11px;font-weight:700;color:#52607d}
-.tech-page .plan-trips em:before{content:'';width:16px;height:4px;background:var(--mode)}
-.tech-page .plan-card:not([data-changed]) .now,.tech-page .plan-card[data-changed] .was{display:none}
-.tech-page .plan-card[data-changed] li:first-child b{color:#049dd6}
-.tech-page .plan-score{display:none;margin-top:4px;padding-top:8px;border-top:2px solid #000b2d}
-.tech-page .plan-card[data-weighed] .plan-score{display:block}
-.tech-page .plan-score div{display:flex;justify-content:space-between;padding:3px 0;font-size:12px;line-height:1.3;color:#52607d}
-.tech-page .plan-score b{color:#000b2d;font-weight:800;font-variant-numeric:tabular-nums}
-.tech-page .plan-card[data-changed] .plan-score b{color:#049dd6}
-.tech-page .round-count{display:flex;align-items:baseline;gap:8px;margin:-2px 0 8px;font-size:34px;line-height:1;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.tech-page .round-count small{font-size:13px;font-weight:700;letter-spacing:0;color:#52607d}
-.tech-page .rounds-curve{display:block;width:100%;height:auto}
-.tech-page .rounds-curve path{fill:none;stroke:#fd4b08;stroke-width:2.4;stroke-dasharray:1 1}
-.tech-page .trace-card{right:48px;top:112px;width:300px}
-.tech-page .trace{display:block;width:100%;height:110px;overflow:visible}
-.tech-page .trace path{fill:none;vector-effect:non-scaling-stroke}
-.tech-page .trace-red{stroke:#e23b3b;stroke-width:4}
-.tech-page .trace-green{stroke:#2fa36b;stroke-width:4}
-.tech-page .trace-cars{stroke:#000b2d;stroke-width:1.4;stroke-linejoin:round}
+.tech-page .flow-key b{flex:0 0 90px;height:7px;background:linear-gradient(90deg,#2bb4ec,#febe11,#fd4b08)}
+/* Each zone's trips over its column, the zone's number beside them; the zone
+   the arcs leave and the one the card reads are lit. */
+.tech-page .zone-tag{position:absolute;left:0;top:0;display:flex;align-items:center;gap:6px;padding:3px 8px 3px 3px;border-radius:12px;background:rgba(6,20,64,.86);box-shadow:0 0 0 1px rgba(10,214,237,.4);color:#bff6fc;font-size:12px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;transform:translate(var(--x),var(--y)) translate(-50%,-100%);opacity:0;transition:opacity .3s}
+.tech-page .zone-tag small{display:grid;place-items:center;width:17px;height:17px;border-radius:50%;background:rgba(10,214,237,.22);font-size:10px;font-weight:800;color:#fff}
+.tech-page .zone-tag[data-shown]{opacity:1}
+.tech-page .zone-tag[data-lit]{background:#0ad6ed;color:#000b2d;box-shadow:0 0 18px rgba(10,214,237,.6)}
+.tech-page .zone-tag[data-lit] small{background:#000b2d}
+/* 02: the simulated day's cards, beside the city on the left. */
+.tech-page .people-card,.tech-page .crowd-card,.tech-page .weigh-card,.tech-page .memory-card,.tech-page .rounds-card,.tech-page .results-card{left:48px;bottom:40px;width:400px}
+.tech-page .weigh-card{width:430px;padding:14px 16px 12px}
+.tech-page .resident{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:linear-gradient(135deg,#fff4ee,#eef9fb)}
+.tech-page .resident-head{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:13px;font-weight:800}
+.tech-page .resident-head i{width:12px;height:12px;border-radius:50%;background:#fd4b08;box-shadow:0 0 0 3px rgba(253,75,8,.2)}
+.tech-page .resident dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 14px;align-items:center;margin:0;font-size:12px}
+.tech-page .resident dt{font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8b97b0}
+.tech-page .resident dd{margin:0;font-weight:700}
+.tech-page .resident .plan-lit{opacity:.4;transition:opacity .4s}
+.tech-page .people-card[data-plan] .plan-lit{opacity:1}
+.tech-page .people-card[data-plan] dd.plan-lit:not(.chain){color:#fd4b08}
+.tech-page .chain{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.tech-page .chain b{padding:2px 8px;border-radius:9px;background:#0a9fb4;color:#fff;font-size:10.5px}
+.tech-page .chain b.at-work{background:#0b6d8e}
+.tech-page .chain b.at-shop{background:#34bccf}
+.tech-page .chain em{font-style:normal;font-weight:800;color:#fd4b08}
+.tech-page .bands{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr);gap:6px 12px;align-items:center;font-size:11px;color:#52607d}
+.tech-page .bands>b{font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8b97b0}
+.tech-page .bands>span:not(.meter){display:flex;align-items:center;gap:6px;font-weight:700;color:#000b2d;white-space:nowrap}
+.tech-page .inc-low,.tech-page .inc-mid,.tech-page .inc-high{display:inline-block;width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+.tech-page .inc-low{background:#febe11}
+.tech-page .inc-mid{background:#0ab8cf}
+.tech-page .inc-high{background:#57039b}
+.tech-page .meter{position:relative;display:block;height:15px;border-radius:8px;background:#eef1f7;overflow:hidden}
+.tech-page .meter i{position:absolute;left:0;top:0;bottom:0;width:var(--w);border-radius:8px;background:linear-gradient(90deg,#9ee8f1,#48c6d8)}
+.tech-page .meter b{position:relative;display:block;padding-left:7px;font-size:10px;line-height:15px;font-weight:800;color:#000b2d;white-space:nowrap}
+.tech-page .people-card .live{margin-top:12px}
+.tech-page .crowd-key{list-style:none;margin:0;padding:0}
+.tech-page .crowd-key li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:0 12px;align-items:center;padding:8px 0;border-top:1px solid #e4eaf4}
+.tech-page .crowd-key li:first-child{border-top:0;padding-top:0}
+.tech-page .crowd-key i{grid-row:span 2;width:30px;height:7px;border-radius:4px}
+.tech-page .crowd-key .k-road{background:repeating-linear-gradient(90deg,#fd4b08 0 8px,#dde3ee 8px 11px)}
+.tech-page .crowd-key .k-rail{background:#57039b}
+.tech-page .crowd-key .k-tail{background:#e23b3b;box-shadow:0 0 0 4px rgba(226,59,59,.18)}
+.tech-page .crowd-key b{font-size:13px}
+.tech-page .crowd-key span{font-size:11px;color:#52607d}
+/* The weighed day: the formula's two halves in two colours, the day's strip
+   under it, the balance, the two totals and the four ways. Pointing at a half
+   lights its hours and its total and pales the other half's. */
+.tech-page .weigh-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.tech-page .weigh-head .card-title{margin-top:6px}
+.tech-page .weigh-score{margin:0;text-align:right;line-height:1}
+.tech-page .weigh-score span{display:block;margin-bottom:2px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#52607d}
+.tech-page .weigh-score b{font-size:32px;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:#0a6f80}
+.tech-page .weigh-card .formula{font-size:20px}
+.tech-page .half-places,.tech-page .half-trips{padding:2px 5px;border-radius:8px;cursor:default;transition:background .2s}
+.tech-page .half-places{background:rgba(10,184,207,.14)}
+.tech-page .half-trips{background:rgba(253,75,8,.1)}
+.tech-page .weigh-card[data-pointed=places] .half-places{background:rgba(10,184,207,.34)}
+.tech-page .weigh-card[data-pointed=trips] .half-trips{background:rgba(253,75,8,.26)}
+.tech-page .weigh-strip{position:relative;display:grid;grid-template-columns:var(--strip,1fr);gap:1px;height:22px;margin:10px 0 3px}
+.tech-page .weigh-strip i{display:flex;align-items:center;justify-content:center;min-width:0;overflow:hidden;font-style:normal;transition:box-shadow .2s,opacity .2s}
+.tech-page .weigh-strip i:first-child{border-radius:11px 0 0 11px}
+.tech-page .weigh-strip i:nth-child(7){border-radius:0 11px 11px 0}
+.tech-page .weigh-strip i span{font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#fff}
+.tech-page .weigh-strip .at{background:linear-gradient(180deg,#2ccde0,#0a9fb4)}
+.tech-page .weigh-strip .at-work{background:linear-gradient(180deg,#1d92b3,#0b6d8e)}
+.tech-page .weigh-strip .at-shop{background:linear-gradient(180deg,#72dde9,#34bccf)}
+.tech-page .weigh-strip .trip{background:linear-gradient(180deg,#ff7a3d,#fd4b08)}
+.tech-page .weigh-strip i[data-now]{box-shadow:inset 0 0 0 2px #000b2d}
+.tech-page .weigh-card[data-pointed=places] .weigh-strip .trip,.tech-page .weigh-card[data-pointed=trips] .weigh-strip .at{opacity:.25}
+.tech-page .weigh-now{position:absolute;top:-5px;bottom:-5px;left:0;width:3px;margin-left:-1.5px;border-radius:2px;background:#000b2d;box-shadow:0 0 0 2px #fff}
+.tech-page .weigh-hours{display:flex;justify-content:space-between;margin:0 0 10px;font-size:9.5px;color:#8b97b0;font-variant-numeric:tabular-nums}
+.tech-page .weigh-bar{position:relative;height:8px;margin:0 0 8px;border-radius:4px;background:#eef1f7}
+.tech-page .weigh-bar i{position:absolute;top:0;bottom:0;left:0;transition:width .4s,left .4s}
+.tech-page .bar-score{border-radius:4px 0 0 4px;background:linear-gradient(90deg,#0ab8cf,#2ccde0)}
+.tech-page .bar-trips{border-radius:0 4px 4px 0;background:repeating-linear-gradient(135deg,#fd4b08 0 3px,#ffc2a6 3px 6px)}
+.tech-page .weigh-sums{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}
+.tech-page .weigh-sums p{margin:0;padding:5px 8px;border-radius:8px;font-size:10.5px;line-height:1.35;color:#52607d;cursor:default;outline:none;transition:background .2s}
+.tech-page .weigh-sums p:focus-visible{box-shadow:0 0 0 2px #049dd6}
+.tech-page .weigh-sums b{display:block;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.tech-page .weigh-sums p>span{display:block;font-size:19px;line-height:1.2;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tech-page .weigh-sums small{display:block;font-size:10px;font-variant-numeric:tabular-nums}
+.tech-page .sum-places b,.tech-page .sum-places>span{color:#0a8fa3}
+.tech-page .sum-trips b,.tech-page .sum-trips>span{color:#e0440a}
+.tech-page .weigh-card[data-pointed=places] .sum-places{background:rgba(10,184,207,.16)}
+.tech-page .weigh-card[data-pointed=trips] .sum-trips{background:rgba(253,75,8,.12)}
+.tech-page .weigh-ways{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.tech-page .weigh-ways button{padding:6px 4px;border:1px solid #c9d2e3;border-radius:9px;background:#fff;color:#000b2d;font:inherit;font-size:10.5px;font-weight:700;line-height:1.2;text-align:center;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.tech-page .weigh-ways button b{display:block;margin-top:2px;font-size:14px;font-weight:800;font-variant-numeric:tabular-nums}
+.tech-page .weigh-ways button:hover{border-color:#000b2d}
+.tech-page .weigh-ways button:focus-visible{outline:2px solid #049dd6;outline-offset:2px}
+.tech-page .weigh-ways button[aria-pressed=true]{background:#000b2d;border-color:#000b2d;color:#fff}
+.tech-page .weigh-card .terms{grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr);font-size:10.5px}
+/* The days one resident remembers, best first, and a round's ten dots. */
+.tech-page .remembered{display:flex;flex-direction:column;gap:5px;margin:0 0 12px}
+.tech-page .remembered p{display:grid;grid-template-columns:170px minmax(0,1fr) 40px;gap:8px;align-items:center;margin:0;font-size:11px;color:#52607d}
+.tech-page .remembered p>span{white-space:nowrap}
+.tech-page .remembered b[data-leaves]{font-weight:600;font-variant-numeric:tabular-nums}
+.tech-page .remembered p>i{display:block;height:10px;border-radius:5px;background:linear-gradient(90deg,#c3cbdb var(--w,0%),#f1f4f9 var(--w,0%))}
+.tech-page .remembered p>b{text-align:right;color:#000b2d;font-variant-numeric:tabular-nums}
+.tech-page .remembered em{display:none;margin-left:6px;padding:1px 5px;border-radius:4px;background:#000b2d;color:#fff;font-style:normal;font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;vertical-align:1px}
+.tech-page .remembered p[data-kept]{color:#000b2d;font-weight:800}
+.tech-page .remembered p[data-kept] em{display:inline-block}
+.tech-page .remembered p[data-kept]>i{background:linear-gradient(90deg,#0ab8cf var(--w,0%),#f1f4f9 var(--w,0%))}
+.tech-page .round-dots{display:flex;gap:6px;margin:0 0 8px}
+.tech-page .round-dots i{width:18px;height:18px;border-radius:50%}
+.tech-page .dot-key{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0;font-size:10.5px;line-height:1.4;color:#52607d}
+.tech-page .dot-key i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.tech-page .dot-key b{color:#000b2d}
+.tech-page .round-dots .keep,.tech-page .dot-key .keep{background:#000b2d}
+.tech-page .round-dots .route,.tech-page .dot-key .route{background:#0ab8cf}
+.tech-page .round-dots .hour,.tech-page .dot-key .hour{background:#f5a524}
+.tech-page .round-dots .way,.tech-page .dot-key .way{background:#fd4b08}
+/* The rounds: the average score climbing round by round, and the two checks
+   that say the city settled, lit once the last round is in. */
+.tech-page .rounds-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.tech-page .round-count{display:flex;align-items:baseline;gap:8px;margin:0;font-size:32px;line-height:1;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.tech-page .round-count small{font-size:12px;font-weight:700;letter-spacing:0;color:#52607d}
+.tech-page .rounds-chart{display:block;width:100%;height:auto;margin:4px 0 6px}
+.tech-page .rounds-chart .plot{fill:#f6f8fc}
+.tech-page .rounds-chart .tenth{fill:#0ab8cf;fill-opacity:.16}
+.tech-page .rounds-chart .grid{fill:none;stroke:#e3e9f3}
+.tech-page .rounds-chart .stop{stroke:#fd4b08;stroke-width:1.2;stroke-dasharray:3 3}
+.tech-page .rounds-chart .line{fill:none;stroke:#000b2d;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.tech-page .rounds-chart .now{fill:#0ab8cf;stroke:#fff;stroke-width:1.5}
+.tech-page .rounds-chart .ticks text,.tech-page .signal-trace .ticks text{font-size:8px;font-weight:600;fill:#52607d}
+.tech-page .dot-key .k-line{width:14px;height:3px;border-radius:2px;background:#000b2d}
+.tech-page .dot-key .k-stop{width:0;height:10px;border-radius:0;border-left:2px dashed #fd4b08}
+.tech-page .dot-key .k-tenth{border-radius:2px;background:#9fe3ec}
+.tech-page .badges{display:flex;gap:8px;margin:10px 0 0}
+.tech-page .badges span{flex:1;padding:6px 9px;border-radius:9px;background:#eef1f7;color:#8b97b0;transition:background .4s,color .4s}
+.tech-page .badges b{display:block;font-size:11px}
+.tech-page .badges small{display:block;font-size:10px}
+.tech-page .badges span[data-on]{background:rgba(10,184,207,.16);color:#0b6d8e}
+.tech-page .badges span[data-on] b{color:#000b2d}
+/* What comes back: the results screen's groups, who is affected split three
+   ways, and the run's own health. */
+.tech-page .chips{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 10px}
+.tech-page .chips span{padding:3px 9px;border-radius:10px;background:#eef1f7;font-size:10.5px;font-weight:700;color:#000b2d}
+.tech-page .chips span.lit{background:#000b2d;color:#fff}
+.tech-page .chips.pale{margin:0}
+.tech-page .chips.pale span{background:rgba(10,184,207,.12);color:#0b6d8e}
+.tech-page .by{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:6px;margin:0 0 10px}
+.tech-page .by p{margin:0;padding:7px 9px;border-radius:9px;background:linear-gradient(135deg,#fff4ee,#eef9fb);font-size:10.5px;line-height:1.45;color:#52607d}
+.tech-page .by b{display:block;margin-bottom:2px;font-size:11px;color:#000b2d}
+.tech-page .by span{display:flex;align-items:center;gap:5px}
+/* The hour over the city: a tag at the corner of the glowing plane, and the
+   hours up the corner's post. */
+.tech-page .axis-tag{position:absolute;left:0;top:0;font-size:10px;font-weight:750;color:#52607d;font-variant-numeric:tabular-nums;white-space:nowrap;transform:translate(var(--x),var(--y)) translate(6px,-50%);opacity:0;transition:opacity .3s}
+.tech-page .axis-tag[data-shown]{opacity:1}
+.tech-page .hour-tag{letter-spacing:.06em;font-variant-numeric:tabular-nums}
+/* 03: the junction study's cards, at the top right. */
+.tech-page .speed-card,.tech-page .gap-card,.tech-page .signals-card{right:48px;top:112px;width:320px}
+.tech-page .signals-card{width:390px}
+.tech-page .speed-key{display:flex;align-items:center;gap:10px;margin:0;font-size:11px;font-weight:700;color:#52607d;white-space:nowrap}
+.tech-page .speed-key b{flex:1;height:8px;border-radius:4px;background:linear-gradient(90deg,#e23b3b,#febe11 40%,#049dd6)}
+.tech-page .gap-road{display:block;width:100%;height:auto}
+.tech-page .gap-road .kerb{stroke:#c9d2e3;stroke-width:1.5}
+.tech-page .gap-road .follower{fill:#fd4b08}
+.tech-page .gap-road .leader{fill:#000b2d}
+.tech-page .gap-road .bracket{fill:none;stroke:#000b2d;stroke-width:1.2}
+.tech-page .safe-wrap{position:relative;margin-top:6px}
+.tech-page .safe-chart{display:block;width:100%;height:auto;overflow:visible}
+.tech-page .safe-chart .axes{fill:none;stroke:#c9d2e3}
+.tech-page .safe-chart .limit{stroke:#8b97b0;stroke-dasharray:3 3}
+.tech-page .gap-card .curve-line{stroke:#000b2d}
+.tech-page .gap-card .curve-now{fill:#fd4b08;stroke:#fff}
+.tech-page .gap-card[data-limit] .curve-now{fill:#049dd6}
+.tech-page .limit-label{position:absolute;right:6px;top:calc(var(--limit,8%) - 15px);font-size:10px;font-weight:700;color:#8b97b0}
+.tech-page .signals-top{display:grid;grid-template-columns:84px minmax(0,1fr);gap:14px;align-items:center;margin-bottom:8px}
+.tech-page .signals-top .formula{margin:0 0 6px}
+.tech-page .cycle-ring{display:block;width:84px;height:84px}
+.tech-page .cycle-ring circle{fill:none;stroke-width:10}
+.tech-page .cycle-ring .red{stroke:#e23b3b}
+.tech-page .cycle-ring .green{stroke:#2fa36b}
+.tech-page .cycle-ring .amber{stroke:#f5a524}
+.tech-page .cycle-ring .hand{stroke:#000b2d;stroke-width:2.2;stroke-linecap:round}
+.tech-page .cycle-ring .hub{fill:#000b2d;stroke:none}
+.tech-page .green-split{display:grid;grid-template-columns:auto auto auto;gap:3px 12px;align-items:center;font-size:11px;color:#52607d}
+.tech-page .green-split>b{font-weight:800;color:#000b2d;font-variant-numeric:tabular-nums}
+.tech-page .green-split>b:nth-child(2),.tech-page .green-split>b:nth-child(3){font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#8b97b0}
+.tech-page .green-split>span{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.tech-page .green-split i{width:9px;height:9px;border-radius:2px}
+.tech-page .k-main{background:#000b2d}
+.tech-page .k-side{background:#8b97b0}
+.tech-page .signal-trace{display:block;width:100%;height:auto}
+.tech-page .signal-trace .plot{fill:#f6f8fc}
+.tech-page .signal-trace rect.red{fill:#e23b3b}
+.tech-page .signal-trace rect.green{fill:#2fa36b}
+.tech-page .signal-trace rect.amber{fill:#f5a524}
+.tech-page .signal-trace .grid{fill:none;stroke:#e3e9f3}
+.tech-page .signal-trace .wedge{fill:#e23b3b;fill-opacity:.12}
+.tech-page .signal-trace .stop-line{stroke:#000b2d;stroke-dasharray:2 3;opacity:.45}
+.tech-page .signal-trace path{fill:none;stroke-linecap:round}
+.tech-page .signal-trace .moving{stroke:#0ab8cf;stroke-width:1.5}
+.tech-page .signal-trace .standing{stroke:#e23b3b;stroke-width:3.2}
+.tech-page .signal-trace .away{stroke:#f5a524;stroke-width:1.8}
+.tech-page .signal-trace .forming{stroke:#e23b3b;stroke-width:1.2;stroke-dasharray:3 3}
+.tech-page .signal-trace .clearing{stroke:#2fa36b;stroke-width:1.2;stroke-dasharray:3 3}
+.tech-page .signal-trace .now{stroke:#000b2d;stroke-width:1.2}
+.tech-page .trace-key{display:flex;flex-wrap:wrap;gap:4px 12px;margin:4px 0 0;font-size:10.5px;color:#52607d}
+.tech-page .trace-key i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.tech-page .k-moving{background:#0ab8cf}
+.tech-page .k-standing{background:#e23b3b}
+.tech-page .k-away{background:#f5a524}
+.tech-page .trace-key .k-axis{margin-left:auto;color:#8b97b0}
+/* 04: what each way follows, its clock and its area, under its column. */
+.tech-page .three .facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;margin:6px 0 0;font-size:13px;line-height:1.45}
+.tech-page .three .facts dt{font-weight:750;color:#000b2d}
+.tech-page .three .facts dd{margin:0}
+/* The quick estimate's slice stands on navy between the two slice lines'
+   height, so the heading above and the words below stay on paper. */
+.tech-page .slice-night{position:absolute;left:0;top:290px;bottom:170px;z-index:0;width:var(--cut1,0%);background:#000b2d;opacity:0;transition:opacity .3s;pointer-events:none}
+.tech-page .slice-night[data-shown]{opacity:1}
 .tech-page .study-pin i{background:#fd4b08}
 .tech-page .study-pin span{background:#fd4b08}
 .tech-page .veil{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .5s;background:radial-gradient(ellipse 32vw 40vh at var(--x,50%) var(--y,50%),rgba(246,247,251,0) 0,rgba(246,247,251,0) 62%,rgba(246,247,251,.72) 100%)}
@@ -685,33 +922,84 @@ html[data-snap-rests]{scroll-snap-type:y mandatory}
 .tech-page .slice-tag[data-slice-tag=quick]{left:calc(var(--cut1,0%)/2)}
 .tech-page .slice-tag[data-slice-tag=day]{left:calc((var(--cut1,0%) + var(--cut2,0%))/2)}
 .tech-page .slice-tag[data-slice-tag=junction]{left:calc((var(--cut2,0%) + 100%)/2)}
+@media(min-width:761px){
+ /* The simulated day has seven rows under its words, so on a wide screen its
+    heading, sentence and rows are set tighter to stand in one window. */
+ .tech-page #day h2{font-size:clamp(40px,4.3vw,62px)}
+ .tech-page #day .copy{margin-top:16px;font-size:15px;line-height:1.55}
+ .tech-page #day .changes{margin-top:18px}
+ .tech-page #day .changes>div{padding:8px 0;font-size:14px}
+}
+@media(max-height:860px) and (min-width:761px){
+ /* On a short wide screen the weighed day keeps its picture and its buttons,
+    and leaves the letters' meanings out. */
+ .tech-page .weigh-card .terms{display:none}
+}
 @media(max-width:760px){
  /* On a phone every card stands at the top of the screen, clear of the city
-    and of the words at its foot. */
- .tech-page .mode-card,.tech-page .hour-card,.tech-page .plan-card,.tech-page .rounds-card,.tech-page .trace-card{left:16px;right:16px;top:72px;bottom:auto;width:auto;padding:10px 14px}
+    and of the words at its foot, with the letters' meanings left out. */
+ .tech-page .how-card{left:12px;right:12px;top:66px;bottom:auto;width:auto;padding:10px 12px}
+ .tech-page .screen.step#quick:before{background:linear-gradient(0deg,rgba(0,11,45,.97) 0,rgba(0,11,45,.88) 40%,rgba(0,11,45,0) 68%)}
+ .tech-page #day .changes>div{padding:7px 0}
  .tech-page .card-title{margin-bottom:6px}
  .tech-page .card-key{margin-top:6px;font-size:10px}
- .tech-page .hour-card,.tech-page .rounds-card{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 14px;align-items:center}
- .tech-page .hour-clock{grid-row:span 2;margin:0;font-size:30px}
- .tech-page .hour-card .card-key{margin-top:0}
- .tech-page .rounds-card .card-title{grid-column:span 2}
- .tech-page .round-count{grid-row:span 2;flex-direction:column;align-items:flex-start;gap:2px;margin:0;font-size:30px}
- .tech-page .round-count small{font-size:10px}
- .tech-page .rounds-curve{height:40px}
- .tech-page .rounds-card .card-key{margin-top:2px}
- .tech-page .plan-trips li{grid-template-columns:40px minmax(0,1fr) auto;padding:4px 0;font-size:11px}
- .tech-page .plan-trips em{grid-column:auto;font-size:10px}
- .tech-page .plan-score{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding-top:6px}
- .tech-page .plan-card[data-weighed] .plan-score{display:grid}
- .tech-page .plan-score div{display:block;padding:0;font-size:10px}
- .tech-page .plan-score b{display:block;font-size:14px}
- .tech-page .trace{height:60px}
+ .tech-page .terms{display:none}
+ .tech-page .formula{font-size:16px;margin-bottom:4px}
+ .tech-page .live{margin-top:5px;font-size:10.5px}
+ .tech-page .live math{font-size:12px}
+ .tech-page .big-number b{font-size:40px}
+ /* The distance and road charts keep their shape at a smaller size, with
+    their axis labels under their own ends. */
+ .tech-page .gravity-card .curve,.tech-page .roads-card .curve,.tech-page .gravity-card .axis,.tech-page .roads-card .axis{width:46%;margin-left:auto;margin-right:auto}
+ .tech-page .hour-clock{font-size:26px}
+ .tech-page .zone-tag{font-size:10px;padding:2px 6px 2px 2px}
+ .tech-page .zone-tag small{width:14px;height:14px;font-size:8.5px}
+ .tech-page .resident{margin-bottom:8px;padding:7px 9px}
+ .tech-page .resident-head{margin-bottom:5px;font-size:12px}
+ .tech-page .resident dl{gap:3px 10px;font-size:11px}
+ .tech-page .bands{gap:4px 8px;font-size:10px}
+ .tech-page .people-card .live{margin-top:8px}
+ .tech-page .weigh-score b{font-size:24px}
+ .tech-page .weigh-card .formula{font-size:14px}
+ .tech-page .weigh-strip{height:16px;margin-top:6px}
+ .tech-page .weigh-strip i span{font-size:7px}
+ .tech-page .weigh-hours{margin-bottom:6px;font-size:8.5px}
+ .tech-page .weigh-bar{height:6px;margin-bottom:6px}
+ .tech-page .weigh-sums{margin-bottom:7px}
+ .tech-page .weigh-sums small{display:none}
+ .tech-page .weigh-sums p>span{font-size:14px}
+ .tech-page .weigh-ways button{font-size:8.5px;padding:4px 2px}
+ .tech-page .weigh-ways button b{font-size:11px}
+ .tech-page .remembered{gap:3px;margin-bottom:8px}
+ .tech-page .remembered p{grid-template-columns:136px minmax(0,1fr) 32px;gap:5px;font-size:9.5px}
+ .tech-page .round-dots i{width:12px;height:12px}
+ .tech-page .dot-key{font-size:9.5px;gap:2px 10px}
+ .tech-page .memory-card .live{display:none}
+ .tech-page .round-count{font-size:24px}
+ .tech-page .rounds-chart{max-height:110px}
+ .tech-page .badges{margin-top:6px}
+ .tech-page .badges small{display:none}
+ .tech-page .rounds-card .live{display:none}
+ .tech-page .chips{gap:4px;margin-bottom:6px}
+ .tech-page .chips span{font-size:9px;padding:2px 7px}
+ .tech-page .by{gap:4px;margin-bottom:6px}
+ .tech-page .by p{padding:5px 6px;font-size:9px}
+ .tech-page .by b{font-size:9.5px}
+ .tech-page .results-card .mix-label{margin-bottom:4px;font-size:8.5px}
+ .tech-page .signals-top{grid-template-columns:62px minmax(0,1fr);gap:10px;margin-bottom:4px}
+ .tech-page .cycle-ring{width:62px;height:62px}
+ .tech-page .signals-top .formula{margin-bottom:3px}
+ .tech-page .green-split{font-size:10px;gap:2px 8px}
+ .tech-page .signal-trace{max-height:170px}
+ .tech-page .trace-key .k-axis{display:none}
+ .tech-page .three .facts{grid-template-columns:minmax(0,1fr);gap:0;margin-top:4px;font-size:10px;line-height:1.35}
+ .tech-page .three .facts dt{display:none}
  .tech-page .veil{background:radial-gradient(ellipse 48vw 30vh at var(--x,50%) var(--y,50%),rgba(246,247,251,0) 0,rgba(246,247,251,0) 62%,rgba(246,247,251,.72) 100%)}
  .tech-page .slice-tag{top:250px;font-size:9px;letter-spacing:.1em;padding:4px 6px}
- .tech-page .slice-line{bottom:150px}
+ .tech-page .slice-line,.tech-page .slice-night{bottom:150px}
 }
 @media(prefers-reduced-motion:reduce){
- .tech-page .veil,.tech-page .slices,.tech-page .slice-tag{transition:none}
+ .tech-page .veil,.tech-page .slices,.tech-page .slice-tag,.tech-page .slice-night,.tech-page .zone-tag,.tech-page .axis-tag{transition:none}
 }
 
 /* Platform: the ten kinds of change with how many cards each holds, and three

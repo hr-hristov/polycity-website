@@ -1,35 +1,60 @@
-import { THREE, plan } from './one-city.js?v=93d1433f0575';
+import { THREE, plan } from './one-city.js?v=a2f722dbad15';
+import { tripTable } from './story-curves.js?v=7dd555d9dbcc';
+import { weigh, REMEMBERED } from './day-score.js?v=3884fd80fb69';
 
 // What the Technical page draws over the city, one set for each of the three
 // ways Polycity runs it:
-//   the quick estimate: a glass block over each zone as tall as the trips the
-//     zone makes, arcs carrying trips from zone to zone that split into the
-//     four ways of travelling, and the car trips loaded onto the roads as
-//     walls of light that rise and fall hour by hour;
-//   the simulated day: residents at every door, each group's plan along the
-//     streets, everyone out at once, each day weighed by a ring at its end,
-//     one resident's plan changing, and the rounds of learning stacked over
-//     the city as slices of its roads, orange to blue as it settles;
-//   the junction study: a line round one stretch of the west road, a dot every
-//     second behind every vehicle in it, the gap each car keeps ahead, the
-//     signal's ring at the stop line and the longest tailback beside the queue.
+//   the quick estimate, over the city in numbers: a column of light over each
+//     zone as tall as the trips the zone makes, glowing arcs carrying trips
+//     from zone to zone that part into the four ways of travelling, and the
+//     car trips poured onto the roads as flowing light, wider where more cars
+//     go, slower and more orange as a road fills;
+//   the simulated day: residents at every door, each one's plan along the
+//     streets, everyone out at once with red tailbacks reaching back into the
+//     side streets, and then each resident's day as a thread rising over the
+//     city an hour a step, a glowing plane climbing through them at the hour;
+//     one resident's five remembered days, the rounds flashing the threads
+//     that try something new, and at the end the threads in income colours;
+//   the junction study: a line round one stretch of the west road, a trail
+//     behind every vehicle coloured by its speed, the gap each car keeps
+//     ahead, the signal's ring at the stop line and the longest tailback.
 // All of it lies over the city rather than being part of it, so none of it
 // turns into numbers.
-const INK='#000b2d',ORANGE='#fd4b08',CYAN='#0ad6ed',GOLD='#febe11',BLUE='#049dd6',PURPLE='#57039b',FOOT='#e0a800';
-const RED='#e23b3b',GREEN='#2fa36b';
+const INK='#000b2d',ORANGE='#fd4b08',CYAN='#0ad6ed',TEAL='#0ab8cf',PALE='#bff6fc',GOLD='#febe11',BLUE='#049dd6',FOOT='#e0a800';
+const RED='#e23b3b',GREEN='#2fa36b',PURPLE='#7a2fb8';
+// The residents' income bands, in the colours the page's key uses.
+const INCOME={low:GOLD,mid:TEAL,high:'#57039b'};
 const BLOCKS_X=[[-11.25,-6.9],[-5.1,4.9],[6.7,11.25]],BLOCKS_Z=[[-8.5,-4.3],[-2.5,2.5],[4.3,8.5]];
 const ZONES=BLOCKS_X.flatMap(([x0,x1])=>BLOCKS_Z.map(([z0,z1])=>({x0,x1,z0,z1,x:(x0+x1)/2,z:(z0+z1)/2})));
-// The trips each zone makes, in the same order as ZONES, and how tall that
-// stands its block: every block clears the roofs of its own zone.
-const TRIPS_MADE=[2.4,2,3,2.2,3.6,2.6,1.8,2.8,2];
-const blockHeight=trips=>2.6+trips*1.25;
-// The trips between zones: from, to and how thick the arc is.
-const FLOWS=[[2,4,.07],[8,3,.06],[7,4,.05],[0,5,.045],[6,1,.04],[5,7,.035],[2,6,.03]];
+
+// ---- The quick estimate's numbers --------------------------------------------
+// The residents of each zone, in the same order as ZONES, and the trips they
+// make on a day: 2.4 each, to the nearest ten.
+const RESIDENTS=[1000,830,1250,920,1500,1080,750,1170,830];
+export const TRIP_RATE=2.4;
+export const ZONE_TRIPS=RESIDENTS.map(n=>Math.round(n*TRIP_RATE/10)*10);
+// Where the trips go: the product's gravity table, balanced so every zone's
+// trips out and in add up.
+export const {km:ZONE_KM,trips:TRIP_TABLE}=tripTable(ZONES,ZONE_TRIPS);
+// The zone the page lights, the one in the middle, and the others in order.
+export const LIT_ZONE=4;
+export const DESTINATIONS=ZONES.map((_,j)=>j).filter(j=>j!==LIT_ZONE);
+const columnHeight=trips=>.8+trips/3600*5.4;
+// The arcs drawn: every trip from the lit zone, and the six busiest pairs
+// among the others, each pair's trips both ways on one arc.
+const PAIRS=[];
+for(let i=0;i<ZONES.length;i++)for(let j=i+1;j<ZONES.length;j++)PAIRS.push({a:i,b:j,trips:TRIP_TABLE[i][j]+TRIP_TABLE[j][i]});
+const ARCS=[
+  ...DESTINATIONS.map(j=>({a:LIT_ZONE,b:j,trips:TRIP_TABLE[LIT_ZONE][j]+TRIP_TABLE[j][LIT_ZONE]})),
+  ...PAIRS.filter(p=>p.a!==LIT_ZONE&&p.b!==LIT_ZONE).sort((x,y)=>y.trips-x.trips).slice(0,6)
+];
+const MOST_TRIPS=Math.max(...ARCS.map(p=>p.trips));
 // How the trips share out between the ways of travelling: car, public
-// transport, bike and on foot, the shares How it works fits to the survey.
-const MODES=[{color:ORANGE,share:.48},{color:PURPLE,share:.27},{color:BLUE,share:.07},{color:FOOT,share:.18}];
+// transport, bike and on foot, the shares How it works fits to the survey,
+// in colours bright enough for the navy of the number city.
+export const MODES=[{key:'car',color:ORANGE,share:.48},{key:'transit',color:'#a35ef0',share:.27},{key:'bike',color:'#2bb4ec',share:.07},{key:'foot',color:GOLD,share:.18}];
 // Each road between two junctions, and how full its car trips make it at the
-// busiest hour, 0 to 1.
+// busiest hour, 0 to 1. The card reads the north street's middle stretch.
 const ROADS=[
   [-12.3,-3.4,-6,-3.4,.55],[-6,-3.4,5.8,-3.4,.95],[5.8,-3.4,12.3,-3.4,.5],
   [-12.3,3.4,-6,3.4,.35],[-6,3.4,5.8,3.4,.62],[5.8,3.4,12.3,3.4,.3],
@@ -37,38 +62,93 @@ const ROADS=[
   [5.8,-9.6,5.8,-3.4,.45],[5.8,-3.4,5.8,3.4,.68],[5.8,3.4,5.8,9.6,.5],
   [-6.9,-9.15,6.7,-9.15,.3],[-6.9,9.15,6.7,9.15,.36]
 ];
+export const READ_ROAD=1;
+export const roadLoad=i=>ROADS[i][4];
 // How busy the roads are at an hour, as a share of the busiest: a morning
 // peak, a smaller one at noon and an evening peak.
 export function hourLoad(hour){
   const bell=(centre,width)=>Math.exp(-(((hour-centre)/width)**2));
   return .12+.88*Math.max(bell(8,1.3),.85*bell(17.5,1.6),.35*bell(13,2.5));
 }
-// Flowing roads are blue, busy ones gold and queued ones orange.
-const flowing=new THREE.Color(BLUE),busy=new THREE.Color(GOLD),queued=new THREE.Color(ORANGE);
+// Flowing roads are blue, busy ones gold and ones in a tailback orange.
+const flowing=new THREE.Color('#2bb4ec'),busy=new THREE.Color(GOLD),queued=new THREE.Color(ORANGE);
 function loadColor(target,load){
   const v=Math.min(1,Math.max(0,load));
   return v<.5?target.copy(flowing).lerp(busy,v/.5):target.copy(busy).lerp(queued,(v-.5)/.5);
 }
 
-// Where a building's door opens onto its street, a step out from the wall.
+// ---- The simulated day's residents ---------------------------------------------
 const doorOf=plan.doorOf;
-const B=plan.BUILDINGS,HOME_DOOR=doorOf(B[6]),WORK_DOOR=doorOf(B[1]);
-// One resident's day as the page follows it, from a home on the south street
-// to work on the north street, both in sight beside the words: by car along
-// the south street, the west road past the signal and the north street, and
-// after the plans change, by bike through the park on the cycle track.
+const B=plan.BUILDINGS,HOME_DOOR=doorOf(B[6]),WORK_DOOR=doorOf(B[1]),SHOP_DOOR=doorOf(B[2]);
+// The resident the page follows: home on the south street, work on the north
+// street, a shop after work. Each way of travelling takes its own way to work;
+// the trips after work keep to the streets.
 const CAR_ROUTE=[HOME_DOOR,[HOME_DOOR[0],3.4],[-6,3.4],[-6,-3.4],[WORK_DOOR[0],-3.4],WORK_DOOR];
-const BIKE_ROUTE=[HOME_DOOR,[HOME_DOOR[0],2.25],[-4.22,2.25],[-4.22,-2.25],[WORK_DOOR[0],-2.25],WORK_DOOR];
-// How well each plan's day came out, 0 to 1: the sample's days in their order,
-// then the followed resident's. Some change their plans and come out better.
-const SCORES=[.8,.3,.65,.25,.7,.55,.2];
-const BETTER={1:.75,3:.8,6:.85};
-// The rounds of learning the stack shows, and how far each has settled: the
-// share of the busiest hour's load still standing on the roads.
-export const ROUNDS=[1,2,5,12,30];
-const SETTLING=[1,.82,.66,.52,.42];
-const SLICE_Y=6.2,SLICE_STEP=1.4;
-export const sliceHeight=k=>SLICE_Y+k*SLICE_STEP;
+const TO_WORK={
+  car:CAR_ROUTE,
+  route:[HOME_DOOR,[HOME_DOOR[0],3.4],[5.8,3.4],[5.8,-3.4],[WORK_DOOR[0],-3.4],WORK_DOOR],
+  bike:[HOME_DOOR,[HOME_DOOR[0],2.25],[-4.22,2.25],[-4.22,-2.25],[WORK_DOOR[0],-2.25],WORK_DOOR],
+  transit:[HOME_DOOR,[HOME_DOOR[0],3.05],[-11.3,3.05],[-11.3,-3.8],[WORK_DOOR[0],-3.8],WORK_DOOR],
+  foot:[HOME_DOOR,[-2.6,0],WORK_DOOR]
+};
+const TO_SHOP=[WORK_DOOR,[WORK_DOOR[0],-3.4],[2.2,-3.4],SHOP_DOOR];
+const SHOP_HOME=[SHOP_DOOR,[2.2,-3.4],[5.8,-3.4],[5.8,3.4],[HOME_DOOR[0],3.4],HOME_DOOR];
+const PLACE={home:HOME_DOOR,work:WORK_DOOR,shop:SHOP_DOOR};
+// A day's parts as the threads read them: where the resident stands, or the
+// path they travel, from one hour to another.
+function dayParts(day,key,side=0){
+  const routes=[TO_WORK[key],TO_SHOP,SHOP_HOME];
+  return day.parts.map(p=>p.kind==='place'?{from:p.from,to:p.to,at:PLACE[p.place]}:{from:p.from,to:p.to,path:plan.makePath(routes[p.trip],{radius:.45}),side});
+}
+// The survey's sample of days, each lived by two residents: one from each
+// end. Each leaves and comes back at its own hour, by its own way.
+const SPEED={car:32,transit:24,bike:22,foot:12};
+const WAY_OF=['car','transit','car','bike','car','foot','transit','car','bike','car','transit','foot'];
+const INCOME_OF=['mid','low','high','mid','mid','low','mid','high','low','mid','high','low'];
+const WAY_COLOR={car:ORANGE,transit:PURPLE,bike:BLUE,foot:FOOT,route:'#ff9a6b'};
+const SAMPLE=plan.SURVEY.sample.flatMap((s,i)=>[0,1].map(k=>{
+  const n=i*2+k,route=k?[...s.route].reverse():s.route,way=WAY_OF[n];
+  const there=plan.makePath(route,{radius:.45}),back=plan.makePath([...route].reverse(),{radius:.45});
+  const trip=there.length/SPEED[way],leave=6.3+(n*1.37)%3.2,leaveWork=15.4+(n*2.11)%4.2,side=s.side*.4*(k?-1:1);
+  return {way,income:INCOME_OF[n],offset:[((n%3)-1)*.11,((n%2)-.5)*.16],parts:[
+    {from:0,to:leave,at:route[0]},{from:leave,to:leave+trip,path:there,side},{from:leave+trip,to:leaveWork,at:route[route.length-1]},
+    {from:leaveWork,to:leaveWork+trip,path:back,side},{from:leaveWork+trip,to:24,at:route[0]}
+  ]};
+}));
+// The threads rise an hour a step, THREAD_HEIGHT over the whole day.
+export const THREAD_HEIGHT=9;
+const hourY=hour=>.06+hour/24*THREAD_HEIGHT;
+function placeOn(parts,hour,[ox,oz]){
+  const part=parts.find(p=>hour<=p.to+1e-9)||parts[parts.length-1];
+  if(part.at)return [part.at[0]+ox,part.at[1]+oz];
+  const u=Math.min(1,Math.max(0,(hour-part.from)/(part.to-part.from))),p=part.path.at(u*part.path.length,part.side||0);
+  return [p.x+ox,p.z+oz];
+}
+// A day as a line through the city and the hours: along the tube its trips
+// take sixteen times their share, so the streets they follow stay round.
+// The tube is read by the hour, so drawing it part way draws the day so far.
+class DayThread extends THREE.Curve{
+  constructor(parts,{from=0,to=24,offset=[0,0]}={}){
+    super();this.parts=parts;this.offset=offset;this.from=from;this.to=to;
+    let sum=0;
+    this.spans=parts.filter(p=>p.to>from&&p.from<to).map(p=>{
+      const a=Math.max(from,p.from),b=Math.min(to,p.to),w=(b-a)*(p.path?16:1),span={a,b,w0:sum,w};sum+=w;return span;
+    });
+    this.total=sum||1;
+  }
+  hourAt(t){
+    const w=t*this.total,s=this.spans.find(s=>w<=s.w0+s.w+1e-9)||this.spans[this.spans.length-1];
+    return s.a+(s.b-s.a)*Math.min(1,Math.max(0,(w-s.w0)/(s.w||1)));
+  }
+  shareAt(hour){
+    if(hour<=this.from)return 0;if(hour>=this.to)return 1;
+    const s=this.spans.find(s=>hour<=s.b)||this.spans[this.spans.length-1];
+    return (s.w0+s.w*(hour-s.a)/((s.b-s.a)||1))/this.total;
+  }
+  getPoint(t,target=new THREE.Vector3()){const hour=this.hourAt(t),[x,z]=placeOn(this.parts,hour,this.offset);return target.set(x,hourY(hour),z);}
+  getPointAt(u,target){return this.getPoint(u,target);}
+  getTangentAt(u,target){return this.getTangent(u,target);}
+}
 
 export function createTechnicalLayers(city){
   const {world,kit,traffic,lineMaterials}=city;
@@ -77,6 +157,7 @@ export function createTechnicalLayers(city){
     const material=new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false,depthTest,side:THREE.DoubleSide,fog:false,toneMapped:false,blending});
     lineMaterials.push(material);return material;
   };
+  const glowing=(color,opacity)=>flat(color,opacity,{blending:THREE.AdditiveBlending});
   // A set of things shown together and faded as one. Each set belongs to one
   // of the three ways, so the three-way screen can draw each slice of the city
   // with only its own way's sets.
@@ -139,67 +220,80 @@ export function createTechnicalLayers(city){
     dot.renderOrder=rim.renderOrder+1;
     return g;
   }
+  const white=new THREE.Color('#ffffff'),placer=new THREE.Object3D(),color=new THREE.Color();
 
   // ---- 01 The quick estimate --------------------------------------------------
-  // A glass block over each zone, standing on the ground, as tall as the trips
-  // the zone makes. Each rises on its own, a little after the one before.
-  const blocks=layer('quick',world,.1,3);
-  const glass=flat(CYAN,.09),glassTop=flat(CYAN,.2);
-  const edge=new THREE.LineBasicMaterial({color:'#0ab8cf',transparent:true,opacity:.95,depthWrite:false,fog:false,toneMapped:false});
-  lineMaterials.push(edge);
-  const boxGeometry=own(new THREE.BoxGeometry(1,1,1).translate(0,.5,0));
-  const boxEdges=own(new THREE.EdgesGeometry(boxGeometry));
-  const tops=ZONES.map((zone,i)=>{
-    const g=new THREE.Group();g.position.set(zone.x,0,zone.z);blocks.group.add(g);
-    const w=zone.x1-zone.x0-.3,d=zone.z1-zone.z0-.3,h=blockHeight(TRIPS_MADE[i]);
-    const fill=blocks.add(new THREE.Mesh(boxGeometry,glass));fill.scale.set(w,h,d);g.add(fill);
-    const lines=blocks.add(new THREE.LineSegments(boxEdges,edge));lines.scale.set(w,h,d);g.add(lines);
-    const top=blocks.add(new THREE.Mesh(plane,glassTop));top.scale.set(w,1,d);top.position.y=h;g.add(top);
-    g.scale.y=.001;
-    return {group:g,height:h};
+  // A column of light over each zone, as tall as the trips the zone makes: a
+  // glowing shaft round a bright core, a cap of light on top and a ring where
+  // it meets the ground. Each rises on its own, a little after the one before.
+  const columns=layer('quick',world,0,3);
+  const shaft=own(new THREE.CylinderGeometry(1,1,1,40,1,true).translate(0,.5,0));
+  const shaftLight=glowing(CYAN,.13),coreLight=glowing(PALE,.8),capLight=glowing(PALE,.75),haloLight=glowing(CYAN,.22),footLight=glowing(CYAN,.75);
+  const beams=ZONES.map((zone,i)=>{
+    const g=new THREE.Group();g.position.set(zone.x,0,zone.z);columns.group.add(g);
+    const height=columnHeight(ZONE_TRIPS[i]);
+    const body=columns.add(new THREE.Mesh(shaft,shaftLight));body.scale.set(.78,height,.78);g.add(body);
+    const core=columns.add(new THREE.Mesh(shaft,coreLight));core.scale.set(.09,height,.09);g.add(core);
+    const top=new THREE.Group();g.add(top);
+    const cap=columns.add(new THREE.Mesh(disc,capLight));cap.scale.setScalar(.78);top.add(cap);
+    const halo=columns.add(new THREE.Mesh(ball,haloLight));halo.scale.set(.5,.24,.5);top.add(halo);
+    const foot=columns.add(new THREE.Mesh(ring,footLight));foot.scale.setScalar(1.05);foot.position.y=.03;g.add(foot);
+    return {body,core,top,height,risen:0};
   });
-  // The trips between zones, from the top of one block to the top of another.
-  // Each arc is four strands, one for each way of travelling, drawn together
-  // as one dark arc until the trips are shared out, when the strands part and
-  // take their colours.
+  // The trips between zones, from the top of one column to the top of
+  // another, as thick as the trips they carry. Each arc is four strands, one
+  // for each way of travelling, drawn together as one cyan arc until the
+  // trips are shared out, when the strands part and take their colours. The
+  // arc the card reads glows brighter.
   const arcs=layer('quick',world,0,4);
-  const ARC_STEPS=60,ARC_SIDES=6;
-  const strandMaterials=MODES.map(()=>flat(INK,.92));
-  const strandColors=MODES.map(mode=>new THREE.Color(mode.color)),ink=new THREE.Color(INK);
-  const flows=FLOWS.map(([a,b,width])=>{
-    const A=ZONES[a],Z=ZONES[b],ha=blockHeight(TRIPS_MADE[a])+.1,hb=blockHeight(TRIPS_MADE[b])+.1;
+  const ARC_STEPS=64,ARC_SIDES=6;
+  const arcGlow=glowing(CYAN,.1),arcLit=glowing(PALE,.3);
+  const cyan=new THREE.Color(CYAN),modeColors=MODES.map(mode=>new THREE.Color(mode.color));
+  const flows=ARCS.map(({a,b,trips})=>{
+    const A=ZONES[a],Z=ZONES[b],ha=columnHeight(ZONE_TRIPS[a])+.05,hb=columnHeight(ZONE_TRIPS[b])+.05;
     const length=Math.hypot(Z.x-A.x,Z.z-A.z),across=[-(Z.z-A.z)/length,(Z.x-A.x)/length];
-    const curve=new THREE.QuadraticBezierCurve3(new THREE.Vector3(A.x,ha,A.z),new THREE.Vector3((A.x+Z.x)/2,Math.max(ha,hb)+1.4+length*.1,(A.z+Z.z)/2),new THREE.Vector3(Z.x,hb,Z.z));
-    const radii=MODES.map(mode=>width*.95*Math.sqrt(mode.share*4));
-    // Where each strand stands across the arc once they part, side by side.
-    const total=radii.reduce((sum,r)=>sum+2*r,0)+.05*(MODES.length-1);
+    const curve=new THREE.QuadraticBezierCurve3(new THREE.Vector3(A.x,ha,A.z),new THREE.Vector3((A.x+Z.x)/2,Math.max(ha,hb)+.8+length*.16,(A.z+Z.z)/2),new THREE.Vector3(Z.x,hb,Z.z));
+    const width=.035+.1*Math.sqrt(trips/MOST_TRIPS);
+    const radii=MODES.map(mode=>width*Math.sqrt(mode.share));
+    const total=radii.reduce((sum,r)=>sum+2*r,0)+.035*(MODES.length-1);
     let at=-total/2;
+    const materials=MODES.map(()=>flat(CYAN,.92));
     const strands=MODES.map((mode,k)=>{
       const geometry=own(new THREE.TubeGeometry(curve,ARC_STEPS,radii[k],ARC_SIDES,false));
-      const mesh=arcs.add(new THREE.Mesh(geometry,strandMaterials[k]));
-      const offset=at+radii[k];at+=2*radii[k]+.05;
+      const mesh=arcs.add(new THREE.Mesh(geometry,materials[k]));
+      const offset=at+radii[k];at+=2*radii[k]+.035;
       return {mesh,geometry,offset};
     });
-    [[A,ha],[Z,hb]].forEach(([zone,h])=>{const end=arcs.add(new THREE.Mesh(disc,flat(INK,.9)));end.scale.setScalar(.22);end.position.set(zone.x,h+.005,zone.z);});
-    return {curve,across,strands};
+    const haloGeometry=own(new THREE.TubeGeometry(curve,ARC_STEPS,width*2.6,8,false));
+    const halo=arcs.add(new THREE.Mesh(haloGeometry,arcGlow));
+    const lit=arcs.add(new THREE.Mesh(haloGeometry,arcLit));lit.visible=false;
+    return {a,b,curve,across,strands,materials,haloGeometry,halo,lit};
   });
   // Trips riding the arcs while the trips are spread between the zones.
   const riders=layer('quick',world,0,5);
-  const riderDots=flows.flatMap((flow,i)=>[0,1].map(k=>({flow,phase:k/2+i*.13,group:traveller(riders,.13)})));
-  // The car trips loaded onto the roads: a wall of light along each road, as
-  // tall as the trips on it at the hour, blue where they flow, gold where it
-  // is busy and orange where they queue.
-  const walls=layer('quick',world,.1,3);
-  const wallGeometry=own(new THREE.PlaneGeometry(1,1).translate(0,.5,0));
-  const wallParts=ROADS.map(([x0,z0,x1,z1,load])=>{
+  const riderLight=glowing('#e9fdff',.95);
+  const riderDots=flows.flatMap((flow,i)=>[0,1,2].map(k=>{const m=riders.add(new THREE.Mesh(ball,riderLight));m.scale.setScalar(.075);return {flow,phase:k/3+i*.07,mesh:m};}));
+  // The car trips poured onto the roads as flowing light: a band along each
+  // road as wide as the cars on it, and pulses running both ways along it,
+  // blue and quick while the road is free, slower and orange as it fills.
+  // The light lies just above the street's surface, as the study's trails do.
+  const roads=layer('quick',world,.12,3);
+  const roadParts=ROADS.map(([x0,z0,x1,z1,load])=>{
     const length=Math.hypot(x1-x0,z1-z0),turn=Math.atan2(z1-z0,x1-x0);
-    const sheet=flat(BLUE,.5),cap=flat(BLUE,1),foot=flat(BLUE,.6);
-    const wall=walls.add(new THREE.Mesh(wallGeometry,sheet));wall.position.set((x0+x1)/2,0,(z0+z1)/2);wall.rotation.y=-turn;wall.scale.set(length,1,1);
-    const top=walls.add(new THREE.Mesh(plane,cap));top.position.set((x0+x1)/2,1,(z0+z1)/2);top.rotation.y=-turn;top.scale.set(length,1,.1);
-    const base=walls.add(new THREE.Mesh(plane,foot));base.position.set((x0+x1)/2,.02,(z0+z1)/2);base.rotation.y=-turn;base.scale.set(length,1,.55);
-    return {wall,top,load,materials:[sheet,cap,foot]};
+    const core=glowing(BLUE,.55),halo=glowing(BLUE,.16);
+    const mid=[(x0+x1)/2,(z0+z1)/2];
+    const bandMesh=roads.add(new THREE.Mesh(plane,core));bandMesh.position.set(mid[0],0,mid[1]);bandMesh.rotation.y=-turn;
+    const haloMesh=roads.add(new THREE.Mesh(plane,halo));haloMesh.position.set(mid[0],-.01,mid[1]);haloMesh.rotation.y=-turn;
+    return {x0,z0,length,turn,load,hx:(x1-x0)/length,hz:(z1-z0)/length,band:bandMesh,halo:haloMesh,materials:[core,halo],shown:new THREE.Color()};
   });
-  const wallColor=new THREE.Color();
+  const read=roadParts[READ_ROAD];
+  const readLit=roads.add(new THREE.Mesh(plane,glowing(PALE,.28)));readLit.position.copy(read.band.position);readLit.rotation.y=-read.turn;
+  const pulseList=roadParts.flatMap((road,r)=>[1,-1].flatMap(way=>{
+    const count=Math.max(3,Math.round(road.length/1.25));
+    return Array.from({length:count},(_,k)=>({road,r,way,phase:(k+(way<0?.5:0))/count}));
+  }));
+  const pulses=new THREE.InstancedMesh(plane,glowing('#ffffff',.95),pulseList.length);
+  pulses.frustumCulled=false;pulseList.forEach((_,i)=>pulses.setColorAt(i,white));roads.add(pulses);
 
   // ---- 02 The simulated day ---------------------------------------------------
   // Residents stand at every door, three at each, until everyone goes out.
@@ -210,6 +304,10 @@ export function createTechnicalLayers(city){
     const acrossX=side==='north'||side==='south';
     [-.32,0,.32].forEach(offset=>{const m=doorsSet.add(new THREE.Mesh(ball,residentMaterial));m.scale.setScalar(.15);m.position.set(x+(acrossX?offset:0),.3,z+(acrossX?0:offset));});
   });
+  // The resident the card follows, ringed at their door.
+  const homeSet=layer('day',world,.04,4);
+  const homeRing=homeSet.add(new THREE.Mesh(ring,flat(ORANGE,1)));homeRing.position.set(HOME_DOOR[0],0,HOME_DOOR[1]);homeRing.scale.setScalar(.62);
+  const homeWave=new THREE.Mesh(ring,flat(ORANGE,0));homeWave.renderOrder=4;homeWave.position.copy(homeRing.position);homeSet.group.add(homeWave);
   // Each group's plan for the day, along the streets it will take: the
   // survey's sample of days, which the plans are fitted to, drawn faint.
   const plans=layer('day',world,.13,2);
@@ -220,58 +318,80 @@ export function createTechnicalLayers(city){
     plans.add(new THREE.Mesh(drawn.geometry,planInk));
     return drawn;
   });
-  // The followed resident's plan: to work by car, and after the plans change,
-  // by bike another way and a little earlier.
+  // The followed resident's plan: to work by car.
   const routes=layer('day',world,.16,3);
   const carRoute=stroke(routes,CAR_ROUTE,.2,flat(ORANGE,1),{radius:.45});
-  const bikeRoute=stroke(routes,BIKE_ROUTE,.2,flat(BLUE,1),{radius:.35});
-  const carPath=plan.makePath(CAR_ROUTE,{radius:.45}),bikePath=plan.makePath(BIKE_ROUTE,{radius:.35});
+  const carPath=plan.makePath(CAR_ROUTE,{radius:.45});
   // Everyone out at once: each sample's residents and the followed resident
   // ride their plans at the same time, stand at the far end a while, and go
   // again, a day at a time.
   const out=layer('day',world,0,5);
   const outDots=samplePaths.flatMap((path,i)=>[0,1].map(k=>({path,side:plan.SURVEY.sample[i].side,phase:k*.42+i*.17,group:traveller(out,.17)})));
   const followed=traveller(out,.22,ORANGE);
-  // Each day weighed: a ring at the end of each plan, as full as the day
-  // came out well, orange for a poor day and blue for a good one.
-  const weighed=layer('day',world,.14,4);
-  const ends=[...samplePaths.map(path=>{const p=path.at(path.length);return [p.x,p.z];}),WORK_DOOR];
-  const scoreColor=score=>loadColor(new THREE.Color(),1-score);
-  function gauge(score,[x,z]){
-    const geometry=own(new THREE.RingGeometry(.78,1,48,1,Math.PI/2,-score*Math.PI*2).rotateX(-Math.PI/2));
-    const m=weighed.add(new THREE.Mesh(geometry,flat(scoreColor(score),1)));m.position.set(x,.01,z);m.scale.setScalar(.7);
-    return m;
-  }
-  const scoreRings=ends.map(([x,z],i)=>{
-    const back=weighed.add(new THREE.Mesh(ring,flat(INK,.18)));back.position.set(x,0,z);back.scale.setScalar(.7);
-    return {before:gauge(SCORES[i],[x,z]),after:BETTER[i]!=null?gauge(BETTER[i],[x,z]):null};
+  // Tailbacks: red from a stop line back along the road and round into the
+  // side street, as long as the hour is busy and the plans have not settled.
+  const tails=layer('day',world,.12,4);
+  const tailCore=flat(RED,.95),tailHalo=flat(RED,.16);
+  const tailLines=[
+    [[-6.45,1.45],[-6.45,-3.05],[-11.5,-3.05]],
+    [[4.9,-3.05],[-3,-3.05]]
+  ].map(corners=>({core:stroke(tails,corners,.24,tailCore,{radius:.4}),halo:stroke(tails,corners,.9,tailHalo,{radius:.4})}));
+  tailLines.forEach(t=>{t.halo.mesh.position.y=-.01;});
+
+  // Each resident's day as a thread rising over the city: straight up while
+  // they stay at a place, across the city along the streets while they
+  // travel. Coloured by the way they travel, then by their income.
+  const threads=layer('day',world,0,6);
+  const THREAD_SEGMENTS=420,SIDES=4;
+  const residents=SAMPLE.map(r=>{
+    const curve=new DayThread(r.parts,{offset:r.offset});
+    const geometry=own(new THREE.TubeGeometry(curve,THREAD_SEGMENTS,.05,SIDES,false));
+    const material=flat(WAY_COLOR[r.way],.82);
+    const mesh=threads.add(new THREE.Mesh(geometry,material));
+    return {...r,curve,geometry,material,mesh,base:new THREE.Color(WAY_COLOR[r.way]),income:new THREE.Color(INCOME[r.income]),flash:0};
   });
-  // The rounds of learning: each round as a sheet of tinted glass over the
-  // city with its roads drawn on it, the first low and orange where the day
-  // queued, each later one higher and bluer as the plans settle. The first
-  // rises out of the city itself.
-  const slices=ROUNDS.map((round,k)=>{
-    const set=layer('day',world,0,6+k);
-    const tone=loadColor(new THREE.Color(),.95-k*.2);
-    const w=plan.BOARD.w*.48,d=plan.BOARD.d*.48;
-    set.add(new THREE.Mesh(plane,flat(tone,.13))).scale.set(w*2,1,d*2);
-    stroke(set,[[-w,-d],[w,-d],[w,d],[-w,d]],.1,flat(tone,.9),{closed:true,radius:.3});
-    const buckets=new Map();
-    ROADS.forEach(([x0,z0,x1,z1,load])=>{
-      const color='#'+loadColor(new THREE.Color(),load*SETTLING[k]).getHexString();
-      if(!buckets.has(color))buckets.set(color,flat(color,.85));
-      const r=set.add(new THREE.Mesh(plane,buckets.get(color)));
-      r.position.set((x0+x1)/2,.01,(z0+z1)/2);r.scale.set(Math.abs(x1-x0)+.22,1,Math.abs(z1-z0)+.22);
-    });
-    return {set,round};
+  // The resident the card weighs, in seven pieces: teal while at a place,
+  // orange while travelling, as in the card's equation. Pointing at either
+  // half of the equation lights its pieces and pales the other half's.
+  const DAY=weigh('car');
+  const own7=layer('day',world,0,7);
+  const placeLight=flat(TEAL,1),tripLight=flat(ORANGE,1);
+  const paper=new THREE.Color('#dfe5f0'),teal=new THREE.Color(TEAL),orange=new THREE.Color(ORANGE),midIncome=new THREE.Color(INCOME.mid);
+  const pieces=dayParts(DAY,'car').map(part=>{
+    const curve=new DayThread([part],{from:part.from,to:part.to});
+    const segments=part.path?72:6;
+    const geometry=own(new THREE.TubeGeometry(curve,segments,.085,6,false));
+    const mesh=own7.add(new THREE.Mesh(geometry,part.path?tripLight:placeLight));
+    return {curve,geometry,segments,sides:6,trip:!!part.path};
   });
-  // Thin posts at two corners hold the stack over the board.
-  const posts=layer('day',world,0,5);
-  const post=own(new THREE.BoxGeometry(.05,1,.05).translate(0,.5,0));
-  const postMaterial=flat(INK,.3);
-  const corners=[[plan.BOARD.w*.48,-plan.BOARD.d*.48],[-plan.BOARD.w*.48,plan.BOARD.d*.48],[plan.BOARD.w*.48,plan.BOARD.d*.48]].map(([x,z])=>{
-    const m=posts.add(new THREE.Mesh(post,postMaterial));m.position.set(x,.1,z);return m;
+  // The four other days the resident remembers, fainter, each a little to
+  // the side: another route by car, by bike, by public transport and on foot.
+  const remembered=layer('day',world,0,6);
+  const others=REMEMBERED.filter(r=>r.key!=='car').map((r,k)=>{
+    const day=weigh(r.way,{minutes:r.minutes,km:r.km});
+    const side=(k+1)*.14,curve=new DayThread(dayParts(day,r.key,side),{offset:[(k+1)*.12,(k+1)*.06]});
+    const geometry=own(new THREE.TubeGeometry(curve,THREAD_SEGMENTS,.045,SIDES,false));
+    remembered.add(new THREE.Mesh(geometry,flat(WAY_COLOR[r.key],.55)));
+    return {curve,geometry};
   });
+  // The hour plane: a sheet of glass over the board at the hour, edged in
+  // teal, with each resident's dot where its thread crosses it and a shadow
+  // on the ground below.
+  const W=plan.BOARD.w*.48,D=plan.BOARD.d*.48;
+  const hourPlane=layer('day',world,0,8);
+  hourPlane.add(new THREE.Mesh(plane,flat(CYAN,.08))).scale.set(W*2,1,D*2);
+  stroke(hourPlane,[[-W,-D],[W,-D],[W,D],[-W,D]],.09,flat(TEAL,.9),{closed:true,radius:.35});
+  const tips=layer('day',world,0,9);
+  const tipDots=new THREE.InstancedMesh(ball,flat('#ffffff',1),residents.length);tipDots.frustumCulled=false;
+  residents.forEach((r,i)=>tipDots.setColorAt(i,r.base));tips.add(tipDots);
+  const shadows=new THREE.InstancedMesh(disc,flat(INK,.35),residents.length+1);shadows.frustumCulled=false;tips.add(shadows);
+  const followedTip=traveller(tips,.17,ORANGE);
+  // The hours stand up one corner, with a tick every six hours.
+  const axis=layer('day',world,0,6);
+  const axisInk=flat(INK,.55);
+  const post=axis.add(new THREE.Mesh(own(new THREE.BoxGeometry(.05,1,.05).translate(0,.5,0)),axisInk));
+  post.position.set(W,0,D);post.scale.y=hourY(24);
+  [6,12,18,24].forEach(h=>{const t=axis.add(new THREE.Mesh(plane,axisInk));t.position.set(W+.2,hourY(h),D);t.scale.set(.4,1,.05);});
 
   // ---- 03 The junction study --------------------------------------------------
   // The line the study is drawn round: the west road from the north street's
@@ -280,25 +400,27 @@ export function createTechnicalLayers(city){
   const pen=layer('junction',world,.3,8);
   const penLine=stroke(pen,[[J.x0,J.z0],[J.x1,J.z0],[J.x1,J.z1],[J.x0,J.z1]],.16,flat(ORANGE,1,{depthTest:false}),{closed:true,radius:.6,step:.08});
   const inside=(x,z)=>x>J.x0&&x<J.x1&&z>J.z0&&z<J.z1;
-  // Every second, every vehicle in the study leaves a dot where it stands:
-  // close together where it crawls, far apart where it runs. The dots fade
-  // over nine seconds of the traffic's own clock, so with less movement, when
-  // the traffic stands still, the last nine seconds stay drawn.
-  const seconds=layer('junction',world,.12,5);
-  const DOT_LIFE=9,DOTS=260;
-  const dotMesh=new THREE.InstancedMesh(disc,flat(INK,.72),DOTS);dotMesh.count=0;dotMesh.frustumCulled=false;
-  seconds.add(dotMesh);
+  // Every vehicle in the study leaves a trail, a dash every sixth of a second
+  // along its way, coloured by its speed: red standing, gold slow, blue at
+  // speed. A dash is as long as the way the vehicle went in that time, so a
+  // standing car leaves a red blot and a running one a long blue line. The
+  // trail fades over ten seconds of the traffic's own clock, and is wide
+  // enough to read from the camera's height.
+  const trails=layer('junction',world,.12,5);
+  const TRAIL_LIFE=10,TRAIL_STEP=.15,DASHES=1200,TRAIL_WIDTH=.24;
+  const dashMesh=new THREE.InstancedMesh(plane,flat('#ffffff',.92),DASHES);dashMesh.count=0;dashMesh.frustumCulled=false;
+  for(let i=0;i<DASHES;i++)dashMesh.setColorAt(i,white);
+  trails.add(dashMesh);
   const trail=[];let lastMark=null;
   const vehicles=()=>traffic.movers.filter(m=>(m.kind==='car'&&m.state==='drive')||m.kind==='tram');
   const placeOf=m=>m.kind==='tram'?traffic.carriages(m)[1]:traffic.place(m);
-  const placer=new THREE.Object3D();
-  const TRACE_SECONDS=24;
-  // The gap each car keeps to the one ahead: longer the faster it goes, orange
+  const standing=new THREE.Color(RED),slow=new THREE.Color(GOLD),fast=new THREE.Color(BLUE);
+  const speedColor=pace=>pace<.02?standing.clone():pace<.4?standing.clone().lerp(slow,pace/.4):slow.clone().lerp(fast,(pace-.4)/.6);
+  // The gap each car keeps to the one ahead: longer the faster it goes, red
   // while it stands, gold while it crawls and blue while it runs.
   const gaps=layer('junction',world,.11,4);
   const cars=traffic.movers.filter(m=>m.kind==='car');
   const gapBands=cars.map(()=>{const material=flat(BLUE,.55);const m=gaps.add(new THREE.Mesh(plane,material));return {mesh:m,material};});
-  const standing=new THREE.Color(ORANGE),crawling=new THREE.Color(GOLD),running=new THREE.Color(BLUE);
   // The signal's ring at the stop line, red or green with the lamp.
   const signal=layer('junction',world,.13,6);
   const signalFill=flat(RED,.28),signalEdge=flat(RED,1,{depthTest:false});
@@ -307,157 +429,181 @@ export function createTechnicalLayers(city){
   const signalRing=signal.add(new THREE.Mesh(ring,signalEdge));signalRing.position.set(stopAt[0],.01,stopAt[1]);signalRing.scale.setScalar(.62);
   const signalWave=new THREE.Mesh(ring,flat(RED,0,{depthTest:false}));signalWave.renderOrder=6;signalWave.position.set(stopAt[0],.01,stopAt[1]);signal.group.add(signalWave);
   const red=new THREE.Color(RED),green=new THREE.Color(GREEN);
-  // The longest tailback: a bracket beside the queue, from the stop line back
-  // to the end of the longest queue the study has seen.
+  // The longest tailback: a bracket beside the waiting cars, from the stop
+  // line back to the end of the longest line the study has seen.
   const tailback=layer('junction',world,.15,7);
   const bracketMaterial=flat(INK,1,{depthTest:false});
   const BRACKET_X=-5.6;
   const bar=tailback.add(new THREE.Mesh(plane,bracketMaterial));
   const ticks=[0,1].map(()=>{const t=tailback.add(new THREE.Mesh(plane,bracketMaterial));t.scale.set(.5,1,.09);return t;});
   let longest=0;
-  // The west road's queue this moment: from the stop line back to the rear of
-  // the last car standing in an unbroken line behind it.
+  // The west road's waiting cars this moment: from the stop line back to the
+  // rear of the last car standing in an unbroken line behind it.
   function queueLength(){
-    const queue=cars.filter(m=>m.state==='drive'&&m.v<.05).map(m=>traffic.place(m)).filter(p=>Math.abs(p.x-stopAt[0])<.2&&p.z<stopAt[1]+.2).sort((a,b)=>b.z-a.z);
+    const standingCars=cars.filter(m=>m.state==='drive'&&m.v<.05).map(m=>traffic.place(m)).filter(p=>Math.abs(p.x-stopAt[0])<.2&&p.z<stopAt[1]+.2).sort((a,b)=>b.z-a.z);
     let front=stopAt[1],length=0;
-    for(const p of queue){
+    for(const p of standingCars){
       const head=p.z+plan.SIZES.CAR.len/2,rear=p.z-plan.SIZES.CAR.len/2;
       if(front-head>.7)break;
       length=stopAt[1]-rear;front=rear;
     }
     return length;
   }
-  // The study's record: a dot for every vehicle every second, each car's place
-  // along the west road and the signal four times a second for the card, and
-  // the longest queue seen, all on the traffic's own clock.
-  const traced={cars:new Map(),signal:[]};let lastSample=null;
+  // The study's record, on the traffic's own clock: a dash for every vehicle
+  // every sixth of a second, and the longest line of waiting cars seen.
   function record(){
     const now=traffic.clock;
-    if(lastMark===null||now-lastMark>=1){
+    if(lastMark===null||now-lastMark>=TRAIL_STEP){
       lastMark=now;
-      vehicles().forEach(m=>{const p=placeOf(m);if(inside(p.x,p.z))trail.push({x:p.x,z:p.z,t:now});});
+      vehicles().forEach(m=>{
+        const p=placeOf(m);if(!inside(p.x,p.z))return;
+        const pace=Math.min(1,(m.v||0)/(m.vmax||1));
+        trail.push({x:p.x,z:p.z,turn:Math.atan2(p.hx,p.hz),length:.07+(m.v||0)*TRAIL_STEP,t:now,color:speedColor(pace)});
+      });
     }
-    while(trail.length&&now-trail[0].t>DOT_LIFE)trail.shift();
-    if(lastSample!==null&&now-lastSample<.25)return;
-    lastSample=now;
-    cars.forEach(m=>{
-      const p=traffic.place(m);
-      if(m.state!=='drive'||Math.abs(p.x-stopAt[0])>.3||p.z<J.z0||p.z>J.z1)return;
-      if(!traced.cars.has(m))traced.cars.set(m,[]);
-      traced.cars.get(m).push({t:now,z:p.z});
-    });
-    traced.signal.push({t:now,green:traffic.green()});
-    for(const [m,list] of traced.cars){while(list.length&&now-list[0].t>TRACE_SECONDS)list.shift();if(!list.length)traced.cars.delete(m);}
-    while(traced.signal.length&&now-traced.signal[0].t>TRACE_SECONDS)traced.signal.shift();
+    while(trail.length&&(now-trail[0].t>TRAIL_LIFE||trail.length>DASHES))trail.shift();
     longest=Math.max(longest,queueLength());
   }
-  // The study has run a while before anybody reaches it: the traffic runs on
-  // for as long as the card shows, so the card, the dots and the tailback
-  // stand from the first frame, with less movement too.
-  for(let i=0;i<TRACE_SECONDS*30;i++){traffic.step(1/30);record();}
+  // The study has run a while before anybody reaches it, so the trails and
+  // the tailback stand from the first frame, with less movement too.
+  for(let i=0;i<TRAIL_LIFE*30;i++){traffic.step(1/30);record();}
 
   // Sets everything for one frame. Each value is how much of it is shown, 0
   // to 1, unless it says otherwise.
-  //   quick {blocks, grow: how far the blocks have risen, arcs, drawn: how far
-  //     along the arcs are drawn, split: how far the strands have parted,
-  //     riders, walls, hour}
-  //   day {doors, plans: how far drawn, route, drawn: how far the followed
-  //     resident's route is drawn, change: 0 by car, 1 by bike,
-  //     out, weighed, better: how far the changed plans' rings have turned,
-  //     rounds: how far the stack has risen, 0 to 1}
-  //   junction {pen, drawn, seconds, gaps, signal, tailback}
+  //   quick {columns, grow: how far the columns have risen, arcs, drawn: how
+  //     far along the arcs are drawn, split: how far the strands have parted,
+  //     lit: the destination whose arc glows, riders, roads, hour, roadLit}
+  //   day {doors, home, plans: how far drawn, route, drawn, out, tails,
+  //     tail: how long the tailbacks are, threads, upTo: the hour the threads
+  //     are drawn to, plane, planeHour, tips, pointed: 'places' or 'trips',
+  //     own: the followed resident's pieces, remembered, income: 0 by way of
+  //     travelling to 1 by income}
+  //   junction {pen, drawn, trails, gaps, signal, tailback}
+  let grown=0,planeAt=0;
   function update(state,dt,{paused=false,still=false}={}){
     const time=city.hero.time;
     const quick=state.quick||{},day=state.day||{},junction=state.junction||{};
     // 01
-    blocks.set(quick.blocks||0);
-    tops.forEach((top,i)=>{top.group.scale.y=Math.max(.001,Math.min(1,Math.max(0,((quick.grow??1)-i*.05)/.55)));});
+    columns.set(quick.columns||0);
+    grown=quick.grow??1;
+    beams.forEach((beam,i)=>{
+      const risen=Math.min(1,Math.max(0,(grown-i*.05)/.55)),e=risen*risen*(3-2*risen),h=Math.max(.001,beam.height*e);
+      beam.risen=e;beam.body.scale.y=h;beam.core.scale.y=h;beam.top.position.y=h;beam.top.visible=e>.02;
+    });
     arcs.set(quick.arcs||0);
     const split=quick.split||0;
-    strandMaterials.forEach((material,k)=>material.color.copy(ink).lerp(strandColors[k],split));
-    flows.forEach(flow=>flow.strands.forEach(strand=>{
-      const shift=strand.offset*split;
-      strand.mesh.position.set(flow.across[0]*shift,0,flow.across[1]*shift);
-      strand.geometry.setDrawRange(0,Math.floor(ARC_STEPS*Math.min(1,Math.max(0,quick.drawn??1)))*ARC_SIDES*6);
-    }));
-    riders.set(quick.riders||0);
-    if(quick.riders>0)riderDots.forEach(r=>{r.group.position.copy(r.flow.curve.getPoint((time*.3+r.phase)%1));});
-    walls.set(quick.walls||0);
-    if(quick.walls>0){
-      const busyness=hourLoad(quick.hour??8);
-      wallParts.forEach(part=>{
-        const load=part.load*busyness,h=.1+3*load;
-        part.wall.scale.y=h;part.top.position.y=h;
-        loadColor(wallColor,load);part.materials.forEach(material=>material.color.copy(wallColor));
+    flows.forEach((flow,f)=>{
+      const lit=quick.lit===flow.b&&flow.a===LIT_ZONE;
+      flow.materials.forEach((material,k)=>{material.color.copy(cyan).lerp(modeColors[k],split);if(lit)material.color.lerp(white,.25);});
+      flow.lit.visible=lit;
+      const count=Math.floor(ARC_STEPS*Math.min(1,Math.max(0,quick.drawn??1)));
+      flow.strands.forEach(strand=>{
+        const shift=strand.offset*split;
+        strand.mesh.position.set(flow.across[0]*shift,0,flow.across[1]*shift);
+        strand.geometry.setDrawRange(0,count*ARC_SIDES*6);
       });
+      flow.haloGeometry.setDrawRange(0,count*8*6);
+    });
+    riders.set(quick.riders||0);
+    if(quick.riders>0)riderDots.forEach(r=>{r.mesh.position.copy(r.flow.curve.getPoint((time*.22+r.phase)%1));});
+    roads.set(quick.roads||0);
+    if(quick.roads>0){
+      const busyness=hourLoad(quick.hour??8);
+      roadParts.forEach(road=>{
+        const load=road.load*busyness,width=.12+.5*load;
+        road.band.scale.set(road.length,1,width);road.halo.scale.set(road.length,1,width*3.2);
+        loadColor(road.shown,load);road.materials.forEach(material=>material.color.copy(road.shown));
+        road.speed=.45+2.4*(1-Math.min(1,load))**1.5;road.now=load;
+      });
+      readLit.visible=!!quick.roadLit;
+      readLit.scale.set(read.length+.3,1,(.12+.5*read.now)*1.9+.12*Math.sin(time*3));
+      pulseList.forEach((p,i)=>{
+        const road=p.road,s=((p.phase*road.length+time*road.speed)%road.length),along=p.way>0?s:road.length-s;
+        const across=p.way*(.08+.12*road.now);
+        placer.position.set(road.x0+road.hx*along-road.hz*across,.02,road.z0+road.hz*along+road.hx*across);
+        placer.rotation.set(0,-road.turn,0);placer.scale.set(.5,1,.07+.07*road.now);placer.updateMatrix();
+        pulses.setMatrixAt(i,placer.matrix);pulses.setColorAt(i,color.copy(road.shown).lerp(white,.45));
+      });
+      pulses.instanceMatrix.needsUpdate=true;pulses.instanceColor.needsUpdate=true;
     }
     // 02
     doorsSet.set(day.doors||0);
+    homeSet.set(day.home||0);
+    if(day.home>0){const life=(time*.6)%1;homeWave.scale.setScalar(.62*(1+life*1.4));homeWave.material.opacity=.8*day.home*(1-life);homeWave.visible=!still;}
     plans.set(day.plans>0?1:0);
     planLines.forEach((drawn,i)=>drawTo(drawn,((day.plans||0)-i*.05)/.7));
     routes.set(day.route||0);
-    const change=day.change||0;
-    drawTo(carRoute,(day.drawn??1)*(1-Math.min(1,change*2)));
-    drawTo(bikeRoute,change*2-1);
-    carRoute.mesh.visible=change<.5;bikeRoute.mesh.visible=change>.5;
+    drawTo(carRoute,day.drawn??1);
     out.set(day.out||0);
     if(day.out>0){
       outDots.forEach(d=>{
         const u=Math.min(1,((time*.11+d.phase)%1.35));
         const p=d.path.at(u*d.path.length,d.side);d.group.position.set(p.x,.3,p.z);
       });
-      const path=change>.5?bikePath:carPath,u=Math.min(1,((time*.11+.31)%1.35));
-      const p=path.at(u*path.length);followed.position.set(p.x,.32,p.z);
+      const u=Math.min(1,((time*.11+.31)%1.35)),p=carPath.at(u*carPath.length);followed.position.set(p.x,.32,p.z);
     }
-    weighed.set(day.weighed||0);
-    const better=day.better||0;
-    scoreRings.forEach(r=>{
-      if(!r.after)return;
-      r.before.visible=better<1;r.before.scale.setScalar(.7*Math.max(.001,1-better));
-      r.after.visible=better>0;r.after.scale.setScalar(.7*Math.max(.001,better));
+    tails.set(day.tails||0);
+    tailLines.forEach((t,i)=>{const long=Math.min(1,Math.max(0,(day.tail??1)*(i?.85:1)));drawTo(t.core,long);drawTo(t.halo,long);});
+    const upTo=day.upTo??24;
+    threads.set(day.threads||0);
+    const income=day.income||0;
+    residents.forEach(r=>{
+      if(!paused)r.flash=Math.max(0,r.flash-dt*1.4);
+      r.geometry.setDrawRange(0,Math.floor(r.curve.shareAt(upTo)*THREAD_SEGMENTS)*SIDES*6);
+      r.material.color.copy(r.base).lerp(r.income,income).lerp(cyan,r.flash);
     });
-    // Each slice takes a little more than its share of the rise, so the last
-    // one has settled at its height when the rounds are done.
-    const rounds=day.rounds||0;
-    slices.forEach((slice,k)=>{
-      const rise=Math.min(1,Math.max(0,(rounds*(ROUNDS.length+.2)-k)/1.2));
-      const eased=rise*rise*(3-2*rise);
-      slice.risen=eased;
-      slice.set.set(eased);slice.set.group.position.y=.3+(sliceHeight(k)-.3)*eased;
-    });
-    posts.set(rounds>0?Math.min(1,rounds*3):0);
-    const topSlice=slices.reduce((top,slice)=>Math.max(top,slice.set.group.position.y),.3);
-    corners.forEach(m=>{m.scale.y=Math.max(.001,topSlice-.1);});
+    own7.set(day.own||0);
+    const pointed=day.pointed;
+    placeLight.color.copy(teal).lerp(midIncome,income).lerp(paper,pointed==='trips'?.75:0);
+    tripLight.color.copy(orange).lerp(midIncome,income).lerp(paper,pointed==='places'?.75:0);
+    pieces.forEach(piece=>piece.geometry.setDrawRange(0,Math.floor(piece.curve.shareAt(upTo)*piece.segments)*piece.sides*6));
+    remembered.set(day.remembered||0);
+    others.forEach(o=>o.geometry.setDrawRange(0,Math.floor(o.curve.shareAt(upTo)*THREAD_SEGMENTS)*SIDES*6));
+    planeAt=day.planeHour??upTo;
+    hourPlane.set(day.plane||0);hourPlane.group.position.y=hourY(planeAt);
+    axis.set(day.plane||0);
+    tips.set(day.tips||0);
+    if(day.tips>0){
+      const at=new THREE.Vector3();
+      residents.forEach((r,i)=>{
+        const [x,z]=placeOn(r.parts,planeAt,r.offset);
+        placer.position.set(x,hourY(planeAt),z);placer.rotation.set(0,0,0);placer.scale.setScalar(.12);placer.updateMatrix();tipDots.setMatrixAt(i,placer.matrix);
+        tipDots.setColorAt(i,color.copy(r.base).lerp(r.income,income));
+        placer.position.set(x,.03,z);placer.scale.setScalar(.14);placer.updateMatrix();shadows.setMatrixAt(i,placer.matrix);
+      });
+      const [fx,fz]=placeOn(dayParts(DAY,'car'),planeAt,[0,0]);
+      followedTip.position.set(fx,hourY(planeAt),fz);
+      at.set(fx,.03,fz);placer.position.copy(at);placer.scale.setScalar(.2);placer.updateMatrix();shadows.setMatrixAt(residents.length,placer.matrix);
+      tipDots.instanceMatrix.needsUpdate=true;tipDots.instanceColor.needsUpdate=true;shadows.instanceMatrix.needsUpdate=true;
+    }
     // 03
     pen.set(junction.pen||0);
     drawTo(penLine,junction.drawn??1);
     if(!paused)record();
-    seconds.set(junction.seconds||0);
-    if(junction.seconds>0){
+    trails.set(junction.trails||0);
+    if(junction.trails>0){
       let n=0;
-      for(const d of trail){
-        if(n>=DOTS)break;
-        const age=traffic.clock-d.t,size=.13*Math.max(.25,1-age/DOT_LIFE);
-        placer.position.set(d.x,0,d.z);placer.scale.setScalar(size);placer.updateMatrix();
-        dotMesh.setMatrixAt(n++,placer.matrix);
+      for(let k=trail.length-1;k>=0&&n<DASHES;k--){
+        const d=trail[k],fade=1-(traffic.clock-d.t)/TRAIL_LIFE;
+        placer.position.set(d.x,0,d.z);placer.rotation.set(0,d.turn,0);placer.scale.set(TRAIL_WIDTH*Math.max(.4,fade),1,d.length);placer.updateMatrix();
+        dashMesh.setMatrixAt(n,placer.matrix);dashMesh.setColorAt(n,color.copy(d.color).lerp(paper,.45*(1-fade)));n++;
       }
-      dotMesh.count=n;dotMesh.instanceMatrix.needsUpdate=true;
+      dashMesh.count=n;dashMesh.instanceMatrix.needsUpdate=true;dashMesh.instanceColor.needsUpdate=true;
     }
     gaps.set(junction.gaps||0);
     if(junction.gaps>0)cars.forEach((m,i)=>{
-      const band=gapBands[i],p=traffic.place(m);
+      const gapBand=gapBands[i],p=traffic.place(m);
       const on=m.state==='drive'&&inside(p.x,p.z)&&Math.abs(p.x-stopAt[0])<.3;
-      band.mesh.visible=on;if(!on)return;
+      gapBand.mesh.visible=on;if(!on)return;
       const length=plan.SIZES.CAR.gap+m.v*1.1,front=m.len/2+length/2;
-      band.mesh.position.set(p.x+p.hx*front,0,p.z+p.hz*front);band.mesh.rotation.y=Math.atan2(p.hx,p.hz);
-      band.mesh.scale.set(.5,1,length);
-      const pace=m.v/m.vmax;
-      band.material.color.copy(m.v<.05?standing:pace<.6?crawling:running);
+      gapBand.mesh.position.set(p.x+p.hx*front,0,p.z+p.hz*front);gapBand.mesh.rotation.y=Math.atan2(p.hx,p.hz);
+      gapBand.mesh.scale.set(.5,1,length);
+      gapBand.material.color.copy(speedColor(m.v/m.vmax));
     });
     signal.set(junction.signal||0);
     if(junction.signal>0){
-      const color=traffic.green()?green:red;
-      signalFill.color.copy(color);signalEdge.color.copy(color);signalWave.material.color.copy(color);
+      const lamp=traffic.green()?green:red;
+      signalFill.color.copy(lamp);signalEdge.color.copy(lamp);signalWave.material.color.copy(lamp);
       const life=(time*.7)%1;
       signalWave.scale.setScalar(.62*(1+life*.9));signalWave.material.opacity=.8*(junction.signal||0)*(1-life);
       signalWave.visible=!still;
@@ -469,22 +615,17 @@ export function createTechnicalLayers(city){
       ticks[0].position.set(BRACKET_X,0,from);ticks[1].position.set(BRACKET_X,0,to);
     }
   }
-  // The card's record, as each car's line and the signal's runs: how many
-  // seconds ago, and how far along the stretch, 0 where the study starts and
-  // 1 where it ends. A run lasts from older seconds ago to newer.
-  function trace(){
-    const now=traffic.clock,span=J.z1-J.z0;
-    const lines=[...traced.cars.values()].map(list=>list.map(({t,z})=>({ago:now-t,along:(z-J.z0)/span})));
-    const runs=[];
-    traced.signal.forEach(({t,green:on})=>{
-      const last=runs[runs.length-1];
-      if(last&&last.green===on)last.newer=now-t;else runs.push({green:on,older:now-t,newer:now-t});
-    });
-    return {lines,runs,seconds:TRACE_SECONDS,stop:(plan.STOP_LINE.z-J.z0)/span,longest};
+  // A round of learning: a few residents try another route, hour or way, and
+  // their threads flash. Which ones is read from the round, so a round seen
+  // again flashes the same threads.
+  function flashRound(round){
+    residents.forEach((r,i)=>{if(((i*7+round*5)%11)<3)r.flash=1;});
   }
-  // Where the rounds' tags stand: at the near corner of the first and the
-  // last slice. A tag shows once its slice has nearly reached its height.
-  const roundTag=k=>[plan.BOARD.w*.48,slices[k].set.group.position.y,plan.BOARD.d*.48];
-  const roundRisen=k=>(slices[k].risen||0)>.8;
-  return {update,show,trace,roundTag,roundRisen,hourLoad};
+  // Where the page's tags stand: over each zone's column as it has risen,
+  // the hour at the corner of the hour plane, and the hours up the corner.
+  const zoneTag=i=>[ZONES[i].x,beams[i].height*beams[i].risen+.55,ZONES[i].z];
+  const zoneRisen=i=>beams[i].risen>.9;
+  const hourTag=()=>[W,hourY(planeAt)+.05,D];
+  const axisTag=h=>[W+.45,hourY(h),D];
+  return {update,show,flashRound,zoneTag,zoneRisen,hourTag,axisTag,longest:()=>longest};
 }
